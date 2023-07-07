@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8wz0fV26MPlJNlf6GTCphcbfAfluRBukZJ2GK6O6NMRSqYHhb6oshF7fUgo7E4guAQAI2jckLa6rbVUrY8SMBA==",
+  "dgSpecHash": "1sDlYXj/uAA0EvoETmXVTmtj2H/B23HSY+D7Z684/9orwyRPZZJTKeMQfWuXOObJ2eqUHUIq7qOQ858ILy0gsw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\BookWorm.Web.csproj",
+  "projectFilePath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Alexander\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.13\\microsoft.aspnetcore.cryptography.internal.6.0.13.nupkg.sha512",

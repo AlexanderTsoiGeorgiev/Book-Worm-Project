@@ -5,7 +5,7 @@
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Humanizer.dll": {
+          "lib/netstandard2.0/_._": {
             "related": ".xml"
           }
         },
@@ -226,7 +226,7 @@
           "Microsoft.EntityFrameworkCore.Relational": "6.0.13"
         },
         "compile": {
-          "lib/net6.0/Microsoft.EntityFrameworkCore.Design.dll": {
+          "lib/net6.0/_._": {
             "related": ".xml"
           }
         },
@@ -950,23 +950,6 @@
             "assetType": "runtime",
             "rid": "win"
           }
-        }
-      },
-      "BookWorm.Data/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "BookWorm.Data.Models": "1.0.0",
-          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.13",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.13",
-          "Microsoft.AspNetCore.Identity.UI": "6.0.13",
-          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.13"
-        },
-        "compile": {
-          "bin/placeholder/BookWorm.Data.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BookWorm.Data.dll": {}
         }
       },
       "BookWorm.Data.Common/1.0.0": {
@@ -2483,11 +2466,6 @@
         "version.txt"
       ]
     },
-    "BookWorm.Data/1.0.0": {
-      "type": "project",
-      "path": "../BookWorm.Data/BookWorm.Data.csproj",
-      "msbuildProject": "../BookWorm.Data/BookWorm.Data.csproj"
-    },
     "BookWorm.Data.Common/1.0.0": {
       "type": "project",
       "path": "../BookWorm.Data.Common/BookWorm.Data.Common.csproj",
@@ -2501,7 +2479,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "BookWorm.Data >= 1.0.0",
+      "BookWorm.Data.Models >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.13",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.13",
       "Microsoft.AspNetCore.Identity.UI >= 6.0.13",
@@ -2516,11 +2494,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\BookWorm.Web.csproj",
-      "projectName": "BookWorm.Web",
-      "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\BookWorm.Web.csproj",
+      "projectUniqueName": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj",
+      "projectName": "BookWorm.Data",
+      "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj",
       "packagesPath": "C:\\Users\\Alexander\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\obj\\",
+      "outputPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2542,8 +2520,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj": {
-              "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj"
+            "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data.Models\\BookWorm.Data.Models.csproj": {
+              "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data.Models\\BookWorm.Data.Models.csproj"
             }
           }
         }
@@ -2575,6 +2553,8 @@
             "version": "[6.0.13, )"
           },
           "Microsoft.EntityFrameworkCore.Tools": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
             "target": "Package",
             "version": "[6.0.13, )"
           }
@@ -2591,9 +2571,6 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
-          "Microsoft.AspNetCore.App": {
-            "privateAssets": "none"
-          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
