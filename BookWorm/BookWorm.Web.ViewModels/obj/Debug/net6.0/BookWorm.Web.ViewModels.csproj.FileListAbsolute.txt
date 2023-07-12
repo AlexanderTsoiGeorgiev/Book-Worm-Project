@@ -1,0 +1,12 @@
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\bin\Debug\net6.0\BookWorm.Web.ViewModels.deps.json
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\bin\Debug\net6.0\BookWorm.Web.ViewModels.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\bin\Debug\net6.0\BookWorm.Web.ViewModels.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\BookWorm.Web.ViewModels.csproj.AssemblyReference.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\BookWorm.Web.ViewModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\BookWorm.Web.ViewModels.AssemblyInfoInputs.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\BookWorm.Web.ViewModels.AssemblyInfo.cs
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\BookWorm.Web.ViewModels.csproj.CoreCompileInputs.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\BookWorm.Web.ViewModels.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\refint\BookWorm.Web.ViewModels.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\BookWorm.Web.ViewModels.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.ViewModels\obj\Debug\net6.0\ref\BookWorm.Web.ViewModels.dll

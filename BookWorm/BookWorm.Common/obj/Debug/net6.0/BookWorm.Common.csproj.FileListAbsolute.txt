@@ -1,0 +1,12 @@
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\bin\Debug\net6.0\BookWorm.Common.deps.json
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\bin\Debug\net6.0\BookWorm.Common.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\bin\Debug\net6.0\BookWorm.Common.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\BookWorm.Common.csproj.AssemblyReference.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\BookWorm.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\BookWorm.Common.AssemblyInfoInputs.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\BookWorm.Common.AssemblyInfo.cs
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\BookWorm.Common.csproj.CoreCompileInputs.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\BookWorm.Common.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\refint\BookWorm.Common.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\BookWorm.Common.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Common\obj\Debug\net6.0\ref\BookWorm.Common.dll

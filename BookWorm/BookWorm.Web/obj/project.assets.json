@@ -991,6 +991,16 @@
         "runtime": {
           "bin/placeholder/BookWorm.Data.Models.dll": {}
         }
+      },
+      "BookWorm.Web.ViewModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BookWorm.Web.ViewModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookWorm.Web.ViewModels.dll": {}
+        }
       }
     }
   },
@@ -2497,11 +2507,17 @@
       "type": "project",
       "path": "../BookWorm.Data.Models/BookWorm.Data.Models.csproj",
       "msbuildProject": "../BookWorm.Data.Models/BookWorm.Data.Models.csproj"
+    },
+    "BookWorm.Web.ViewModels/1.0.0": {
+      "type": "project",
+      "path": "../BookWorm.Web.ViewModels/BookWorm.Web.ViewModels.csproj",
+      "msbuildProject": "../BookWorm.Web.ViewModels/BookWorm.Web.ViewModels.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "BookWorm.Data >= 1.0.0",
+      "BookWorm.Web.ViewModels >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.13",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.13",
       "Microsoft.AspNetCore.Identity.UI >= 6.0.13",
@@ -2544,6 +2560,9 @@
           "projectReferences": {
             "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj": {
               "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj"
+            },
+            "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web.ViewModels\\BookWorm.Web.ViewModels.csproj": {
+              "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web.ViewModels\\BookWorm.Web.ViewModels.csproj"
             }
           }
         }

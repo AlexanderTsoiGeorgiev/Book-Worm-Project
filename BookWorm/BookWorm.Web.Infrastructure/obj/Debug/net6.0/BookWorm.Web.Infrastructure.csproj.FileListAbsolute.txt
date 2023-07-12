@@ -1,0 +1,12 @@
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\bin\Debug\net6.0\BookWorm.Web.Infrastructure.deps.json
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\bin\Debug\net6.0\BookWorm.Web.Infrastructure.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\bin\Debug\net6.0\BookWorm.Web.Infrastructure.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\BookWorm.Web.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\BookWorm.Web.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\BookWorm.Web.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\BookWorm.Web.Infrastructure.AssemblyInfo.cs
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\BookWorm.Web.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\BookWorm.Web.Infrastructure.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\refint\BookWorm.Web.Infrastructure.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\BookWorm.Web.Infrastructure.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web.Infrastructure\obj\Debug\net6.0\ref\BookWorm.Web.Infrastructure.dll

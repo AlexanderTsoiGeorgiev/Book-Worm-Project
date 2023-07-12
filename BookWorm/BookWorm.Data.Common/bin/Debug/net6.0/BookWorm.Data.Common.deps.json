@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "BookWorm.Data.Common/1.0.0": {
+        "runtime": {
+          "BookWorm.Data.Common.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BookWorm.Data.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

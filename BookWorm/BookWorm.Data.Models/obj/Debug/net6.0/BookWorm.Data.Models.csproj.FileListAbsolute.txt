@@ -1,0 +1,15 @@
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\bin\Debug\net6.0\BookWorm.Data.Models.deps.json
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\bin\Debug\net6.0\BookWorm.Data.Models.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\bin\Debug\net6.0\BookWorm.Data.Models.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\bin\Debug\net6.0\BookWorm.Data.Common.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\bin\Debug\net6.0\BookWorm.Data.Common.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\BookWorm.Data.Models.csproj.AssemblyReference.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\BookWorm.Data.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\BookWorm.Data.Models.AssemblyInfoInputs.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\BookWorm.Data.Models.AssemblyInfo.cs
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\BookWorm.Data.Models.csproj.CoreCompileInputs.cache
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\BookWorm.Data.Models.csproj.CopyComplete
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\BookWorm.Data.Models.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\refint\BookWorm.Data.Models.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\BookWorm.Data.Models.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Models\obj\Debug\net6.0\ref\BookWorm.Data.Models.dll
