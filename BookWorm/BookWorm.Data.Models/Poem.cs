@@ -1,6 +1,5 @@
 ﻿namespace BookWorm.Data.Models
 {
-    using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
 
     using static BookWorm.Data.Common.DataModelsValidationConstants.PoemValidationConstants;
@@ -38,5 +37,9 @@
 
         [Required]
         public bool IsDeleted { get; set; }
+
+        //public IEnumerable<Review> Reviews { get; set; } = null!;
+
+        //public IEnumerable<BookPoem> BooksPoems { get; set; } = null!;
     }
 }

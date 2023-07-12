@@ -9,6 +9,7 @@
       "BookWorm.Web/1.0.0": {
         "dependencies": {
           "BookWorm.Data": "1.0.0",
+          "BookWorm.Data.Common": "1.0.0",
           "BookWorm.Web.ViewModels": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.13",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.18",
