@@ -38,8 +38,8 @@
         [Required]
         public bool IsDeleted { get; set; }
 
-        //public IEnumerable<Review> Reviews { get; set; } = null!;
+        public IEnumerable<Review> Reviews { get; set; } = null!;
 
-        //public IEnumerable<BookPoem> BooksPoems { get; set; } = null!;
+        public IEnumerable<BookPoem> BooksPoems { get; set; } = null!;
     }
 }

@@ -3940,6 +3940,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "BookWorm.Data.Configuration": "1.0.0",
           "BookWorm.Data.Models": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.13",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.13",
@@ -3961,6 +3962,19 @@
         },
         "runtime": {
           "bin/placeholder/BookWorm.Data.Common.dll": {}
+        }
+      },
+      "BookWorm.Data.Configuration/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "BookWorm.Data.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BookWorm.Data.Configuration.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookWorm.Data.Configuration.dll": {}
         }
       },
       "BookWorm.Data.Models/1.0.0": {
@@ -11236,6 +11250,11 @@
       "type": "project",
       "path": "../BookWorm.Data.Common/BookWorm.Data.Common.csproj",
       "msbuildProject": "../BookWorm.Data.Common/BookWorm.Data.Common.csproj"
+    },
+    "BookWorm.Data.Configuration/1.0.0": {
+      "type": "project",
+      "path": "../BookWorm.Data.Configuration/BookWorm.Data.Configuration.csproj",
+      "msbuildProject": "../BookWorm.Data.Configuration/BookWorm.Data.Configuration.csproj"
     },
     "BookWorm.Data.Models/1.0.0": {
       "type": "project",

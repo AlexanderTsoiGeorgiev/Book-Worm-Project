@@ -17,3 +17,5 @@ C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data\obj\Debug\net6.0\BookWorm.Data.pdb
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data\obj\Debug\net6.0\BookWorm.Data.genruntimeconfig.cache
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data\obj\Debug\net6.0\ref\BookWorm.Data.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data\bin\Debug\net6.0\BookWorm.Data.Configuration.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data\bin\Debug\net6.0\BookWorm.Data.Configuration.pdb

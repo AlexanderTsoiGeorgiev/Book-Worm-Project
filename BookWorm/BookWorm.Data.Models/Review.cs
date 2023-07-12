@@ -37,12 +37,12 @@
         [Required]
         public bool IsDeleted { get; set; }
 
-        //[ForeignKey(nameof(Poem))]
-        //public string PoemId { get; set; } = null!;
-        //public Poem Poem { get; set; } = null!;
+        [ForeignKey(nameof(Poem))]
+        public Guid PoemId { get; set; }
+        public Poem Poem { get; set; } = null!;
 
-        //[ForeignKey(nameof(Book))]
-        //public int BookId { get; set; }
-        //public Book Book { get; set; } = null!;
+        [ForeignKey(nameof(Book))]
+        public int BookId { get; set; }
+        public Book Book { get; set; } = null!;
     }
 }

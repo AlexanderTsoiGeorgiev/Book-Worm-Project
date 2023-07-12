@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "BookWorm.Data/1.0.0": {
         "dependencies": {
+          "BookWorm.Data.Configuration": "1.0.0",
           "BookWorm.Data.Models": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.13",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.13",
@@ -543,6 +544,14 @@
           "BookWorm.Data.Common.dll": {}
         }
       },
+      "BookWorm.Data.Configuration/1.0.0": {
+        "dependencies": {
+          "BookWorm.Data.Models": "1.0.0"
+        },
+        "runtime": {
+          "BookWorm.Data.Configuration.dll": {}
+        }
+      },
       "BookWorm.Data.Models/1.0.0": {
         "dependencies": {
           "BookWorm.Data.Common": "1.0.0",
@@ -925,6 +934,11 @@
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
     },
     "BookWorm.Data.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BookWorm.Data.Configuration/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

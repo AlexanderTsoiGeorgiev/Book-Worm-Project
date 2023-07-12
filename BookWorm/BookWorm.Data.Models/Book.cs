@@ -11,7 +11,7 @@
     {
         public Book()
         {
-            //Reviews = new HashSet<Review>();
+            Reviews = new HashSet<Review>();
         }
 
         [Key]
@@ -36,14 +36,14 @@
         [Required]
         public int Quantity { get; set; }
 
-        //[Required]
-        //[ForeignKey(nameof(Author))]
-        //public string AuthorId { get; set; } = null!;
-        //[Required]
-        //public ApplicationUser Author { get; set; } = null!;
+        [Required]
+        [ForeignKey(nameof(Author))]
+        public Guid AuthorId { get; set; }
+        [Required]
+        public ApplicationUser Author { get; set; } = null!;
 
-        //public IEnumerable<Review> Reviews { get; set; } = null!;
+        public IEnumerable<Review> Reviews { get; set; } = null!;
 
-        //public IEnumerable<BookPoem> BooksPoems { get; set; } = null!;
+        public IEnumerable<BookPoem> BooksPoems { get; set; } = null!;
     }
 }

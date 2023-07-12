@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookWorm.Data.Configuration\BookWorm.Data.Configuration.csproj" />
     <ProjectReference Include="..\BookWorm.Data.Models\BookWorm.Data.Models.csproj" />
   </ItemGroup>
 

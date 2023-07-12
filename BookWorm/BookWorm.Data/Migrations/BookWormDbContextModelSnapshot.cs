@@ -96,6 +96,9 @@ namespace BookWorm.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -120,13 +123,33 @@ namespace BookWorm.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.BookPoem", b =>
+                {
+                    b.Property<Guid>("PoemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PoemId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookPoem");
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.Poem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -158,6 +181,8 @@ namespace BookWorm.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.ToTable("Poems");
                 });
 
@@ -166,6 +191,12 @@ namespace BookWorm.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -184,6 +215,9 @@ namespace BookWorm.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("PoemId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<float>("Rating")
                         .HasColumnType("real");
 
@@ -191,6 +225,12 @@ namespace BookWorm.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("PoemId");
 
                     b.ToTable("Reviews");
                 });
@@ -330,6 +370,66 @@ namespace BookWorm.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BookWorm.Data.Models.Book", b =>
+                {
+                    b.HasOne("BookWorm.Data.Models.ApplicationUser", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.BookPoem", b =>
+                {
+                    b.HasOne("BookWorm.Data.Models.Book", "Book")
+                        .WithMany("BooksPoems")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookWorm.Data.Models.Poem", "Poem")
+                        .WithMany("BooksPoems")
+                        .HasForeignKey("PoemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Poem");
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.Poem", b =>
+                {
+                    b.HasOne("BookWorm.Data.Models.ApplicationUser", null)
+                        .WithMany("Poems")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.Review", b =>
+                {
+                    b.HasOne("BookWorm.Data.Models.ApplicationUser", null)
+                        .WithMany("Reviews")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("BookWorm.Data.Models.Book", "Book")
+                        .WithMany("Reviews")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookWorm.Data.Models.Poem", "Poem")
+                        .WithMany("Reviews")
+                        .HasForeignKey("PoemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Poem");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -379,6 +479,29 @@ namespace BookWorm.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Books");
+
+                    b.Navigation("Poems");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.Book", b =>
+                {
+                    b.Navigation("BooksPoems");
+
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.Poem", b =>
+                {
+                    b.Navigation("BooksPoems");
+
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

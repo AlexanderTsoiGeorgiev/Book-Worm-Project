@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Web", "BookWorm.Web\BookWorm.Web.csproj", "{92ADFE2E-6293-4CAE-9881-C7539F824658}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Web", "BookWorm.Web\BookWorm.Web.csproj", "{92ADFE2E-6293-4CAE-9881-C7539F824658}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{21F97672-F051-42D2-8E15-089E235A7F57}"
 EndProject
@@ -11,19 +11,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{A1394FEA-1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{87B5DA85-0D0D-44DC-895A-5B1F80327073}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Data", "BookWorm.Data\BookWorm.Data.csproj", "{819BE37B-6523-438B-9C3F-8F5BA1FCA8EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Data", "BookWorm.Data\BookWorm.Data.csproj", "{819BE37B-6523-438B-9C3F-8F5BA1FCA8EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Data.Models", "BookWorm.Data.Models\BookWorm.Data.Models.csproj", "{0FD7A799-124A-4F20-9F1A-7E8250D7F8C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Data.Models", "BookWorm.Data.Models\BookWorm.Data.Models.csproj", "{0FD7A799-124A-4F20-9F1A-7E8250D7F8C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Data.Common", "BookWorm.Data.Common\BookWorm.Data.Common.csproj", "{8934E406-219D-4579-ADC5-7FE39D1DC9F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Data.Common", "BookWorm.Data.Common\BookWorm.Data.Common.csproj", "{8934E406-219D-4579-ADC5-7FE39D1DC9F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Web.ViewModels", "BookWorm.Web.ViewModels\BookWorm.Web.ViewModels.csproj", "{030BB249-A4A3-412A-A568-8120949B44A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Web.ViewModels", "BookWorm.Web.ViewModels\BookWorm.Web.ViewModels.csproj", "{030BB249-A4A3-412A-A568-8120949B44A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Web.Infrastructure", "BookWorm.Web.Infrastructure\BookWorm.Web.Infrastructure.csproj", "{A088DDAE-148F-454F-83F9-A5738E8D651E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Web.Infrastructure", "BookWorm.Web.Infrastructure\BookWorm.Web.Infrastructure.csproj", "{A088DDAE-148F-454F-83F9-A5738E8D651E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Common", "BookWorm.Common\BookWorm.Common.csproj", "{33A32F11-1C6E-4687-85A8-CB091BCDE00D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Common", "BookWorm.Common\BookWorm.Common.csproj", "{33A32F11-1C6E-4687-85A8-CB091BCDE00D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Services", "BookWorm.Services\BookWorm.Services.csproj", "{25AD82E6-F426-4E08-887B-12DACD590AA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Services", "BookWorm.Services\BookWorm.Services.csproj", "{25AD82E6-F426-4E08-887B-12DACD590AA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Data.Configuration", "BookWorm.Data.Configuration\BookWorm.Data.Configuration.csproj", "{CB353CE4-3AEB-4841-B581-27431F114D47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{25AD82E6-F426-4E08-887B-12DACD590AA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25AD82E6-F426-4E08-887B-12DACD590AA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25AD82E6-F426-4E08-887B-12DACD590AA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB353CE4-3AEB-4841-B581-27431F114D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB353CE4-3AEB-4841-B581-27431F114D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB353CE4-3AEB-4841-B581-27431F114D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB353CE4-3AEB-4841-B581-27431F114D47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{030BB249-A4A3-412A-A568-8120949B44A2} = {21F97672-F051-42D2-8E15-089E235A7F57}
 		{A088DDAE-148F-454F-83F9-A5738E8D651E} = {21F97672-F051-42D2-8E15-089E235A7F57}
 		{25AD82E6-F426-4E08-887B-12DACD590AA9} = {87B5DA85-0D0D-44DC-895A-5B1F80327073}
+		{CB353CE4-3AEB-4841-B581-27431F114D47} = {A1394FEA-1F12-4BC6-8F8C-0A1D7D8EB03A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AC1B3DD-6A7C-4E18-A0FD-8D157E572955}
