@@ -31,7 +31,15 @@
 
             public const decimal MinPrice = 10.00m;
             public const decimal MaxPrice = 1_000.00m;
+        }
 
+        public static class ReviewValidationConstants
+        {
+            public const int ContentMinLength = 100;
+            public const int ContentMaxLength = 100_000;
+
+            public const float MinRating = 0.00f;
+            public const float MaxRating = 10.00f;
         }
     }
 }

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookWorm.Data.Common\BookWorm.Data.Common.csproj" />
     <ProjectReference Include="..\BookWorm.Data\BookWorm.Data.csproj" />
     <ProjectReference Include="..\BookWorm.Web.ViewModels\BookWorm.Web.ViewModels.csproj" />
   </ItemGroup>
