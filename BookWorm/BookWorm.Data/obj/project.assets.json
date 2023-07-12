@@ -966,7 +966,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "BookWorm.Data.Common": "1.0.0"
+          "BookWorm.Data.Common": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.13"
         },
         "compile": {
           "bin/placeholder/BookWorm.Data.Models.dll": {}

@@ -1,9 +1,9 @@
 namespace BookWorm.Web
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     using BookWorm.Data;
+    using BookWorm.Data.Models;
 
     public class Program
     {
@@ -18,7 +18,7 @@ namespace BookWorm.Web
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<BookWormDbContext>();
 
             builder.Services.AddControllersWithViews();
