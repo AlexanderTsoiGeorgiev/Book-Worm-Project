@@ -20,7 +20,18 @@ namespace BookWorm.Web
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("IdentityConfiguration:SignIn:RequireConfirmedAccount");
+
+                options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("IdentityConfiguration:Password:RequireNonAlphanumerical");
+
+                options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("IdentityConfiguration:Password:RequireUppercase");
+
+                options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("IdentityConfiguration:Password:RequireLowercase");
+
+                options.Password.RequiredLength = builder.Configuration.GetValue<int>("IdentityConfiguration:Password:RequiredLength");
+            })
                 .AddEntityFrameworkStores<BookWormDbContext>();
 
             builder.Services.AddControllersWithViews();

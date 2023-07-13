@@ -266,3 +266,5 @@ C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Data.Configuration.dll
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Data.Configuration.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Services.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Services.pdb
