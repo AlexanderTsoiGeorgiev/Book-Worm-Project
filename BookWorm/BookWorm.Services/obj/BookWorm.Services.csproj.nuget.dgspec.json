@@ -384,7 +384,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data.Common\\BookWorm.Data.Common.csproj": {
+                "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data.Common\\BookWorm.Data.Common.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

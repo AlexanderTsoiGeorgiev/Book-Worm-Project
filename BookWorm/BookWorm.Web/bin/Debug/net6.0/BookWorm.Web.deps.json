@@ -2610,6 +2610,9 @@
         }
       },
       "BookWorm.Web.ViewModels/1.0.0": {
+        "dependencies": {
+          "BookWorm.Data.Common": "1.0.0"
+        },
         "runtime": {
           "BookWorm.Web.ViewModels.dll": {}
         }

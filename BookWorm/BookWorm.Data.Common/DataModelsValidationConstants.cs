@@ -11,7 +11,7 @@
             public const int DescriptionMinLength = 30;
             public const int DescriptionMaxLength = 150;
 
-            public const int ConetntMinLength = 75;
+            public const int ContentMinLenght = 75;
             public const int ContentMaxLenght = 6_500;
         }
 

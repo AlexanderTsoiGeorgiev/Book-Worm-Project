@@ -7,14 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v6.0": {
       "BookWorm.Web.ViewModels/1.0.0": {
+        "dependencies": {
+          "BookWorm.Data.Common": "1.0.0"
+        },
         "runtime": {
           "BookWorm.Web.ViewModels.dll": {}
+        }
+      },
+      "BookWorm.Data.Common/1.0.0": {
+        "runtime": {
+          "BookWorm.Data.Common.dll": {}
         }
       }
     }
   },
   "libraries": {
     "BookWorm.Web.ViewModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BookWorm.Data.Common/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

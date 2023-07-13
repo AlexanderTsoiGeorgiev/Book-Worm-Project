@@ -20,6 +20,7 @@
             this.dbContext = dbContext;
         }
 
+        //Check TODOs
         public async Task CreatePoemAsync(PoemFormViemModel model)
         {
             var entity = new Poem
@@ -35,6 +36,24 @@
             await dbContext.SaveChangesAsync();
         }
 
+        //Check TODOs
+        public async Task EditPoemAsync(string id, PoemFormViemModel model)
+        {
+            var entity = await dbContext.Poems.FindAsync(id);
+            if (entity == null)
+            {
+                return; //Add exception
+            }
+            entity.Title = model.Title;
+            entity.Content = model.Content;
+            entity.Description = model.Description;
+            entity.IsPrivate = model.IsPrivate;
+            entity.DateEdited = DateTime.Now;
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        //Check TODOs
         public async Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync()
         {
             var allPoems = await dbContext.Poems
@@ -45,8 +64,22 @@
                     DateCreated = p.DateCreated,
                     Description = p.Description
                 })
+                .AsNoTracking()
                 .ToArrayAsync();
             return allPoems;
+        }
+
+        //Check TODOs
+        public async Task SoftDeletePoemAsync(string id)
+        {
+            var entity = await dbContext.Poems.FindAsync(id);
+            if (entity == null)
+            {
+                return; //Add exception
+            }
+            entity.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }
