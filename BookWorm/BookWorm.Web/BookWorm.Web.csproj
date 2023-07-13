@@ -25,4 +25,10 @@
     <ProjectReference Include="..\BookWorm.Web.ViewModels\BookWorm.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Book\" />
+    <Folder Include="Views\Review\" />
+    <Folder Include="Views\Poem\" />
+  </ItemGroup>
+
 </Project>
