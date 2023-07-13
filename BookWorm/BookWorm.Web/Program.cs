@@ -4,6 +4,8 @@ namespace BookWorm.Web
 
     using BookWorm.Data;
     using BookWorm.Data.Models;
+    using BookWorm.Services.Interfaces;
+    using BookWorm.Services;
 
     public class Program
     {
@@ -22,6 +24,10 @@ namespace BookWorm.Web
                 .AddEntityFrameworkStores<BookWormDbContext>();
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IPoemService, PoemService>();
+            builder.Services.AddScoped<IBookService, BookService>();
+            builder.Services.AddScoped<IReviewService, ReviewService>();
 
             var app = builder.Build();
 
