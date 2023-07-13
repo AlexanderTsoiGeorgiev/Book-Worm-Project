@@ -3,9 +3,9 @@ namespace BookWorm.Web
     using Microsoft.EntityFrameworkCore;
 
     using BookWorm.Data;
+    using BookWorm.Services;
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
-    using BookWorm.Services;
 
     public class Program
     {

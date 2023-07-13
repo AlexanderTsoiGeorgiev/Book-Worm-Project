@@ -29,8 +29,8 @@
             public const int MinQuantity = 0;
             public const int MaxQuantity = 1_000_000;
 
-            public const decimal MinPrice = 10.00m;
-            public const decimal MaxPrice = 1_000.00m;
+            public const int MinPrice = 10;
+            public const int MaxPrice = 1_000;
         }
 
         public static class ReviewValidationConstants
