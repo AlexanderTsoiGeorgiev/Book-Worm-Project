@@ -10,4 +10,8 @@
     <ProjectReference Include="..\BookWorm.Data.Common\BookWorm.Data.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Review\" />
+  </ItemGroup>
+
 </Project>
