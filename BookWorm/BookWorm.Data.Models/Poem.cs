@@ -1,7 +1,7 @@
 ﻿namespace BookWorm.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using static BookWorm.Data.Common.DataModelsValidationConstants.PoemValidationConstants;
 
     //TODO: Add comments & summaries
@@ -37,6 +37,12 @@
 
         [Required]
         public bool IsDeleted { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Category))]
+        public int CategoryId { get; set; }
+        [Required]
+        public Category Category { get; set; } = null!;
 
         public IEnumerable<Review> Reviews { get; set; } = null!;
 
