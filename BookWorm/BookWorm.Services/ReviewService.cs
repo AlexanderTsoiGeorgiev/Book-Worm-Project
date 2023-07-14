@@ -1,7 +1,9 @@
 ﻿namespace BookWorm.Services
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Microsoft.EntityFrameworkCore;
 
     using BookWorm.Data;
     using BookWorm.Data.Models;
@@ -51,9 +53,33 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviews(string userId)
+        //TODO: Add exceptions
+        public async Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviews(string userId)
         {
-            throw new NotImplementedException();
+            var userReviews = await dbContext.Reviews
+                .Include(r => r.Poem)
+                .Include(r => r.Book)
+                .Where(r => r.AuthorId.ToString() == userId &&
+                                      r.IsDeleted == false)
+                .Select(r => new ReviewDisplayViewModel
+                {
+                    Content = r.Content,
+                    Rating = r.Rating,
+                    DatePosted = r.DatePosted,
+                    DateEdited = r.DateEdited,
+                    Upvotes = r.Upvotes,
+                    Downvotes = r.Downvotes,
+                    PoemName = r.Poem.Title ?? string.Empty, //??
+                    BookName = r.Book.Title ?? string.Empty, //??
+                })
+                .ToArrayAsync();
+
+            if (userReviews.Any())
+            {
+                throw new Exception();
+            }
+
+            return userReviews;
         }
 
         //TODO: Check if entity is null and add try catch
