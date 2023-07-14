@@ -6,5 +6,6 @@
     {
         public Task CreateReviewAsync(ReviewFormViewModel model);
         public Task EditReviewAsync(string id, ReviewFormViewModel model);
+        public Task SoftDeleteReviewAsync(string id);
     }
 }

@@ -2,6 +2,7 @@
 {
     public class ReviewFormViewModel
     {
-
+        public string Content { get; set; } = null!;
+        public float Rating { get; set; }
     }
 }

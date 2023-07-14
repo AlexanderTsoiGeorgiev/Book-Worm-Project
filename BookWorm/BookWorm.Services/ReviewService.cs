@@ -6,7 +6,6 @@
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Review;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
     public class ReviewService : IReviewService
     {
@@ -47,6 +46,21 @@
 
             entity.Content = model.Content;
             entity.Rating = model.Rating;
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        //TODO: Check if entity is null and add try catch
+        public async Task SoftDeleteReviewAsync(string id)
+        {
+            Review? entity = await dbContext.Reviews.FindAsync(Guid.Parse(id));
+
+            if (entity == null)
+            {
+                return;
+            }
+
+            entity.IsDeleted = true;
 
             await dbContext.SaveChangesAsync();
         }

@@ -38,11 +38,11 @@
         public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(Poem))]
-        public Guid PoemId { get; set; }
-        public Poem Poem { get; set; } = null!;
+        public Guid? PoemId { get; set; }
+        public Poem? Poem { get; set; }
 
         [ForeignKey(nameof(Book))]
-        public int BookId { get; set; }
-        public Book Book { get; set; } = null!;
+        public int? BookId { get; set; }
+        public Book? Book { get; set; }
     }
 }
