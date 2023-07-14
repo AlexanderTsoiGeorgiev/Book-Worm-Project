@@ -41,5 +41,13 @@
             public const float MinRating = 0.00f;
             public const float MaxRating = 10.00f;
         }
+
+
+        //Might be unnecessary as only admins should be able to create new categories
+        public static class CategoryValidationConstants
+        {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 50;
+        }
     }
 }
