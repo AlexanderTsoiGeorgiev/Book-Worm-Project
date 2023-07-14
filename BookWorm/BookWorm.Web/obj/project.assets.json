@@ -3936,6 +3936,16 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
+      "BookWorm.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BookWorm.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookWorm.Common.dll": {}
+        }
+      },
       "BookWorm.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -11258,6 +11268,11 @@
         "system.xml.xdocument.nuspec"
       ]
     },
+    "BookWorm.Common/1.0.0": {
+      "type": "project",
+      "path": "../BookWorm.Common/BookWorm.Common.csproj",
+      "msbuildProject": "../BookWorm.Common/BookWorm.Common.csproj"
+    },
     "BookWorm.Data/1.0.0": {
       "type": "project",
       "path": "../BookWorm.Data/BookWorm.Data.csproj",
@@ -11291,6 +11306,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "BookWorm.Common >= 1.0.0",
       "BookWorm.Data >= 1.0.0",
       "BookWorm.Data.Common >= 1.0.0",
       "BookWorm.Services >= 1.0.0",
@@ -11336,6 +11352,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+            "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Common\\BookWorm.Common.csproj": {
+              "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Common\\BookWorm.Common.csproj"
+            },
             "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data.Common\\BookWorm.Data.Common.csproj": {
               "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data.Common\\BookWorm.Data.Common.csproj"
             },

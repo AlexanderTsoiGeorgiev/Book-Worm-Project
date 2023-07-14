@@ -4,6 +4,8 @@
 
     using static BookWorm.Data.Common.DataModelsValidationConstants.CategoryValidationConstants;
 
+
+    //TODO: Add comments and summaries
     public class Category
     {
         public Category()
