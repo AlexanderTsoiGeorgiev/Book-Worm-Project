@@ -37,6 +37,12 @@
         [Required]
         public bool IsDeleted { get; set; }
 
+        [Required]
+        [ForeignKey(nameof(Author))]
+        public Guid AuthorId { get; set; }
+        [Required]
+        public ApplicationUser Author { get; set; } = null!;
+
         [ForeignKey(nameof(Poem))]
         public Guid? PoemId { get; set; }
         public Poem? Poem { get; set; }

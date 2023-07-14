@@ -1,5 +1,6 @@
 ﻿namespace BookWorm.Web.ViewModels.Review
 {
+    //TODO: Check if validation interferes with the display model
     public class ReviewDisplayViewModel : ReviewFormViewModel
     {
         public int Upvotes { get; set; }

@@ -1,5 +1,6 @@
 ﻿namespace BookWorm.Services
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using BookWorm.Data;
@@ -48,6 +49,11 @@
             entity.Rating = model.Rating;
 
             await dbContext.SaveChangesAsync();
+        }
+
+        public Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviews(string userId)
+        {
+            throw new NotImplementedException();
         }
 
         //TODO: Check if entity is null and add try catch
