@@ -16,9 +16,12 @@
 
         [Required]
         [StringLength(ContentMaxLenght, MinimumLength = ContentMinLenght)]
-        public string Content { get; set; } = null!; 
+        public string Content { get; set; } = null!;
 
+        [Required]
         public bool IsPrivate { get; set; }
 
+        [Required]
+        public int CategoryId { get; set; }
     }
 }
