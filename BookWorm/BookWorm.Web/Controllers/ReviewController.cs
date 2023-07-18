@@ -1,10 +1,8 @@
 ﻿namespace BookWorm.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Authorization;
 
-    [Authorize]
-    public class ReviewController : Controller
+    public class ReviewController : BaseController
     {
         public IActionResult Index()
         {

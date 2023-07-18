@@ -1,13 +1,11 @@
 ﻿namespace BookWorm.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Authorization;
 
-    using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Interfaces;
+    using BookWorm.Web.ViewModels.Poem;
 
-    [Authorize]
-    public class PoemController : Controller
+    public class PoemController : BaseController
     {
         private readonly IPoemService poemService;
 
