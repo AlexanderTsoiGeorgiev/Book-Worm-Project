@@ -39,11 +39,10 @@
             <div class="mb-3">
                 <label asp-for="@Model.CategoryId" class="form-label"></label>
                 <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                    @*TODO: update model so foreach of types can be used*@
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
                 </select>
             </div>
         </form>
