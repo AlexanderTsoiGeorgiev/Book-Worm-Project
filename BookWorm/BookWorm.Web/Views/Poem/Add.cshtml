@@ -3,6 +3,9 @@
     ViewData["Title"] = "Create new Poem";
 }
 
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr/>
+
 <div class="row">
     <div class="col-2">
     </div>
@@ -17,19 +20,20 @@
             <div class="mb-3">
                 <div class="mb-1">
                     <label asp-for="@Model.Description" class="form-label">Description</label>
-                    <input asp-for="@Model.Description" class="form-control" />
+                    <textarea asp-for="@Model.Description" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="@Model.Description"></span>
                 </div>
             </div>
 
             <div class="mb-3">
                 <label asp-for="@Model.Content" class="form-label">Content</label>
-                <input asp-for="@Model.Content" class="form-control" />
+                <textarea asp-for="@Model.Content" class="form-control" rows="5"></textarea>
                 <span asp-validation-for="@Model.Content"></span>
             </div>
 
             <div class="mb-3">
-
+                <label asp-for="@Model.IsPrivate" class="form-check-label">Private</label>
+                <input class="form-check-input" asp-for="@Model.IsPrivate"/>
             </div>
 
             <div class="mb-3">
