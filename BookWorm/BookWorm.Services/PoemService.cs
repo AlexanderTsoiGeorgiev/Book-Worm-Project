@@ -8,6 +8,7 @@
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Data.Models;
+    using BookWorm.Web.ViewModels.Category;
 
 
     //TODO: Add exceptions and add summaries
@@ -53,6 +54,20 @@
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()
+        {
+            CategoryDisplayViewModel[] categories = await dbContext.Categories
+                .AsNoTracking()
+                .Select(c => new CategoryDisplayViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                })
+                .ToArrayAsync();
+
+            return categories;
+        }
+
         //Check TODOs
         public async Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync()
         {
@@ -60,7 +75,7 @@
                 .Where(p => p.IsDeleted == false)
                 .Select(p => new PoemDisplayViewModel
                 {
-                    Title= p.Title,
+                    Title = p.Title,
                     DateCreated = p.DateCreated,
                     Description = p.Description
                 })

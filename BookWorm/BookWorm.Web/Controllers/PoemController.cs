@@ -22,15 +22,28 @@
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            PoemFormViemModel model = new PoemFormViemModel 
+            {
+                Categories = await poemService.GetAllCategoriesAsync()
+            };
+            return View(model);
         }
 
+        //TODO: fix not valid model state & add try catch when accessing the DB
         [HttpPost]
-        public IActionResult Add(PoemFormViemModel model)
+        public async Task<IActionResult> Add(PoemFormViemModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                throw new Exception();
+            }
+
+            //add try catch
+            await poemService.CreatePoemAsync(model);
+
+            return RedirectToAction(nameof(Index), nameof(PoemController));
         }
 
         public IActionResult Edit()
