@@ -20,7 +20,7 @@
         }
 
         //TODO: Check if moddel is null and add try catch
-        public async Task CreateReviewAsync(ReviewFormViewModel model)
+        public async Task CreatePoemReviewAsync(ReviewFormViewModel model)
         {
             if (model == null)
             {
@@ -31,6 +31,7 @@
             {
                 Content = model.Content,
                 Rating = model.Rating,
+                PoemId = model.PoemId
             };
 
             await dbContext.AddAsync(entity);
@@ -51,6 +52,27 @@
             entity.Rating = model.Rating;
 
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ReviewFormViewModel> FindReviewById(string id)
+        {
+            ReviewFormViewModel? review = await dbContext.Reviews
+                .AsNoTracking()
+                .Where(r => r.Id.ToString() == id)
+                .Select(r => new ReviewFormViewModel
+                {
+                    Content = r.Content,
+                    Rating = r.Rating,
+                    PoemId = r.PoemId,
+                    BookId = r.BookId
+                })
+                .FirstOrDefaultAsync();
+            if (review == null)
+            {
+                throw new Exception();
+            }
+
+            return review;
         }
 
         //TODO: Add exceptions

@@ -30,7 +30,6 @@
             };
             return View(model);
         }
-
         //TODO: fix not valid model state & add try catch when accessing the DB
         [HttpPost]
         public async Task<IActionResult> Add(PoemFormViemModel model)
@@ -47,13 +46,19 @@
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(string id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Edit(string id, PoemFormViemModel model)
         {
             return View();
         }
 
+
         [HttpGet]
-        public IActionResult Delete()
+        public IActionResult Delete(string id)
         {
             return View();
         }

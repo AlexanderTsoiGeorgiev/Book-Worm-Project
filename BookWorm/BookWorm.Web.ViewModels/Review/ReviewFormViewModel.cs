@@ -14,5 +14,9 @@
         [Required]
         [Range(MinRating, MaxRating)]
         public float Rating { get; set; }
+
+        public Guid? PoemId { get; set; }
+
+        public int? BookId { get; set; }
     }
 }
