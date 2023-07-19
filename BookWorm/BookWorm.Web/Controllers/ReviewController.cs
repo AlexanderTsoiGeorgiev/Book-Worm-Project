@@ -50,6 +50,35 @@
             return View();
         }
 
+        [HttpGet]
+        public IActionResult AddBook(int id)
+        {
+            ReviewFormViewModel model = new ReviewFormViewModel
+            {
+                BookId = id
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddBook(ReviewFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception();
+            }
+
+            try
+            {
+                await reviewService.CreatePoemReviewAsync(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
+        }
+
         //TODO: Add exceptions and redirects
         [HttpGet]
         public async Task<IActionResult> Edit(string id)

@@ -37,6 +37,23 @@
             await dbContext.AddAsync(entity);
             await dbContext.SaveChangesAsync();
         }
+        public async Task CreateBookReviewAsync(ReviewFormViewModel model)
+        {
+            if (model == null)
+            {
+                return;
+            }
+
+            Review entity = new Review
+            {
+                Content = model.Content,
+                Rating = model.Rating,
+                BookId = model.BookId
+            };
+
+            await dbContext.AddAsync(entity);
+            await dbContext.SaveChangesAsync();
+        }
 
         //TODO: Check if entity is null and add try catch
         public async Task EditReviewAsync(string id, ReviewFormViewModel model)
