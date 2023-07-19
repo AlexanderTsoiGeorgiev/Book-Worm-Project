@@ -12,6 +12,7 @@
           "BookWorm.Data": "1.0.0",
           "BookWorm.Data.Common": "1.0.0",
           "BookWorm.Services": "1.0.0",
+          "BookWorm.Web.Infrastructure": "1.0.0",
           "BookWorm.Web.ViewModels": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.13",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.18",
@@ -2625,6 +2626,11 @@
           "BookWorm.Services.dll": {}
         }
       },
+      "BookWorm.Web.Infrastructure/1.0.0": {
+        "runtime": {
+          "BookWorm.Web.Infrastructure.dll": {}
+        }
+      },
       "BookWorm.Web.ViewModels/1.0.0": {
         "dependencies": {
           "BookWorm.Data.Common": "1.0.0"
@@ -4235,6 +4241,11 @@
       "sha512": ""
     },
     "BookWorm.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BookWorm.Web.Infrastructure/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

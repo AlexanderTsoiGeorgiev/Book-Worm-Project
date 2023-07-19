@@ -4,6 +4,7 @@ using BookWorm.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookWorm.Data.Migrations
 {
     [DbContext(typeof(BookWormDbContext))]
-    partial class BookWormDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230719160435_AddedIsDeteledColumnToBookModel")]
+    partial class AddedIsDeteledColumnToBookModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

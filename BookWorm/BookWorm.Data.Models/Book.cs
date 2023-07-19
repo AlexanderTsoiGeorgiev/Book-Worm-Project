@@ -37,6 +37,9 @@
         public int Quantity { get; set; }
 
         [Required]
+        public bool IsDeleted { get; set; }
+
+        [Required]
         [ForeignKey(nameof(Author))]
         public Guid AuthorId { get; set; }
         [Required]
