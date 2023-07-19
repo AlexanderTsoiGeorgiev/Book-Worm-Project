@@ -39,8 +39,14 @@
                 throw new Exception();
             }
 
+            string? authorId = User.GetUserId();
+            if (authorId == null)
+            {
+                throw new Exception();
+            }
+
             //add try catch
-            await poemService.CreatePoemAsync(model);
+            await poemService.CreatePoemAsync(authorId, model);
 
             return RedirectToAction(nameof(Index), nameof(PoemController));
         }

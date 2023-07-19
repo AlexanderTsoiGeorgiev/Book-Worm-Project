@@ -7,8 +7,8 @@
         public Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviews(string userId);
 
         //
-        public Task CreatePoemReviewAsync(ReviewFormViewModel model);
-        public Task CreateBookReviewAsync(ReviewFormViewModel model)
+        public Task CreatePoemReviewAsync(string authorId, ReviewFormViewModel model);
+        public Task CreateBookReviewAsync(string authorId, ReviewFormViewModel model);
 
         public Task<ReviewFormViewModel> FindReviewById(string id);
         public Task EditReviewAsync(string id, ReviewFormViewModel model);

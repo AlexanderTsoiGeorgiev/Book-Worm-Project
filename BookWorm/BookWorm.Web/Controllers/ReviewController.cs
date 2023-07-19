@@ -4,6 +4,7 @@
 
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Review;
+    using BookWorm.Web.Infrastructure.ExtensionMethods;
 
     public class ReviewController : BaseController
     {
@@ -38,9 +39,15 @@
                 throw new Exception();
             }
 
+            string? authorId = User.GetUserId();
+            if (authorId == null)
+            {
+                throw new Exception();
+            }
+
             try
             {
-                await reviewService.CreatePoemReviewAsync(model);
+                await reviewService.CreatePoemReviewAsync(authorId, model);
             }
             catch (Exception)
             {
@@ -67,9 +74,15 @@
                 throw new Exception();
             }
 
+            string? authorId = User.GetUserId();
+            if (authorId == null)
+            {
+                throw new Exception();
+            }
+
             try
             {
-                await reviewService.CreatePoemReviewAsync(model);
+                await reviewService.CreatePoemReviewAsync(authorId, model);
             }
             catch (Exception)
             {

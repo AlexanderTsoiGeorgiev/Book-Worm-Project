@@ -19,8 +19,8 @@
             this.dbContext = dbContext;
         }
 
-        //TODO: Add exeptions and Author id shoudl be recieved as a parameter
-        public async Task CreateBookAsync(BookFormViewModel model)
+        //TODO: Add exeptions and Author id should be recieved as a parameter
+        public async Task CreateBookAsync(string authorId, BookFormViewModel model)
         {
             var entity = new Book
             {
@@ -28,7 +28,8 @@
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
                 Price = model.Price,
-                Quantity = model.Quantity
+                Quantity = model.Quantity,
+                AuthorId = Guid.Parse(authorId)
             };
 
             await dbContext.AddAsync(entity);

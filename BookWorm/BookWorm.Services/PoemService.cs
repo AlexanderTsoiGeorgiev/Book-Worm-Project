@@ -22,7 +22,7 @@
         }
 
         //Check TODOs
-        public async Task CreatePoemAsync(PoemFormViemModel model)
+        public async Task CreatePoemAsync(string authorId,PoemFormViemModel model)
         {
             var entity = new Poem
             {
@@ -31,6 +31,7 @@
                 Description = model.Description,
                 IsPrivate = model.IsPrivate,
                 DateCreated = DateTime.Now,
+                AuthorId = Guid.Parse(authorId)
             };
 
             await dbContext.AddAsync(entity);

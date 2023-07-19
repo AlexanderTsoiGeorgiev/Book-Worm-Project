@@ -20,7 +20,7 @@
         }
 
         //TODO: Check if moddel is null and add try catch
-        public async Task CreatePoemReviewAsync(ReviewFormViewModel model)
+        public async Task CreatePoemReviewAsync(string authorId, ReviewFormViewModel model)
         {
             if (model == null)
             {
@@ -37,7 +37,7 @@
             await dbContext.AddAsync(entity);
             await dbContext.SaveChangesAsync();
         }
-        public async Task CreateBookReviewAsync(ReviewFormViewModel model)
+        public async Task CreateBookReviewAsync(string authorId, ReviewFormViewModel model)
         {
             if (model == null)
             {
