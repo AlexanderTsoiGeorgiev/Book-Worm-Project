@@ -4,6 +4,7 @@
 
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Poem;
+    using BookWorm.Web.Infrastructure.ExtensionMethods;
 
     public class PoemController : BaseController
     {
@@ -58,9 +59,21 @@
         }
 
         [HttpGet]
-        public IActionResult Mine()
+        public async Task<IActionResult> Mine()
         {
-            return View();
+            IEnumerable<PoemDisplayViewModel>? poems;
+            string? userId = User.GetUserId() ?? throw new Exception();
+            try
+            {
+                poems = await poemService.GetAllUserPoemsAsync(userId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return View(poems);
         }
     }
 }

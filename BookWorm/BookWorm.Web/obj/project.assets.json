@@ -4015,6 +4015,16 @@
           "bin/placeholder/BookWorm.Services.dll": {}
         }
       },
+      "BookWorm.Web.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BookWorm.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookWorm.Web.Infrastructure.dll": {}
+        }
+      },
       "BookWorm.Web.ViewModels/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -11298,6 +11308,11 @@
       "path": "../BookWorm.Services/BookWorm.Services.csproj",
       "msbuildProject": "../BookWorm.Services/BookWorm.Services.csproj"
     },
+    "BookWorm.Web.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../BookWorm.Web.Infrastructure/BookWorm.Web.Infrastructure.csproj",
+      "msbuildProject": "../BookWorm.Web.Infrastructure/BookWorm.Web.Infrastructure.csproj"
+    },
     "BookWorm.Web.ViewModels/1.0.0": {
       "type": "project",
       "path": "../BookWorm.Web.ViewModels/BookWorm.Web.ViewModels.csproj",
@@ -11310,6 +11325,7 @@
       "BookWorm.Data >= 1.0.0",
       "BookWorm.Data.Common >= 1.0.0",
       "BookWorm.Services >= 1.0.0",
+      "BookWorm.Web.Infrastructure >= 1.0.0",
       "BookWorm.Web.ViewModels >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.13",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.18",
@@ -11363,6 +11379,9 @@
             },
             "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Services\\BookWorm.Services.csproj": {
               "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Services\\BookWorm.Services.csproj"
+            },
+            "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web.Infrastructure\\BookWorm.Web.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web.Infrastructure\\BookWorm.Web.Infrastructure.csproj"
             },
             "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web.ViewModels\\BookWorm.Web.ViewModels.csproj": {
               "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web.ViewModels\\BookWorm.Web.ViewModels.csproj"

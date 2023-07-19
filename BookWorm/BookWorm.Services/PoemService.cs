@@ -5,9 +5,9 @@
     using Microsoft.EntityFrameworkCore;
 
     using BookWorm.Data;
-    using BookWorm.Services.Interfaces;
-    using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Data.Models;
+    using BookWorm.Web.ViewModels.Poem;
+    using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Category;
 
 
@@ -54,9 +54,35 @@
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task<PoemFormViemModel> FindPoemByIdAsync(string id)
+        {
+            IEnumerable<CategoryDisplayViewModel> categories = await GetAllCategoriesAsync();
+
+            PoemFormViemModel? poem = await dbContext.Poems
+                .AsNoTracking()
+                .Where(p => p.Id.ToString() == id)
+                .Select(p => new PoemFormViemModel
+                {
+                    Title = p.Title,
+                    Description = p.Description,
+                    Content = p.Content,
+                    IsPrivate = p.IsPrivate,
+                    CategoryId = p.CategoryId,
+                    Categories = categories
+                })
+                .FirstOrDefaultAsync();
+
+            if (poem == null)
+            {
+                throw new Exception();
+            }
+
+            return poem;
+        }
+
         public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()
         {
-            CategoryDisplayViewModel[] categories = await dbContext.Categories
+            CategoryDisplayViewModel[]? categories = await dbContext.Categories
                 .AsNoTracking()
                 .Select(c => new CategoryDisplayViewModel
                 {
@@ -65,6 +91,11 @@
                 })
                 .ToArrayAsync();
 
+            if (!categories.Any())
+            {
+                throw new Exception();
+            }
+
             return categories;
         }
 
@@ -72,14 +103,14 @@
         public async Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id)
         {
             var allPoems = await dbContext.Poems
-                .Where(p => p.IsDeleted == false)
+                .AsNoTracking()
+                .Where(p => p.IsDeleted == false && p.AuthorId.ToString() == id)
                 .Select(p => new PoemDisplayViewModel
                 {
                     Title = p.Title,
                     DateCreated = p.DateCreated,
                     Description = p.Description
                 })
-                .AsNoTracking()
                 .ToArrayAsync();
             return allPoems;
         }
