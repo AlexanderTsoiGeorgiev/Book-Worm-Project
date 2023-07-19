@@ -14,6 +14,7 @@
             this.poemService = poemService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -44,12 +45,20 @@
             return RedirectToAction(nameof(Index), nameof(PoemController));
         }
 
+        [HttpGet]
         public IActionResult Edit()
         {
             return View();
         }
 
+        [HttpGet]
         public IActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Mine()
         {
             return View();
         }

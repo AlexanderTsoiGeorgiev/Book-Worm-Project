@@ -7,7 +7,7 @@
 
     public interface IPoemService
     {
-        public Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync();
+        public Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id);
         public Task CreatePoemAsync(PoemFormViemModel model);
         public Task EditPoemAsync(string id, PoemFormViemModel model);
         public Task SoftDeletePoemAsync(string id);

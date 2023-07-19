@@ -39,6 +39,12 @@
         public bool IsDeleted { get; set; }
 
         [Required]
+        [ForeignKey(nameof(Author))]
+        public Guid AuthorId { get; set; }
+        [Required]
+        public ApplicationUser Author { get; set; } = null!;
+
+        [Required]
         [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
         [Required]

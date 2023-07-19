@@ -22,6 +22,7 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration<BookPoem>(new BookPoemTableConfiguration());
+            builder.ApplyConfiguration<Poem>(new PoemTableConfiguration());
             base.OnModelCreating(builder);
         }
     }

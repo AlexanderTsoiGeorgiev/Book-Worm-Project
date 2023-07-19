@@ -69,7 +69,7 @@
         }
 
         //Check TODOs
-        public async Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync()
+        public async Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id)
         {
             var allPoems = await dbContext.Poems
                 .Where(p => p.IsDeleted == false)
