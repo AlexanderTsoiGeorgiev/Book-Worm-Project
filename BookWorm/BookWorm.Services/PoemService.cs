@@ -107,10 +107,11 @@
                 .Select(c => c.Name)
                 .ToArrayAsync();
 
-            if (!categoryNames.Any())
-            {
-                throw new Exception();
-            }
+            //Seed DB with categories
+            //if (!categoryNames.Any())
+            //{
+            //    throw new Exception();
+            //}
 
             return categoryNames;
         }
