@@ -100,6 +100,33 @@
             return categories;
         }
 
+        public async Task<IEnumerable<string>> GetAllCategoryNamesAsync()
+        {
+            string[] categoryNames = await dbContext.Categories
+                .AsNoTracking()
+                .Select(c => c.Name)
+                .ToArrayAsync();
+
+            if (!categoryNames.Any())
+            {
+                throw new Exception();
+            }
+
+            return categoryNames;
+        }
+
+        public async Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync()
+        {
+            PoemDisplayViewModel[] allPoems = await dbContext.Poems.AsNoTracking().Select(p => new PoemDisplayViewModel
+            {
+                Title = p.Title,
+                Description = p.Description,
+                DateCreated = p.DateCreated
+            }).ToArrayAsync();
+
+            return allPoems;
+        }
+
         //Check TODOs
         public async Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id)
         {

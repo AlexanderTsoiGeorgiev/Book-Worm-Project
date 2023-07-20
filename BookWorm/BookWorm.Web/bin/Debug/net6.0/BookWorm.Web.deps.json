@@ -2633,6 +2633,7 @@
       },
       "BookWorm.Web.ViewModels/1.0.0": {
         "dependencies": {
+          "BookWorm.Common": "1.0.0",
           "BookWorm.Data.Common": "1.0.0"
         },
         "runtime": {

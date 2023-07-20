@@ -7,6 +7,9 @@
 
     public interface IPoemService
     {
+        //All action
+        public Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync();
+
         //Mine action
         public Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id);
 
@@ -21,5 +24,6 @@
 
         //Note: This may require its own service
         public Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync();
+        public Task<IEnumerable<string>> GetAllCategoryNamesAsync();
     }
 }

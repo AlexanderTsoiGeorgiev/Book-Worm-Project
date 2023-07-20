@@ -15,10 +15,21 @@
             this.poemService = poemService;
         }
 
-        [HttpGet]
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            PoemQueryViewModel model = new PoemQueryViewModel()
+            {
+                Categories = await poemService.GetAllCategoryNamesAsync(),
+                Poems = await poemService.GetAllPoemsAsync(),
+
+            };
+            return View(model);
         }
 
         [HttpGet]

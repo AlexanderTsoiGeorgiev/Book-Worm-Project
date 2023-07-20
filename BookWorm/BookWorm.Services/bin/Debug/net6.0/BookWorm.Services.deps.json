@@ -509,6 +509,11 @@
           }
         }
       },
+      "BookWorm.Common/1.0.0": {
+        "runtime": {
+          "BookWorm.Common.dll": {}
+        }
+      },
       "BookWorm.Data/1.0.0": {
         "dependencies": {
           "BookWorm.Data.Configuration": "1.0.0",
@@ -546,6 +551,7 @@
       },
       "BookWorm.Web.ViewModels/1.0.0": {
         "dependencies": {
+          "BookWorm.Common": "1.0.0",
           "BookWorm.Data.Common": "1.0.0"
         },
         "runtime": {
@@ -902,6 +908,11 @@
       "sha512": "sha512-CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
+    },
+    "BookWorm.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "BookWorm.Data/1.0.0": {
       "type": "project",

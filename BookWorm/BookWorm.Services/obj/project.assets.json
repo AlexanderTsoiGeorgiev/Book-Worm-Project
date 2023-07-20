@@ -906,6 +906,16 @@
           }
         }
       },
+      "BookWorm.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BookWorm.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookWorm.Common.dll": {}
+        }
+      },
       "BookWorm.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -965,6 +975,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "BookWorm.Common": "1.0.0",
           "BookWorm.Data.Common": "1.0.0"
         },
         "compile": {
@@ -2408,6 +2419,11 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "BookWorm.Common/1.0.0": {
+      "type": "project",
+      "path": "../BookWorm.Common/BookWorm.Common.csproj",
+      "msbuildProject": "../BookWorm.Common/BookWorm.Common.csproj"
     },
     "BookWorm.Data/1.0.0": {
       "type": "project",
