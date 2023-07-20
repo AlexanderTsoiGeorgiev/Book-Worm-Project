@@ -1,9 +1,10 @@
 ﻿namespace BookWorm.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
+    using BookWorm.Web.ViewModels.Book;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
-    using BookWorm.Web.ViewModels.Book;
-    using Microsoft.AspNetCore.Mvc;
 
     public class BookController : BaseController
     {
@@ -90,10 +91,21 @@
             return View(model);
         }
 
+        //TODO: Add exceptions and Get action
         [HttpPost]
-        public IActionResult Delete()
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            try
+            {
+                await bookService.SoftDeleteBookAsync(id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

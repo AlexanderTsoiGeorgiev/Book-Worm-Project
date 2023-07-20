@@ -101,6 +101,10 @@
         public async Task SoftDeleteBookAsync(int id)
         {
             Book entity = await FindBookByIdAsync(id);
+
+            entity.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync();
         }
     }
 }
