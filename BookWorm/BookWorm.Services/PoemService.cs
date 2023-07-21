@@ -9,6 +9,8 @@
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Category;
+    using BookWorm.Services.Models.Poem;
+    using Web.ViewModels.Poem.Enums;
 
 
     //TODO: Add exceptions and add summaries
@@ -22,7 +24,7 @@
         }
 
         //Check TODOs
-        public async Task CreatePoemAsync(string authorId,PoemFormViemModel model)
+        public async Task CreatePoemAsync(string authorId, PoemFormViemModel model)
         {
             var entity = new Poem
             {
@@ -124,6 +126,65 @@
             }).ToArrayAsync();
 
             return allPoems;
+        }
+
+        public async Task<PoemAllFilteredServiceModel> GetAllPoemsFilteredAsync(PoemQueryViewModel query)
+        {
+            IQueryable<Poem> filteredPoems = dbContext.Poems
+                .Include(p => p.Category)
+                .Include(p => p.Author)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(query.CategoryName))
+            {
+                filteredPoems = filteredPoems
+                    .Where(p => p.Category.Name == query.CategoryName);
+            }
+
+            if (!string.IsNullOrEmpty(query.QueryString))
+            {
+                string wildCard = $"%{query.QueryString.ToLower()}%";
+
+                filteredPoems = filteredPoems.
+                    Where(p => EF.Functions.Like(p.Title, wildCard) ||
+                               EF.Functions.Like(p.Description, wildCard) ||
+                               EF.Functions.Like(p.Author.UserName, wildCard));
+            }
+
+            switch (query.OrderBy)
+            {
+                case PoemSort.AlphabeticAscending:
+                    filteredPoems = filteredPoems.OrderBy(p => p.Title);
+                    break;
+                case PoemSort.AlphabeticDescending:
+                    filteredPoems = filteredPoems.OrderByDescending(p => p.Title);
+                    break;
+                case PoemSort.Newest:
+                    filteredPoems = filteredPoems.OrderBy(p => p.DateCreated);
+                    break;
+                case PoemSort.Oldest:
+                    filteredPoems = filteredPoems.OrderByDescending(p => p.DateCreated);
+                    break;
+                default:
+                    filteredPoems = filteredPoems.OrderBy(p => p.DateCreated);
+                    break;
+            }
+
+            IEnumerable<PoemDisplayViewModel> poems = await filteredPoems
+               .Where(p => p.IsDeleted == false)
+               .Skip((query.CurrentPage - 1) * query.PoemsPerPage)
+               .Take(query.PoemsPerPage)
+               .Select(p => new PoemDisplayViewModel
+               {
+                   Id = p.Id,
+                   Title = p.Title,
+                   Description = p.Description,
+                   DateCreated = p.DateCreated
+               })
+               .ToArrayAsync();
+
+            int totalPoems = filteredPoems.Count();
+
         }
 
         //Check TODOs

@@ -4,11 +4,13 @@
 
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Web.ViewModels.Category;
+    using BookWorm.Services.Models.Poem;
 
     public interface IPoemService
     {
         //All action
         public Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync();
+        public Task<PoemAllFilteredServiceModel> GetAllPoemsFilteredAsync(PoemQueryViewModel query);
 
         //Mine action
         public Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id);

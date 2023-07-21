@@ -1,11 +1,64 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "BookWorm.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BookWorm.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookWorm.Common.dll": {}
+        }
+      },
+      "BookWorm.Data.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BookWorm.Data.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookWorm.Data.Common.dll": {}
+        }
+      },
+      "BookWorm.Web.ViewModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "BookWorm.Common": "1.0.0",
+          "BookWorm.Data.Common": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BookWorm.Web.ViewModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BookWorm.Web.ViewModels.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "BookWorm.Common/1.0.0": {
+      "type": "project",
+      "path": "../BookWorm.Common/BookWorm.Common.csproj",
+      "msbuildProject": "../BookWorm.Common/BookWorm.Common.csproj"
+    },
+    "BookWorm.Data.Common/1.0.0": {
+      "type": "project",
+      "path": "../BookWorm.Data.Common/BookWorm.Data.Common.csproj",
+      "msbuildProject": "../BookWorm.Data.Common/BookWorm.Data.Common.csproj"
+    },
+    "BookWorm.Web.ViewModels/1.0.0": {
+      "type": "project",
+      "path": "../BookWorm.Web.ViewModels/BookWorm.Web.ViewModels.csproj",
+      "msbuildProject": "../BookWorm.Web.ViewModels/BookWorm.Web.ViewModels.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "BookWorm.Web.ViewModels >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Alexander\\.nuget\\packages\\": {},
@@ -39,7 +92,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web.ViewModels\\BookWorm.Web.ViewModels.csproj": {
+              "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web.ViewModels\\BookWorm.Web.ViewModels.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
