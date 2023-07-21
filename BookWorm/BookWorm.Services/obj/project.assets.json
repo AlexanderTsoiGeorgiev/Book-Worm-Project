@@ -948,6 +948,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "BookWorm.Common": "1.0.0",
           "BookWorm.Data.Models": "1.0.0"
         },
         "compile": {

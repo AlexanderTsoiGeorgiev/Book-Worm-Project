@@ -15,3 +15,5 @@ C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Configuration\obj\Debug\net6.0\refint\BookWorm.Data.Configuration.dll
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Configuration\obj\Debug\net6.0\BookWorm.Data.Configuration.pdb
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Configuration\obj\Debug\net6.0\ref\BookWorm.Data.Configuration.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Configuration\bin\Debug\net6.0\BookWorm.Common.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Data.Configuration\bin\Debug\net6.0\BookWorm.Common.pdb

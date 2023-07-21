@@ -1,9 +1,9 @@
 ﻿namespace BookWorm.Data.Configuration
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     using BookWorm.Data.Models;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     public class CategoryTableConfiguration : IEntityTypeConfiguration<Category>
     {
@@ -53,7 +53,14 @@
                 Name = "Sonnet"
             };
             categories.Add(category);
-            
+
+            category = new Category()
+            {
+                Id = id++,
+                Name = "Ballad"
+            };
+            categories.Add(category);
+
             return categories.ToArray();
         }
 

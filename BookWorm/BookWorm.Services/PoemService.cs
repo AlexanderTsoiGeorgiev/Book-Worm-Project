@@ -84,7 +84,6 @@
         public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()
         {
             CategoryDisplayViewModel[]? categories = await dbContext.Categories
-                .AsNoTracking()
                 .Select(c => new CategoryDisplayViewModel
                 {
                     Id = c.Id,
@@ -107,11 +106,10 @@
                 .Select(c => c.Name)
                 .ToArrayAsync();
 
-            //Seed DB with categories
-            //if (!categoryNames.Any())
-            //{
-            //    throw new Exception();
-            //}
+            if (!categoryNames.Any())
+            {
+                throw new Exception();
+            }
 
             return categoryNames;
         }

@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "BookWorm.Data.Configuration/1.0.0": {
         "dependencies": {
+          "BookWorm.Common": "1.0.0",
           "BookWorm.Data.Models": "1.0.0"
         },
         "runtime": {
@@ -223,6 +224,11 @@
         }
       },
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
+      "BookWorm.Common/1.0.0": {
+        "runtime": {
+          "BookWorm.Common.dll": {}
+        }
+      },
       "BookWorm.Data.Common/1.0.0": {
         "runtime": {
           "BookWorm.Data.Common.dll": {}
@@ -391,6 +397,11 @@
       "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
       "path": "system.runtime.compilerservices.unsafe/6.0.0",
       "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    },
+    "BookWorm.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "BookWorm.Data.Common/1.0.0": {
       "type": "project",

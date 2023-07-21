@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookWorm.Common\BookWorm.Common.csproj" />
     <ProjectReference Include="..\BookWorm.Data.Models\BookWorm.Data.Models.csproj" />
   </ItemGroup>
 
