@@ -1,0 +1,23 @@
+﻿namespace BookWorm.Web.ViewModels.Poem
+{
+    using BookWorm.Web.ViewModels.Review;
+
+    public class PoemReadViewModel
+    {
+        public PoemReadViewModel()
+        {
+            Reviews = new HashSet<ReviewDisplayViewModel>();
+        }
+
+        public string Title { get; set; } = null!;
+
+        public string Content { get; set; } = null!;
+
+        public DateTime DateCreated { get; set; }
+
+        public DateTime? DateEdited { get; set; }
+
+
+        public IEnumerable<ReviewDisplayViewModel> Reviews { get; set; }
+    }
+}

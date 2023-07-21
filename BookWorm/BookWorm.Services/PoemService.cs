@@ -11,6 +11,7 @@
     using BookWorm.Web.ViewModels.Category;
     using BookWorm.Services.Models.Poem;
     using Web.ViewModels.Poem.Enums;
+    using BookWorm.Web.ViewModels.Review;
 
 
     //TODO: Add exceptions and add summaries
@@ -81,6 +82,43 @@
             }
 
             return poem;
+        }
+
+
+        //Fix the comment
+        public async Task<PoemReadViewModel> FindPoemReadModelByIdAsync(string id)
+        {
+            PoemReadViewModel? entity = await dbContext.Poems
+                .Include(p => p.Reviews)
+                .AsNoTracking()
+                .Where(p => p.Id.ToString() == id)
+                .Select(p => new PoemReadViewModel
+                {
+                    Title = p.Title,
+                    Content = p.Content,
+                    DateCreated = p.DateCreated,
+                    DateEdited = p.DateEdited,
+                    //This can be its own service method think about it or reviews can be loaded separately in the controller
+                    Reviews = p.Reviews
+                    .Where(r => r.PoemId.ToString() == id)
+                    .Select(r =>
+                    new ReviewDisplayViewModel
+                    {
+                        Content = r.Content,
+                        Rating = r.Rating,
+                        DatePosted = r.DatePosted,
+                        DateEdited = r.DateEdited,
+                        Upvotes = r.Upvotes,
+                        Downvotes = r.Downvotes
+                    }).ToArray()
+                }).FirstOrDefaultAsync();
+
+            if (entity == null)
+            {
+                throw new Exception();
+            }
+
+            return entity;
         }
 
         public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()

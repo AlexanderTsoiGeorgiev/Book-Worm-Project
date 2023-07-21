@@ -12,6 +12,10 @@
         public Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync();
         public Task<PoemAllFilteredServiceModel> GetAllPoemsFilteredAsync(PoemQueryViewModel query);
 
+        //Read action
+        public Task<PoemReadViewModel> FindPoemReadModelByIdAsync(string id);
+
+
         //Mine action
         public Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id);
 
@@ -19,7 +23,7 @@
         public Task CreatePoemAsync(string authorId, PoemFormViemModel model);
 
         //Edit action
-        public Task<PoemFormViemModel> FindPoemByIdAsync(string id);
+        public Task<PoemFormViemModel> FindPoemByIdAsync(string id);  // this one may not be needed
         public Task EditPoemAsync(string id, PoemFormViemModel model);
 
         public Task SoftDeletePoemAsync(string id);

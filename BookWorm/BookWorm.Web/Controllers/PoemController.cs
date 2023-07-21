@@ -22,9 +22,19 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> All([FromQuery]PoemQueryViewModel model)
+        public async Task<IActionResult> All([FromQuery] PoemQueryViewModel model)
         {
-            PoemAllFilteredServiceModel filteredPoems = await poemService.GetAllPoemsFilteredAsync(model);
+            PoemAllFilteredServiceModel filteredPoems;
+            try
+            {
+                filteredPoems = await poemService.GetAllPoemsFilteredAsync(model);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
             model.Poems = filteredPoems.Poems;
             model.PoemsCount = filteredPoems.AllPoemsCount;
@@ -34,9 +44,18 @@
         }
 
         [HttpGet]
+        public async Task<IActionResult> Read(string id)
+        {
+            PoemReadViewModel model = await poemService.FindPoemReadModelByIdAsync(id); 
+
+
+            return View(model);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Add()
         {
-            PoemFormViemModel model = new PoemFormViemModel 
+            PoemFormViemModel model = new PoemFormViemModel
             {
                 Categories = await poemService.GetAllCategoriesAsync()
             };
