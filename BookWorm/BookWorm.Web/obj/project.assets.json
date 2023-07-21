@@ -11346,6 +11346,7 @@
       "BookWorm.Data >= 1.0.0",
       "BookWorm.Data.Common >= 1.0.0",
       "BookWorm.Services >= 1.0.0",
+      "BookWorm.Services.Models >= 1.0.0",
       "BookWorm.Web.Infrastructure >= 1.0.0",
       "BookWorm.Web.ViewModels >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.13",
@@ -11397,6 +11398,9 @@
             },
             "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj": {
               "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Data\\BookWorm.Data.csproj"
+            },
+            "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Services.Models\\BookWorm.Services.Models.csproj": {
+              "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Services.Models\\BookWorm.Services.Models.csproj"
             },
             "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Services\\BookWorm.Services.csproj": {
               "projectPath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Services\\BookWorm.Services.csproj"

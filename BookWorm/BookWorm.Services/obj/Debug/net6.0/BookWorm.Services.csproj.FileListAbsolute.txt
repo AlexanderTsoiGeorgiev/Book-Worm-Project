@@ -23,3 +23,5 @@ C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Services\obj\Debug\net6.0\BookWorm.Services.csproj.CopyComplete
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Services\bin\Debug\net6.0\BookWorm.Common.dll
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Services\bin\Debug\net6.0\BookWorm.Common.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Services\bin\Debug\net6.0\BookWorm.Services.Models.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Services\bin\Debug\net6.0\BookWorm.Services.Models.pdb

@@ -5,6 +5,7 @@
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
+    using BookWorm.Services.Models.Poem;
 
     public class PoemController : BaseController
     {
@@ -21,14 +22,14 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]PoemQueryViewModel model)
         {
-            PoemQueryViewModel model = new PoemQueryViewModel()
-            {
-                Categories = await poemService.GetAllCategoryNamesAsync(),
-                Poems = await poemService.GetAllPoemsAsync(),
+            PoemAllFilteredServiceModel filteredPoems = await poemService.GetAllPoemsFilteredAsync(model);
 
-            };
+            model.Poems = filteredPoems.Poems;
+            model.PoemsCount = filteredPoems.AllPoemsCount;
+            model.Categories = await poemService.GetAllCategoryNamesAsync();
+
             return View(model);
         }
 

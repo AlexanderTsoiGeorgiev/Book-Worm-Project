@@ -272,3 +272,5 @@ C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Common.pdb
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Web.Infrastructure.dll
 C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Web.Infrastructure.pdb
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Services.Models.dll
+C:\Users\Alexander\Desktop\SU\SU Web\ASP.NET Advanced\Book-Worm-Project\BookWorm\BookWorm.Web\bin\Debug\net6.0\BookWorm.Services.Models.pdb

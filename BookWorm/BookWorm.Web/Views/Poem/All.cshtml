@@ -27,7 +27,7 @@
                     <option value="3">3</option>
                     <option value="6">6</option>
                     <option value="9">9</option>
-                    <option value="9">12</option>
+                    <option value="12">12</option>
                 </select>
             </div>
         </div>
@@ -41,10 +41,10 @@
             <div class="form-group">
                 <label asp-for="OrderBy"></label>
                 <select asp-for="OrderBy" class="form-control">
-                    <option value="1">AlphabeticalAscending</option>
-                    <option value="2">AlphabeticalDescening</option>
-                    <option value="3">Newest</option>
-                    <option value="4">Oldest</option>
+                    <option value="@BookWorm.Web.ViewModels.Poem.Enums.PoemSort.AlphabeticallyAscending">Alphabetically Ascending</option>
+                    <option value="@BookWorm.Web.ViewModels.Poem.Enums.PoemSort.AlphabeticallyDescending">Alphabetically Descening</option>
+                    <option value="@BookWorm.Web.ViewModels.Poem.Enums.PoemSort.Newest">Newest</option>
+                    <option value="@BookWorm.Web.ViewModels.Poem.Enums.PoemSort.Oldest">Oldest</option>
                 </select>
             </div>
         </div>

@@ -9,6 +9,7 @@
       "BookWorm.Services/1.0.0": {
         "dependencies": {
           "BookWorm.Data": "1.0.0",
+          "BookWorm.Services.Models": "1.0.0",
           "BookWorm.Web.ViewModels": "1.0.0"
         },
         "runtime": {
@@ -550,6 +551,14 @@
           "BookWorm.Data.Models.dll": {}
         }
       },
+      "BookWorm.Services.Models/1.0.0": {
+        "dependencies": {
+          "BookWorm.Web.ViewModels": "1.0.0"
+        },
+        "runtime": {
+          "BookWorm.Services.Models.dll": {}
+        }
+      },
       "BookWorm.Web.ViewModels/1.0.0": {
         "dependencies": {
           "BookWorm.Common": "1.0.0",
@@ -931,6 +940,11 @@
       "sha512": ""
     },
     "BookWorm.Data.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BookWorm.Services.Models/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

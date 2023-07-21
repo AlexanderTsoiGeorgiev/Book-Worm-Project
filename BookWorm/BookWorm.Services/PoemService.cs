@@ -153,10 +153,10 @@
 
             switch (query.OrderBy)
             {
-                case PoemSort.AlphabeticAscending:
+                case PoemSort.AlphabeticallyAscending:
                     filteredPoems = filteredPoems.OrderBy(p => p.Title);
                     break;
-                case PoemSort.AlphabeticDescending:
+                case PoemSort.AlphabeticallyDescending:
                     filteredPoems = filteredPoems.OrderByDescending(p => p.Title);
                     break;
                 case PoemSort.Newest:
@@ -170,7 +170,7 @@
                     break;
             }
 
-            IEnumerable<PoemDisplayViewModel> poems = await filteredPoems
+            IEnumerable<PoemDisplayViewModel> poemsOnCurrentPage = await filteredPoems
                .Where(p => p.IsDeleted == false)
                .Skip((query.CurrentPage - 1) * query.PoemsPerPage)
                .Take(query.PoemsPerPage)
@@ -184,6 +184,12 @@
                .ToArrayAsync();
 
             int totalPoems = filteredPoems.Count();
+
+            return new PoemAllFilteredServiceModel()
+            {
+                Poems = poemsOnCurrentPage,
+                AllPoemsCount = totalPoems
+            };
 
         }
 

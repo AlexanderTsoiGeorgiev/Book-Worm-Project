@@ -2,9 +2,9 @@
 {
     public enum PoemSort
     {
-        AlphabeticAscending = 1,
-        AlphabeticDescending = 2,
-        Newest = 3,
-        Oldest = 4 
+        AlphabeticallyAscending = 0,
+        AlphabeticallyDescending = 1,
+        Newest = 2,
+        Oldest = 3 
     }
 }

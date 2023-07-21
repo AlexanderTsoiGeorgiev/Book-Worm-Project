@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Common", "BookWorm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Services", "BookWorm.Services\BookWorm.Services.csproj", "{25AD82E6-F426-4E08-887B-12DACD590AA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Data.Configuration", "BookWorm.Data.Configuration\BookWorm.Data.Configuration.csproj", "{CB353CE4-3AEB-4841-B581-27431F114D47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookWorm.Data.Configuration", "BookWorm.Data.Configuration\BookWorm.Data.Configuration.csproj", "{CB353CE4-3AEB-4841-B581-27431F114D47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookWorm.Services.Models", "BookWorm.Services.Models\BookWorm.Services.Models.csproj", "{0C72BFDC-E0D2-4567-9F3A-E671E8EB5CAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{CB353CE4-3AEB-4841-B581-27431F114D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB353CE4-3AEB-4841-B581-27431F114D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB353CE4-3AEB-4841-B581-27431F114D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C72BFDC-E0D2-4567-9F3A-E671E8EB5CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C72BFDC-E0D2-4567-9F3A-E671E8EB5CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C72BFDC-E0D2-4567-9F3A-E671E8EB5CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C72BFDC-E0D2-4567-9F3A-E671E8EB5CAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{A088DDAE-148F-454F-83F9-A5738E8D651E} = {21F97672-F051-42D2-8E15-089E235A7F57}
 		{25AD82E6-F426-4E08-887B-12DACD590AA9} = {87B5DA85-0D0D-44DC-895A-5B1F80327073}
 		{CB353CE4-3AEB-4841-B581-27431F114D47} = {A1394FEA-1F12-4BC6-8F8C-0A1D7D8EB03A}
+		{0C72BFDC-E0D2-4567-9F3A-E671E8EB5CAD} = {87B5DA85-0D0D-44DC-895A-5B1F80327073}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AC1B3DD-6A7C-4E18-A0FD-8D157E572955}

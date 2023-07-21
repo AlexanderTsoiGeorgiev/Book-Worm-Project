@@ -12,7 +12,7 @@
 
         public IEnumerable<PoemDisplayViewModel> Poems { get; set; }
 
-        public int AllPoems { get; set; }
+        public int AllPoemsCount { get; set; }
 
     }
 }
