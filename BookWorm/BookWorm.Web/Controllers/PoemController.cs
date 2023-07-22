@@ -172,13 +172,36 @@
 
         }
 
-        //Not implementede
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            PoemDetailsVisualizeViewModel? model;
+            try
+            {
+                model = await poemService.GetPoemAsDetailsViewModelByIdAsync(id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            return View(model);
+        }
+
+        //Not implemented
         [HttpGet]
         public IActionResult Delete(string id)
         {
             return View();
         }
 
+        //Not implemented
         [HttpGet]
         public async Task<IActionResult> Mine()
         {

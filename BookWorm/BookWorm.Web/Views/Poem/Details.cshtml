@@ -1,0 +1,52 @@
+﻿@model PoemDetailsVisualizeViewModel
+
+@{
+    ViewData["Title"] = $"Details {Model.Title}";
+}
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <h2 class="text-center fw-bold">@Model.Title</h2>
+        <hr />
+
+        <div class="row">
+            <div class="col-8">
+                <div class="mt-5">
+                    @foreach (string lyric in Model.ReadableContent)
+                    {
+                        <div class="text-start">@lyric</div>
+                    }
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="mt-5">
+                    <ul class="list-group">
+                        <li class="list-group-item">Date Crated: @Model.DateCreated</li>
+                        @if (Model.DateEdited == null)
+                        {
+                            <li class="list-group-item">Date Edited: Not Edited Yet!</li>
+                        }
+                        else
+                        {
+                            <li class="list-group-item">Date Edited: @Model.DateEdited</li>
+                        }
+                        <li class="list-group-item">Private: @Model.IsPrivate</li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <button class="mt-3 btn-dark">
+                                <a class="text-decoration-none text-center text-light" action="post" asp-action="Edit" asp-controller="Poem" asp-route-id="@Model.Id">Edit</a>
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn-danger mt-3">
+                            <a class="text-decoration-none text-center text-light" action="get" asp-action="Delete" asp-controller="Poem" asp-route-id="@Model.Id">Delete</a>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

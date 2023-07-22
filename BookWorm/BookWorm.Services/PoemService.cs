@@ -114,9 +114,7 @@
                 .Select(p => new PoemReadViewModel
                 {
                     Title = p.Title,
-                    ReadableContent = p.Content
-                                              .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
-                                              .ToArray(),
+                    ReadableContent = SplitContentToReadableFormat(p.Content),
                     DateCreated = p.DateCreated,
                     DateEdited = p.DateEdited,
                     AuthorName = p.Author.UserName,
@@ -224,7 +222,7 @@
         //Check TODOs
         public async Task SoftDeletePoemAsync(string id)
         {
-            var entity = await dbContext.Poems.FindAsync(id);
+            var entity = await dbContext.Poems.FindAsync(Guid.Parse(id));
             if (entity == null)
             {
                 return; //Add exception
@@ -267,6 +265,29 @@
             return categoryNames;
         }
 
-        
+
+        //Details
+        public async Task<PoemDetailsVisualizeViewModel?> GetPoemAsDetailsViewModelByIdAsync(string id)
+        {
+            PoemDetailsVisualizeViewModel? model = await dbContext.Poems
+                .AsNoTracking()
+                .Where(p => p.Id.ToString() == id)
+                .Select(p => new PoemDetailsVisualizeViewModel
+                {
+                    Id = p.Id.ToString(),
+                    ReadableContent = SplitContentToReadableFormat(p.Content),
+                    Title = p.Title,
+                    IsPrivate = p.IsPrivate,
+                    DateCreated = p.DateCreated,
+                    DateEdited = p.DateEdited
+                }).FirstOrDefaultAsync();
+
+            return model;
+        }
+
+        private static string[] SplitContentToReadableFormat(string content)
+        {
+            return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToArray();
+        }
     }
 }

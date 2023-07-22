@@ -3,8 +3,8 @@
     using System.Threading.Tasks;
 
     using BookWorm.Web.ViewModels.Poem;
-    using BookWorm.Web.ViewModels.Category;
     using BookWorm.Services.Models.Poem;
+    using BookWorm.Web.ViewModels.Category;
 
     public interface IPoemService
     {
@@ -26,6 +26,9 @@
         public Task EditPoemAsync(string id, PoemFormViemModel model);
         public Task<bool> ExistsByIdAsync(string id);
         public Task<bool> IsUserPoemOwnerAsync(string userId, string poemId);
+
+        //Details
+        public Task<PoemDetailsVisualizeViewModel?> GetPoemAsDetailsViewModelByIdAsync(string id);
 
         //Delete action
         public Task SoftDeletePoemAsync(string id);
