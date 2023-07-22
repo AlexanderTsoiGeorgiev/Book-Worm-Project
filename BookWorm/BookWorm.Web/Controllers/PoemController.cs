@@ -195,10 +195,11 @@
         }
 
         //Not implemented
+        //Figure out how to work with post method
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            return View();
+            return Ok();
         }
 
         //Not implemented
