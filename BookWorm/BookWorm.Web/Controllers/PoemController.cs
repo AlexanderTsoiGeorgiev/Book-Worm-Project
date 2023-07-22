@@ -96,8 +96,20 @@
         }
 
         [HttpGet]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
+            PoemFormViemModel model;
+
+            try
+            {
+                model = await poemService.FindPoemByIdAsync(id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             return View();
         }
         [HttpPost]

@@ -4,14 +4,14 @@
 
     using Microsoft.EntityFrameworkCore;
 
+    using Web.ViewModels.Poem.Enums;
+
     using BookWorm.Data;
     using BookWorm.Data.Models;
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Category;
     using BookWorm.Services.Models.Poem;
-    using Web.ViewModels.Poem.Enums;
-    using BookWorm.Web.ViewModels.Review;
 
 
     //TODO: Add exceptions and add summaries
@@ -24,130 +24,8 @@
             this.dbContext = dbContext;
         }
 
-        //Check TODOs
-        public async Task CreatePoemAsync(string authorId, PoemFormViemModel model)
-        {
-            var entity = new Poem
-            {
-                Title = model.Title,
-                Content = model.Content,
-                Description = model.Description,
-                IsPrivate = model.IsPrivate,
-                DateCreated = DateTime.Now,
-                AuthorId = Guid.Parse(authorId)
-            };
 
-            await dbContext.AddAsync(entity);
-            await dbContext.SaveChangesAsync();
-        }
-
-        //Check TODOs
-        public async Task EditPoemAsync(string id, PoemFormViemModel model)
-        {
-            var entity = await dbContext.Poems.FindAsync(id);
-            if (entity == null)
-            {
-                return; //Add exception
-            }
-            entity.Title = model.Title;
-            entity.Content = model.Content;
-            entity.Description = model.Description;
-            entity.IsPrivate = model.IsPrivate;
-            entity.DateEdited = DateTime.Now;
-
-            await dbContext.SaveChangesAsync();
-        }
-
-        public async Task<PoemFormViemModel> FindPoemByIdAsync(string id)
-        {
-            IEnumerable<CategoryDisplayViewModel> categories = await GetAllCategoriesAsync();
-
-            PoemFormViemModel? poem = await dbContext.Poems
-                .AsNoTracking()
-                .Where(p => p.Id.ToString() == id)
-                .Select(p => new PoemFormViemModel
-                {
-                    Title = p.Title,
-                    Description = p.Description,
-                    Content = p.Content,
-                    IsPrivate = p.IsPrivate,
-                    CategoryId = p.CategoryId,
-                    Categories = categories
-                })
-                .FirstOrDefaultAsync();
-
-            if (poem == null)
-            {
-                throw new Exception();
-            }
-
-            return poem;
-        }
-
-
-        //TODO: Check comment
-        public async Task<PoemReadViewModel> FindPoemReadModelByIdAsync(string id)
-        {
-            PoemReadViewModel? entity = await dbContext.Poems
-                .Include(p => p.Reviews)
-                .Include(p => p.Author)
-                .AsNoTracking()
-                .Where(p => p.Id.ToString() == id)
-                .Select(p => new PoemReadViewModel
-                {
-                    Title = p.Title,
-                    ReadableContent = p.Content
-                                              .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
-                                              .ToArray(),
-                    DateCreated = p.DateCreated,
-                    DateEdited = p.DateEdited,
-                    AuthorName = p.Author.UserName,
-                    AuthorId = p.AuthorId,
-                }).FirstOrDefaultAsync();
-
-
-            //Instead of throwing exceptions return bad request in controller
-            if (entity == null)
-            {
-                throw new Exception();
-            }
-
-            return entity;
-        }
-
-        public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()
-        {
-            CategoryDisplayViewModel[]? categories = await dbContext.Categories
-                .Select(c => new CategoryDisplayViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                })
-                .ToArrayAsync();
-
-            if (!categories.Any())
-            {
-                throw new Exception();
-            }
-
-            return categories;
-        }
-
-        public async Task<IEnumerable<string>> GetAllCategoryNamesAsync()
-        {
-            string[] categoryNames = await dbContext.Categories
-                .AsNoTracking()
-                .Select(c => c.Name)
-                .ToArrayAsync();
-
-            if (!categoryNames.Any())
-            {
-                throw new Exception();
-            }
-
-            return categoryNames;
-        }
-
+        //All
         public async Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync()
         {
             PoemDisplayViewModel[] allPoems = await dbContext.Poems.AsNoTracking().Select(p => new PoemDisplayViewModel
@@ -159,7 +37,6 @@
 
             return allPoems;
         }
-
         public async Task<PoemAllFilteredServiceModel> GetAllPoemsFilteredAsync(PoemQueryViewModel query)
         {
             IQueryable<Poem> filteredPoems = dbContext.Poems
@@ -225,6 +102,103 @@
 
         }
 
+        //Read
+        //TODO: Check comment
+        public async Task<PoemReadViewModel> FindPoemReadModelByIdAsync(string id)
+        {
+            PoemReadViewModel? entity = await dbContext.Poems
+                .Include(p => p.Reviews)
+                .Include(p => p.Author)
+                .AsNoTracking()
+                .Where(p => p.Id.ToString() == id)
+                .Select(p => new PoemReadViewModel
+                {
+                    Title = p.Title,
+                    ReadableContent = p.Content
+                                              .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+                                              .ToArray(),
+                    DateCreated = p.DateCreated,
+                    DateEdited = p.DateEdited,
+                    AuthorName = p.Author.UserName,
+                    AuthorId = p.AuthorId,
+                }).FirstOrDefaultAsync();
+
+
+            //Instead of throwing exceptions return bad request in controller
+            if (entity == null)
+            {
+                throw new Exception();
+            }
+
+            return entity;
+        }
+
+        //Add
+        //Check TODOs
+        public async Task CreatePoemAsync(string authorId, PoemFormViemModel model)
+        {
+            var entity = new Poem
+            {
+                Title = model.Title,
+                Content = model.Content,
+                Description = model.Description,
+                IsPrivate = model.IsPrivate,
+                DateCreated = DateTime.Now,
+                AuthorId = Guid.Parse(authorId)
+            };
+
+            await dbContext.AddAsync(entity);
+            await dbContext.SaveChangesAsync();
+        }
+
+        //Edit
+        //Check TODOs
+        public async Task EditPoemAsync(string id, PoemFormViemModel model)
+        {
+            var entity = await dbContext.Poems.FindAsync(id);
+            if (entity == null)
+            {
+                return; //Add exception
+            }
+            entity.Title = model.Title;
+            entity.Content = model.Content;
+            entity.Description = model.Description;
+            entity.IsPrivate = model.IsPrivate;
+            entity.DateEdited = DateTime.Now;
+
+            await dbContext.SaveChangesAsync();
+        }
+        public async Task<PoemFormViemModel> FindPoemByIdAsync(string id)
+        {
+            IEnumerable<CategoryDisplayViewModel> categories = await GetAllCategoriesAsync();
+
+            PoemFormViemModel? poem = await dbContext.Poems
+                .AsNoTracking()
+                .Where(p => p.Id.ToString() == id)
+                .Select(p => new PoemFormViemModel
+                {
+                    Title = p.Title,
+                    Description = p.Description,
+                    Content = p.Content,
+                    IsPrivate = p.IsPrivate,
+                    CategoryId = p.CategoryId,
+                    Categories = categories
+                })
+                .FirstOrDefaultAsync();
+
+            if (poem == null)
+            {
+                throw new Exception();
+            }
+
+            return poem;
+        }
+        public async Task<bool> ExistsByIdAsync(string id)
+        {
+            return await dbContext.Poems.FirstOrDefaultAsync(p => p.Id.ToString() == id) != null;
+        }
+
+        //Mine
         //Check TODOs
         public async Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id)
         {
@@ -241,6 +215,7 @@
             return allPoems;
         }
 
+        //Delete
         //Check TODOs
         public async Task SoftDeletePoemAsync(string id)
         {
@@ -253,5 +228,39 @@
 
             await dbContext.SaveChangesAsync();
         }
+
+        //NOTE: This many require its own service
+        public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()
+        {
+            CategoryDisplayViewModel[]? categories = await dbContext.Categories
+                .Select(c => new CategoryDisplayViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                })
+                .ToArrayAsync();
+
+            if (!categories.Any())
+            {
+                throw new Exception();
+            }
+
+            return categories;
+        }
+        public async Task<IEnumerable<string>> GetAllCategoryNamesAsync()
+        {
+            string[] categoryNames = await dbContext.Categories
+                .AsNoTracking()
+                .Select(c => c.Name)
+                .ToArrayAsync();
+
+            if (!categoryNames.Any())
+            {
+                throw new Exception();
+            }
+
+            return categoryNames;
+        }
+
     }
 }

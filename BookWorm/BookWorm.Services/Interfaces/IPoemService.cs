@@ -15,7 +15,6 @@
         //Read action
         public Task<PoemReadViewModel> FindPoemReadModelByIdAsync(string id);
 
-
         //Mine action
         public Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id);
 
@@ -25,7 +24,9 @@
         //Edit action
         public Task<PoemFormViemModel> FindPoemByIdAsync(string id);  // this one may not be needed
         public Task EditPoemAsync(string id, PoemFormViemModel model);
+        public Task<bool> ExistsByIdAsync(string id);
 
+        //Delete action
         public Task SoftDeletePoemAsync(string id);
 
         //Note: This may require its own service
