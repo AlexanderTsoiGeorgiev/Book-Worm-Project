@@ -4,10 +4,23 @@
     ViewData["Title"] = $"Read {Model.Title}";
 }
 
-<h2 class="text-center">@Model.Title</h2>
-<hr/>
+<div class="row">
+    <div class="col-8 offset-2">
+        <h2 class="text-center fw-bold">@Model.Title</h2>
+        <hr />
+        <div class="text-end">
+            <blockquote class="blockquote">
+                <p>
+                    By - <a class="link-primary" asp-action="" asp-controller="" asp-route-id="@Model.AuthorId">@Model.AuthorName</a>
+                </p>
+            </blockquote>
+        </div>
 
-@foreach(string lyric in Model.ReadableContent)
-{
-    <div class="text-start">@lyric</div>
-}
+        <div class="mt-5">
+            @foreach (string lyric in Model.ReadableContent)
+            {
+                <div class="text-start">@lyric</div>
+            }
+        </div>
+    </div>
+</div>

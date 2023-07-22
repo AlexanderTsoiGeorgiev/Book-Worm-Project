@@ -85,11 +85,12 @@
         }
 
 
-        //Fix the comment
+        //TODO: Check comment
         public async Task<PoemReadViewModel> FindPoemReadModelByIdAsync(string id)
         {
             PoemReadViewModel? entity = await dbContext.Poems
                 .Include(p => p.Reviews)
+                .Include(p => p.Author)
                 .AsNoTracking()
                 .Where(p => p.Id.ToString() == id)
                 .Select(p => new PoemReadViewModel
@@ -100,11 +101,12 @@
                                               .ToArray(),
                     DateCreated = p.DateCreated,
                     DateEdited = p.DateEdited,
-                    //This can be its own service method think about it or reviews can be loaded separately in the controller
-                    //FIX THIS NOW ADD ITS OWN SERVICE IN THE REVIEW SERVICE LAYER AND ADD DI IN THE POEM CONTROLLER!!!!!!!!!!!!!!!!!!!!!!
-                    //IN ORDER TO VISUALIZE POEMS NICELY SPLIT THE STRING BY "/r" AND YEAH FIGURE IT OUT
+                    AuthorName = p.Author.UserName,
+                    AuthorId = p.AuthorId,
                 }).FirstOrDefaultAsync();
 
+
+            //Instead of throwing exceptions return bad request in controller
             if (entity == null)
             {
                 throw new Exception();

@@ -11,6 +11,10 @@
 
         public string Title { get; set; } = null!;
 
+        public Guid AuthorId { get; set; }  
+
+        public string AuthorName { get; set; } = null!;
+
         public string[] ReadableContent { get; set; } = null!;
 
         public DateTime DateCreated { get; set; }
