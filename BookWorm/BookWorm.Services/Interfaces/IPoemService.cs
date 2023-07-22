@@ -25,6 +25,7 @@
         public Task<PoemFormViemModel> FindPoemByIdAsync(string id);  // this one may not be needed
         public Task EditPoemAsync(string id, PoemFormViemModel model);
         public Task<bool> ExistsByIdAsync(string id);
+        public Task<bool> IsUserPoemOwnerAsync(string userId, string poemId);
 
         //Delete action
         public Task SoftDeletePoemAsync(string id);

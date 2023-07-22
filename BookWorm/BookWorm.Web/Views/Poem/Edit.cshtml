@@ -1,14 +1,14 @@
 ﻿@model PoemFormViemModel
 @{
-    ViewData["Title"] = "Create new Poem";
-    ViewData["Action"] = "Add";
+    ViewData["Title"] = "Edit a Poem";
+    ViewData["Action"] = "Edit";
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
-<hr/>
+<hr />
 
 <partial name="_PoemFormPartial" model="@Model">
 
 @section Scripts{
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
 }

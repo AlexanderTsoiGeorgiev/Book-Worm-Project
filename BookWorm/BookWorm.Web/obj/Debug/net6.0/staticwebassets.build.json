@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "E4czjKGqEyIsX2zSUMhj++yjEQEyam/JcPTwfL6GY5I=",
+  "Hash": "mLW6098B+65Bls57pHTzxE35M2j3DvL+0p+V9PEqQRY=",
   "Source": "BookWorm.Web",
   "BasePath": "_content/BookWorm.Web",
   "Mode": "Default",
@@ -1088,12 +1088,12 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\wwwroot\\icons8-book-office-m-32.png",
+      "Identity": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\wwwroot\\favicon.ico",
       "SourceId": "BookWorm.Web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\wwwroot\\",
       "BasePath": "_content/BookWorm.Web",
-      "RelativePath": "icons8-book-office-m-32.png",
+      "RelativePath": "favicon.ico",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1102,7 +1102,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\icons8-book-office-m-32.png"
+      "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
       "Identity": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\wwwroot\\js\\site.js",

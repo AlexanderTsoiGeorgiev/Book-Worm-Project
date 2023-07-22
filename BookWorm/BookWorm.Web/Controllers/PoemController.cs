@@ -6,6 +6,7 @@
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Models.Poem;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     public class PoemController : BaseController
     {
@@ -23,6 +24,7 @@
             return View();
         }
 
+        //Works
         [HttpGet]
         public async Task<IActionResult> All([FromQuery] PoemQueryViewModel model)
         {
@@ -45,6 +47,7 @@
             return View(model);
         }
 
+        //Works
         [HttpGet]
         public async Task<IActionResult> Read(string id)
         {
@@ -65,6 +68,7 @@
             return View(model);
         }
 
+        //Works
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -95,14 +99,24 @@
             return RedirectToAction(nameof(Index), nameof(PoemController));
         }
 
+        //Works
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            PoemFormViemModel model;
-
             try
             {
-                model = await poemService.FindPoemByIdAsync(id);
+                bool exists = await poemService.ExistsByIdAsync(id);
+                if (!exists)
+                {
+                    return BadRequest();
+                }
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
+                if (!isOwner)
+                {
+                    return BadRequest();
+                } 
             }
             catch (Exception)
             {
@@ -110,15 +124,55 @@
                 throw;
             }
 
-            return View();
+
+            PoemFormViemModel model;
+            try
+            {
+                model = await poemService.FindPoemByIdAsync(id);
+                model.Categories = await poemService.GetAllCategoriesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View(model);
         }
         [HttpPost]
-        public IActionResult Edit(string id, PoemFormViemModel model)
+        public async Task<IActionResult> Edit(string id, PoemFormViemModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                bool exists = await poemService.ExistsByIdAsync(id);
+                if (!exists)
+                {
+                    return BadRequest();
+                }
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
+                if (!isOwner)
+                {
+                    return BadRequest();
+                }
+
+                await poemService.EditPoemAsync(id, model);
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-
+        //Not implementede
         [HttpGet]
         public IActionResult Delete(string id)
         {
