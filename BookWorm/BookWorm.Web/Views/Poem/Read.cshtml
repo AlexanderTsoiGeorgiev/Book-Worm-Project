@@ -5,6 +5,9 @@
 }
 
 <h2 class="text-center">@Model.Title</h2>
-</br>
+<hr/>
 
-<p>@Model.Content</p>
+@foreach(string lyric in Model.ReadableContent)
+{
+    <div class="text-start">@lyric</div>
+}

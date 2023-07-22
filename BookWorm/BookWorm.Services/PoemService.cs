@@ -95,22 +95,14 @@
                 .Select(p => new PoemReadViewModel
                 {
                     Title = p.Title,
-                    Content = p.Content,
+                    ReadableContent = p.Content
+                                              .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+                                              .ToArray(),
                     DateCreated = p.DateCreated,
                     DateEdited = p.DateEdited,
                     //This can be its own service method think about it or reviews can be loaded separately in the controller
-                    Reviews = p.Reviews
-                    .Where(r => r.PoemId.ToString() == id)
-                    .Select(r =>
-                    new ReviewDisplayViewModel
-                    {
-                        Content = r.Content,
-                        Rating = r.Rating,
-                        DatePosted = r.DatePosted,
-                        DateEdited = r.DateEdited,
-                        Upvotes = r.Upvotes,
-                        Downvotes = r.Downvotes
-                    }).ToArray()
+                    //FIX THIS NOW ADD ITS OWN SERVICE IN THE REVIEW SERVICE LAYER AND ADD DI IN THE POEM CONTROLLER!!!!!!!!!!!!!!!!!!!!!!
+                    //IN ORDER TO VISUALIZE POEMS NICELY SPLIT THE STRING BY "/r" AND YEAH FIGURE IT OUT
                 }).FirstOrDefaultAsync();
 
             if (entity == null)

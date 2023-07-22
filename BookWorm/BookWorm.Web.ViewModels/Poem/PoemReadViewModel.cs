@@ -11,7 +11,7 @@
 
         public string Title { get; set; } = null!;
 
-        public string Content { get; set; } = null!;
+        public string[] ReadableContent { get; set; } = null!;
 
         public DateTime DateCreated { get; set; }
 

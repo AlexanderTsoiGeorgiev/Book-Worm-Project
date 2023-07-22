@@ -93,7 +93,7 @@
         }
 
         //TODO: Add exceptions
-        public async Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviews(string userId)
+        public async Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviewsAsync(string userId)
         {
             var userReviews = await dbContext.Reviews
                 .Include(r => r.Poem)
@@ -134,6 +134,27 @@
             entity.IsDeleted = true;
 
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ReviewDisplayViewModel>> GetAllPoemReviewsAsync(string poemId)
+        {
+            ReviewDisplayViewModel[]? reviews = await dbContext.Reviews
+                .Include(r => r.Poem)
+                .Where(r => r.PoemId != null &&
+                            r.PoemId.ToString() == poemId)
+                .Select(r => new ReviewDisplayViewModel
+                {
+                    Content = r.Content,
+                    Upvotes = r.Upvotes,
+                    Downvotes = r.Downvotes,
+                    Rating = r.Rating,
+                    DatePosted = r.DatePosted,
+                    DateEdited = r.DateEdited,
+                    PoemName = r.Poem!.Title
+                }).ToArrayAsync();
+
+
+            return reviews;
         }
     }
 }

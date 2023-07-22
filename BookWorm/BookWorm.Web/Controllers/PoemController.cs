@@ -4,16 +4,18 @@
 
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Poem;
-    using BookWorm.Web.Infrastructure.ExtensionMethods;
     using BookWorm.Services.Models.Poem;
+    using BookWorm.Web.Infrastructure.ExtensionMethods;
 
     public class PoemController : BaseController
     {
         private readonly IPoemService poemService;
+        private readonly IReviewService reviewService;
 
-        public PoemController(IPoemService poemService)
+        public PoemController(IPoemService poemService, IReviewService reviewService)
         {
             this.poemService = poemService;
+            this.reviewService = reviewService;
         }
 
         public IActionResult Index()
@@ -46,7 +48,18 @@
         [HttpGet]
         public async Task<IActionResult> Read(string id)
         {
-            PoemReadViewModel model = await poemService.FindPoemReadModelByIdAsync(id); 
+            PoemReadViewModel model;
+            try
+            {
+                model = await poemService.FindPoemReadModelByIdAsync(id);
+                model.Reviews = await reviewService.GetAllPoemReviewsAsync(id);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
 
             return View(model);

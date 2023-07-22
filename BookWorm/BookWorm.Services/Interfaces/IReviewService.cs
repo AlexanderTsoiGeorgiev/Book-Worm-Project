@@ -4,7 +4,9 @@
 
     public interface IReviewService
     {
-        public Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviews(string userId);
+        public Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviewsAsync(string userId);
+        public Task<IEnumerable<ReviewDisplayViewModel>> GetAllPoemReviewsAsync(string poemId);
+
 
         //
         public Task CreatePoemReviewAsync(string authorId, ReviewFormViewModel model);
