@@ -96,7 +96,7 @@
             //add try catch
             await poemService.CreatePoemAsync(authorId, model);
 
-            return RedirectToAction(nameof(Index), nameof(PoemController));
+            return RedirectToAction(nameof(All));
         }
 
         //Works

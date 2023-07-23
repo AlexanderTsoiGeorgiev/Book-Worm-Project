@@ -1,0 +1,15 @@
+﻿@model IEnumerable<PoemDisplayViewModel>
+
+@{
+    ViewData["Title"] = "My Poems";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="=row">
+    @foreach (var item in Model)
+    {
+        <partial name="_PoemCardPartial" model="@item" />
+    }
+</div>

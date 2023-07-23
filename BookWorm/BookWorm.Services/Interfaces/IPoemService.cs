@@ -16,7 +16,7 @@
         public Task<PoemReadViewModel> FindPoemReadModelByIdAsync(string id);
 
         //Mine action
-        public Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id);
+        public Task<IEnumerable<PoemDisplayViewModel>?> GetAllUserPoemsAsync(string id);
 
         //Add action
         public Task CreatePoemAsync(string authorId, PoemFormViemModel model);

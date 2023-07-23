@@ -68,6 +68,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9lbVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/Poem/Mine.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9lbVxNaW5lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/Poem/Read.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9lbVxSZWFkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -80,12 +84,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/Shared/_PoemFormPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qb2VtRm9ybVBhcnRpYWwuY3NodG1s
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/Shared/_PoemCardPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qb2VtQ2FyZFBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/Shared/_PoemPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qb2VtUGFydGlhbC5jc2h0bWw=
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/Shared/_PoemFormPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qb2VtRm9ybVBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/Shared/_ValidationScriptsPartial.cshtml]
