@@ -172,13 +172,29 @@
 
         }
 
+        //Decide whether or not an author which is not the owner should be able to view the details page
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
             PoemDetailsVisualizeViewModel? model;
             try
             {
+                bool exists = await poemService.ExistsByIdAsync(id);
+                if (!exists)
+                {
+                    return BadRequest();
+                }
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
+                if (!isOwner) return BadRequest();
+
+
                 model = await poemService.GetPoemAsDetailsViewModelByIdAsync(id);
+
+                if (model == null) return BadRequest(); //this check might be unnecessary
+
+                return View(model);
             }
             catch (Exception)
             {
@@ -186,19 +202,40 @@
                 throw;
             }
 
-            if (model == null)
-            {
-                return BadRequest();
-            }
-
-            return View(model);
+            
         }
 
-        //Not implemented
         //Figure out how to work with post method
+        //It is done by using onclick js function combined with fetch api
         [HttpGet]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
+            try
+            {
+                bool poemExists = await poemService.ExistsByIdAsync(id);
+                if (!poemExists)
+                {
+                    return BadRequest();
+                }
+                string? userId = User.GetUserId();
+                if (userId == null)
+                {
+                    return BadRequest();
+                }
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
+                if (!isOwner)
+                {
+                    return BadRequest();
+                }
+                await poemService.SoftDeletePoemAsync(id);
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
             return Ok();
         }
 

@@ -231,6 +231,11 @@
 
             await dbContext.SaveChangesAsync();
         }
+        public async Task<bool> IsPoemDeletedAsync(string id)
+        {
+            Poem? poem = await dbContext.Poems.FindAsync(Guid.Parse(id));
+            return poem!.IsDeleted;
+        }
 
         //NOTE: This many require its own service
         public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()
