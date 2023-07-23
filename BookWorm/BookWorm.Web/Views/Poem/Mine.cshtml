@@ -7,9 +7,10 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-<div class="=row">
-    @foreach (var item in Model)
+
+<div class="row mt-5">
+    @foreach (var poem in Model)
     {
-        <partial name="_PoemCardPartial" model="@item" />
+        <partial name="_PoemCardPartial" model="@poem" />
     }
 </div>

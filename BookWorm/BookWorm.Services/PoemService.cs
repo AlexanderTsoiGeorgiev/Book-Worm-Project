@@ -210,6 +210,7 @@
                 .Where(p => p.IsDeleted == false && p.AuthorId.ToString() == id)
                 .Select(p => new PoemDisplayViewModel
                 {
+                    Id = p.Id,
                     Title = p.Title,
                     DateCreated = p.DateCreated,
                     Description = p.Description
