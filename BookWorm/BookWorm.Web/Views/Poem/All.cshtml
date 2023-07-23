@@ -74,9 +74,9 @@
            asp-controller="Poem"
            asp-action="All"
            asp-route-currentPage="@previousPage"
-           asp-route-category="@Model.CategoryName"
-           asp-route-searchTerm="@Model.QueryString"
-           asp-route-sorting="@((int)Model.OrderBy)"><<</a>
+           asp-route-categoryName="@Model.CategoryName"
+           asp-route-queryString="@Model.QueryString"
+           asp-route-orderBy="@((int)Model.OrderBy)"><<</a>
     </div>
 
     @{

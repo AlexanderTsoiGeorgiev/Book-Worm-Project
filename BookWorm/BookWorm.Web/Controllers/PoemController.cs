@@ -116,7 +116,7 @@
                 if (!isOwner)
                 {
                     return BadRequest();
-                } 
+                }
             }
             catch (Exception)
             {
@@ -202,7 +202,7 @@
                 throw;
             }
 
-            
+
         }
 
         //Figure out how to work with post method
@@ -235,7 +235,7 @@
 
                 throw;
             }
-            
+
             return Ok();
         }
 
@@ -244,10 +244,13 @@
         public async Task<IActionResult> Mine()
         {
             IEnumerable<PoemDisplayViewModel>? poems;
-            string? userId = User.GetUserId() ?? throw new Exception();
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
                 poems = await poemService.GetAllUserPoemsAsync(userId);
+                return View(poems);
             }
             catch (Exception)
             {
@@ -255,7 +258,6 @@
                 throw;
             }
 
-            return View(poems);
         }
     }
 }

@@ -203,9 +203,9 @@
 
         //Mine
         //Check TODOs
-        public async Task<IEnumerable<PoemDisplayViewModel>> GetAllUserPoemsAsync(string id)
+        public async Task<IEnumerable<PoemDisplayViewModel>?> GetAllUserPoemsAsync(string id)
         {
-            var allPoems = await dbContext.Poems
+            PoemDisplayViewModel[]? allPoems = await dbContext.Poems
                 .AsNoTracking()
                 .Where(p => p.IsDeleted == false && p.AuthorId.ToString() == id)
                 .Select(p => new PoemDisplayViewModel
