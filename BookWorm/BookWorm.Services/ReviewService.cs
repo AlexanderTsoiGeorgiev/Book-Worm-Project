@@ -52,6 +52,26 @@
         }
 
         //TODO: Check if entity is null and add try catch
+
+
+        //Edit
+
+        public async Task<ReviewFormViewModel> FindReviewByIdAsync(string id)
+        {
+            ReviewFormViewModel? review = await dbContext.Reviews
+                .AsNoTracking()
+                .Where(r => r.Id.ToString() == id)
+                .Select(r => new ReviewFormViewModel
+                {
+                    Content = r.Content,
+                    Rating = r.Rating,
+                    PoemId = r.PoemId,
+                    BookId = r.BookId
+                })
+                .FirstAsync();
+
+            return review;
+        }
         public async Task EditReviewAsync(string id, ReviewFormViewModel model)
         {
             Review? entity = await dbContext.Reviews.FindAsync(Guid.Parse(id));
@@ -65,27 +85,6 @@
             entity.Rating = model.Rating;
 
             await dbContext.SaveChangesAsync();
-        }
-
-        public async Task<ReviewFormViewModel> FindReviewById(string id)
-        {
-            ReviewFormViewModel? review = await dbContext.Reviews
-                .AsNoTracking()
-                .Where(r => r.Id.ToString() == id)
-                .Select(r => new ReviewFormViewModel
-                {
-                    Content = r.Content,
-                    Rating = r.Rating,
-                    PoemId = r.PoemId,
-                    BookId = r.BookId
-                })
-                .FirstOrDefaultAsync();
-            if (review == null)
-            {
-                throw new Exception();
-            }
-
-            return review;
         }
 
         //TODO: Add exceptions
@@ -151,6 +150,24 @@
 
 
             return reviews;
+        }
+
+
+        //Validation
+        public async Task<bool> ExistsByIdAsync(string id)
+        {
+            Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
+            return review!.IsDeleted ? false : true;
+        }
+        public async Task<bool> IsReviewDeletedAsync(string id)
+        {
+            Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
+            return review!.IsDeleted;
+        }
+        public async Task<bool> IsUserReviewOwnerAsync(string authorId, string id)
+        {
+            Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
+            return review!.AuthorId.ToString() == authorId;
         }
     }
 }

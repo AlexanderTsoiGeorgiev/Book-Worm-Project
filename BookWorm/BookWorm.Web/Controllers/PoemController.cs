@@ -56,18 +56,23 @@
             PoemReadViewModel model;
             try
             {
+                bool exists = await poemService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+                bool isDeleted = await poemService.IsPoemDeletedAsync(id);
+                if (isDeleted) return BadRequest();
+                bool isPrivate = await poemService.IsPoemPrivateAsync(id);
+                if (isPrivate) return BadRequest();
+
                 model = await poemService.FindPoemReadModelByIdAsync(id);
                 model.Reviews = await reviewService.GetAllPoemReviewsAsync(id);
 
+                return View(model);
             }
             catch (Exception)
             {
 
                 throw;
             }
-
-
-            return View(model);
         }
 
         //Works
@@ -119,26 +124,17 @@
                 {
                     return BadRequest();
                 }
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-
-
-            PoemFormViemModel model;
-            try
-            {
-                model = await poemService.FindPoemByIdAsync(id);
+                PoemFormViemModel model = await poemService.FindPoemByIdAsync(id);
                 model.Categories = await poemService.GetAllCategoriesAsync();
+
+                return View(model);
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(string id, PoemFormViemModel model)

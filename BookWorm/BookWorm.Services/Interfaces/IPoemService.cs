@@ -24,15 +24,18 @@
         //Edit action
         public Task<PoemFormViemModel> FindPoemByIdAsync(string id);  // this one may not be needed
         public Task EditPoemAsync(string id, PoemFormViemModel model);
-        public Task<bool> ExistsByIdAsync(string id);
-        public Task<bool> IsUserPoemOwnerAsync(string userId, string poemId);
 
         //Details
         public Task<PoemDetailsVisualizeViewModel?> GetPoemAsDetailsViewModelByIdAsync(string id);
 
         //Delete action
         public Task SoftDeletePoemAsync(string id);
+
+        //Validation
         public Task<bool> IsPoemPrivateAsync(string id);
+        public Task<bool> ExistsByIdAsync(string id);
+        public Task<bool> IsUserPoemOwnerAsync(string userId, string poemId);
+        public Task<bool> IsPoemDeletedAsync(string id);
 
         //Note: This may require its own service
         public Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync();

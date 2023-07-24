@@ -14,5 +14,7 @@
 
 
         public Task SoftDeleteBookAsync(int id);
+        public Task<bool> IsUserOwnerAsync(string userId);
+
     }
 }

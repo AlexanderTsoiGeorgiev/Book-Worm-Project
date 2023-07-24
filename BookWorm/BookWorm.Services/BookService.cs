@@ -106,5 +106,11 @@
 
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> IsUserOwnerAsync(string userId)
+        {
+            Book? book = await dbContext.Books.FindAsync(Guid.Parse(userId));
+            return book!.AuthorId.ToString() == userId;
+        }
     }
 }

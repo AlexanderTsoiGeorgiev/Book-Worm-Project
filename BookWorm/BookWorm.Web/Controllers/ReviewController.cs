@@ -10,11 +10,13 @@
     {
         private readonly IReviewService reviewService;
         private readonly IPoemService poemService;
+        private readonly IBookService bookService;
 
-        public ReviewController(IReviewService reviewService, IPoemService poemService)
+        public ReviewController(IReviewService reviewService, IPoemService poemService, IBookService bookService)
         {
             this.reviewService = reviewService;
             this.poemService = poemService;
+            this.bookService = bookService;
         }
 
         public IActionResult Index()
@@ -80,28 +82,11 @@
         }
 
         [HttpGet]
-        public asycn Task<IActionResult> AddBook(int id)
+        public IActionResult AddBook(int id)
         {
-            try
-            {
-                string? userId = User.GetUserId();
-
-                if (userId == null) return BadRequest();
-
-                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                bool isPrivete = await poemService.IsPoemPrivateAsync(id);
-
-                if (isPrivete && !isOwner) return BadRequest();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
             ReviewFormViewModel model = new ReviewFormViewModel
             {
-                PoemId = Guid.Parse(id)
+                BookId = id
             };
             return View(model);
         }
@@ -132,17 +117,29 @@
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            ReviewFormViewModel model;
             try
             {
-                model = await reviewService.FindReviewById(id);
+                string? userId = User.GetUserId();
+
+                if (userId == null) return BadRequest();
+
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
+                bool isPrivete = await poemService.IsPoemPrivateAsync(id);
+
+                if (isPrivete && !isOwner) return BadRequest();
+
+                bool exists = await reviewService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                ReviewFormViewModel model = await reviewService.FindReviewByIdAsync(id);
+
+                return View(model);
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(string id, ReviewFormViewModel model)

@@ -181,25 +181,11 @@
                     IsPrivate = p.IsPrivate,
                     CategoryId = p.CategoryId
                 })
-                .FirstOrDefaultAsync();
-
-            if (poem == null)
-            {
-                throw new Exception();
-            }
+                .FirstAsync();
 
             return poem;
         }
-        public async Task<bool> ExistsByIdAsync(string id)
-        {
-            return await dbContext.Poems.FirstOrDefaultAsync(p => p.Id.ToString() == id) != null;
-        }
-        public async Task<bool> IsUserPoemOwnerAsync(string userId, string poemId)
-        {
-            Poem? entity = await dbContext.Poems.FindAsync(Guid.Parse(poemId));
-
-            return entity!.AuthorId == Guid.Parse(userId);
-        }
+        
 
         //Mine
         //Check TODOs
@@ -232,16 +218,7 @@
 
             await dbContext.SaveChangesAsync();
         }
-        public async Task<bool> IsPoemDeletedAsync(string id)
-        {
-            Poem? poem = await dbContext.Poems.FindAsync(Guid.Parse(id));
-            return poem!.IsDeleted;
-        }
-        public async Task<bool> IsPoemPrivateAsync(string id)
-        {
-            Poem? poem = await dbContext.Poems.FindAsync(Guid.Parse(id));
-            return poem!.IsPrivate;
-        }
+        
 
         //NOTE: This many require its own service
         public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()
@@ -301,5 +278,28 @@
             return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToArray();
         }
 
+
+        //Validation
+        public async Task<bool> ExistsByIdAsync(string id)
+        {
+            Poem? poem = await dbContext.Poems.FindAsync(Guid.Parse(id));
+            return poem != null;
+        }
+        public async Task<bool> IsPoemDeletedAsync(string id)
+        {
+            Poem? poem = await dbContext.Poems.FindAsync(Guid.Parse(id));
+            return poem!.IsDeleted;
+        }
+        public async Task<bool> IsPoemPrivateAsync(string id)
+        {
+            Poem? poem = await dbContext.Poems.FindAsync(Guid.Parse(id));
+            return poem!.IsPrivate;
+        }
+        public async Task<bool> IsUserPoemOwnerAsync(string userId, string poemId)
+        {
+            Poem? entity = await dbContext.Poems.FindAsync(Guid.Parse(poemId));
+
+            return entity!.AuthorId == Guid.Parse(userId);
+        }
     }
 }
