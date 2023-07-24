@@ -32,6 +32,7 @@
 
         //Delete action
         public Task SoftDeletePoemAsync(string id);
+        public Task<bool> IsPoemPrivateAsync(string id);
 
         //Note: This may require its own service
         public Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync();

@@ -22,16 +22,14 @@
         //TODO: Check if moddel is null and add try catch
         public async Task CreatePoemReviewAsync(string authorId, ReviewFormViewModel model)
         {
-            if (model == null)
-            {
-                return;
-            }
-
             Review entity = new Review
             {
+                Title = model.Title,
                 Content = model.Content,
                 Rating = model.Rating,
-                PoemId = model.PoemId
+                PoemId = model.PoemId,
+                DatePosted = DateTime.Now,
+                AuthorId = Guid.Parse(authorId)
             };
 
             await dbContext.AddAsync(entity);
@@ -39,16 +37,14 @@
         }
         public async Task CreateBookReviewAsync(string authorId, ReviewFormViewModel model)
         {
-            if (model == null)
-            {
-                return;
-            }
-
             Review entity = new Review
             {
+                Title = model.Title,
                 Content = model.Content,
                 Rating = model.Rating,
-                BookId = model.BookId
+                BookId = model.BookId,
+                DatePosted = DateTime.Now,
+                AuthorId = Guid.Parse(authorId)
             };
 
             await dbContext.AddAsync(entity);

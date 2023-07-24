@@ -1,5 +1,16 @@
 ﻿@model ReviewFormViewModel
 
 @{
-    ViewData["Tilte"] = "Add Poem Review";
+    ViewData["Title"] = "Add Poem Review";
+    ViewData["Action"] = "Submit";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<partial name="_ReviewFormPartial" model="@Model"></partial>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
 }

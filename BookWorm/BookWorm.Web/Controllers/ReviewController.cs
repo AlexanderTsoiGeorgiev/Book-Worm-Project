@@ -9,10 +9,12 @@
     public class ReviewController : BaseController
     {
         private readonly IReviewService reviewService;
+        private readonly IPoemService poemService;
 
-        public ReviewController(IReviewService reviewService)
+        public ReviewController(IReviewService reviewService, IPoemService poemService)
         {
             this.reviewService = reviewService;
+            this.poemService = poemService;
         }
 
         public IActionResult Index()
@@ -23,8 +25,25 @@
         //TODO: Check whether or not passing the id of the poem is necessary
         //Something is not right debug this.
         [HttpGet]
-        public IActionResult AddPoem(string id)
+        public async Task<IActionResult> AddPoem(string id)
         {
+            try
+            {
+                string? userId = User.GetUserId();
+
+                if (userId == null) return BadRequest();
+
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
+                bool isPrivete = await poemService.IsPoemPrivateAsync(id);
+
+                if (isPrivete && !isOwner) return BadRequest();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             ReviewFormViewModel model = new ReviewFormViewModel 
             { 
                 PoemId = Guid.Parse(id) 
@@ -32,37 +51,57 @@
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> AddPoem(ReviewFormViewModel model)
+        public async Task<IActionResult> AddPoem(string id, ReviewFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception();
+                return View(model);
             }
-
-            string? authorId = User.GetUserId();
-            if (authorId == null)
-            {
-                throw new Exception();
-            }
-
+           
             try
             {
-                await reviewService.CreatePoemReviewAsync(authorId, model);
+                string? userId = User.GetUserId();
+                if (userId == null) BadRequest();
+
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId!, id);
+                bool isPrivete = await poemService.IsPoemPrivateAsync(id);
+
+                if (isPrivete && !isOwner) return BadRequest();
+
+                await reviewService.CreatePoemReviewAsync(userId!, model);
+
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return View();
         }
 
         [HttpGet]
-        public IActionResult AddBook(int id)
+        public asycn Task<IActionResult> AddBook(int id)
         {
+            try
+            {
+                string? userId = User.GetUserId();
+
+                if (userId == null) return BadRequest();
+
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
+                bool isPrivete = await poemService.IsPoemPrivateAsync(id);
+
+                if (isPrivete && !isOwner) return BadRequest();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             ReviewFormViewModel model = new ReviewFormViewModel
             {
-                BookId = id
+                PoemId = Guid.Parse(id)
             };
             return View(model);
         }
@@ -74,15 +113,12 @@
                 throw new Exception();
             }
 
-            string? authorId = User.GetUserId();
-            if (authorId == null)
-            {
-                throw new Exception();
-            }
+            string? userId = User.GetUserId();
+            if (userId == null) return BadRequest();
 
             try
             {
-                await reviewService.CreatePoemReviewAsync(authorId, model);
+                await reviewService.CreatePoemReviewAsync(userId!, model);
             }
             catch (Exception)
             {
