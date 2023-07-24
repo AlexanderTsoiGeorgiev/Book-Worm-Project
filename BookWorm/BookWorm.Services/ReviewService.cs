@@ -58,7 +58,7 @@
 
         public async Task<ReviewFormViewModel> FindReviewByIdAsync(string id)
         {
-            ReviewFormViewModel? review = await dbContext.Reviews
+            ReviewFormViewModel review = await dbContext.Reviews
                 .AsNoTracking()
                 .Where(r => r.Id.ToString() == id)
                 .Select(r => new ReviewFormViewModel
@@ -76,13 +76,9 @@
         {
             Review? entity = await dbContext.Reviews.FindAsync(Guid.Parse(id));
 
-            if (entity == null)
-            {
-                return;
-            }
-
             entity.Content = model.Content;
             entity.Rating = model.Rating;
+            entity.Title = model.Title;
 
             await dbContext.SaveChangesAsync();
         }
@@ -157,7 +153,7 @@
         public async Task<bool> ExistsByIdAsync(string id)
         {
             Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
-            return review!.IsDeleted ? false : true;
+            return review != null;
         }
         public async Task<bool> IsReviewDeletedAsync(string id)
         {
@@ -168,6 +164,19 @@
         {
             Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
             return review!.AuthorId.ToString() == authorId;
+        }
+        public async Task<string?> RetrivePoemIdAsync(string id)
+        {
+            Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
+
+            return review!.PoemId.ToString();
+        }
+
+        public async Task<int?> RetriveBookIdAsync(string id)
+        {
+            Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
+
+            return review!.BookId;
         }
     }
 }

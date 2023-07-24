@@ -21,6 +21,16 @@
                 <span asp-validation-for="@Model.Rating"></span>
             </div>
 
+
+            @*This was unnecessary, but helped me understand how data is transfered in the http protocol*@
+            @*<div class="d-none">
+                <input asp-for="@Model.PoemId" value="@Model.PoemId"/>
+            </div>
+
+            <div class="d-none">
+                <input asp-for="@Model.BookId" value="@Model.BookId" />
+            </div>*@
+
             <div class="text-center">
                 <input class="btn btn-primary mt-3" type="submit" value="@ViewData["Action"]" />
             </div>

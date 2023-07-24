@@ -25,7 +25,7 @@
         }
 
         //TODO: Check whether or not passing the id of the poem is necessary
-        //Something is not right debug this.
+        //Something is not right debug this.!!!!!!
         [HttpGet]
         public async Task<IActionResult> AddPoem(string id)
         {
@@ -46,11 +46,7 @@
                 throw;
             }
 
-            ReviewFormViewModel model = new ReviewFormViewModel 
-            { 
-                PoemId = Guid.Parse(id) 
-            };
-            return View(model);
+            return View(new ReviewFormViewModel());
         }
         [HttpPost]
         public async Task<IActionResult> AddPoem(string id, ReviewFormViewModel model)
@@ -59,7 +55,7 @@
             {
                 return View(model);
             }
-           
+
             try
             {
                 string? userId = User.GetUserId();
@@ -70,6 +66,7 @@
 
                 if (isPrivete && !isOwner) return BadRequest();
 
+                model.PoemId = Guid.Parse(id);
                 await reviewService.CreatePoemReviewAsync(userId!, model);
 
                 return RedirectToAction(nameof(Index));
@@ -81,6 +78,9 @@
             }
         }
 
+
+        //Not implemented
+        //Do these two after completing the book controller
         [HttpGet]
         public IActionResult AddBook(int id)
         {
@@ -115,21 +115,31 @@
 
         //TODO: Add exceptions and redirects
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> EditPoem(string id)
         {
             try
             {
                 string? userId = User.GetUserId();
-
                 if (userId == null) return BadRequest();
 
-                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                bool isPrivete = await poemService.IsPoemPrivateAsync(id);
+                bool reviewExists = await reviewService.ExistsByIdAsync(id);
+                if (!reviewExists) return NotFound();
+
+
+                string? poemId = await reviewService.RetrivePoemIdAsync(id);
+                if (poemId == null) return BadRequest();
+                bool poemExists = await poemService.ExistsByIdAsync(poemId);
+                if (!poemExists) return BadRequest();
+                bool isPoemDeleted = await poemService.IsPoemDeletedAsync(poemId);
+                if (isPoemDeleted) return BadRequest();
+
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, poemId);
+                bool isPrivete = await poemService.IsPoemPrivateAsync(poemId);
 
                 if (isPrivete && !isOwner) return BadRequest();
 
-                bool exists = await reviewService.ExistsByIdAsync(id);
-                if (!exists) return NotFound();
+                bool isReviewDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isReviewDeleted) return NotFound();
 
                 ReviewFormViewModel model = await reviewService.FindReviewByIdAsync(id);
 
@@ -142,7 +152,7 @@
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, ReviewFormViewModel model)
+        public async Task<IActionResult> EditPoem(string id, ReviewFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -151,16 +161,50 @@
 
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                bool reviewExists = await reviewService.ExistsByIdAsync(id);
+                if (!reviewExists) return NotFound();
+
+
+                string? poemId = await reviewService.RetrivePoemIdAsync(id);
+                if (poemId == null) return BadRequest();
+                bool poemExists = await poemService.ExistsByIdAsync(poemId);
+                if (!poemExists) return BadRequest();
+                bool isPoemDeleted = await poemService.IsPoemDeletedAsync(poemId);
+                if (isPoemDeleted) return BadRequest();
+
+                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, poemId);
+                bool isPrivete = await poemService.IsPoemPrivateAsync(poemId);
+
+                if (isPrivete && !isOwner) return BadRequest();
+
+                bool isReviewDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isReviewDeleted) return NotFound();
+
                 await reviewService.EditReviewAsync(id, model);
+
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return View();
         }
 
+        //Not Implemented
+        [HttpGet]
+        public IActionResult EditBook(int id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult EditBook(int id, ReviewFormViewModel model)
+        {
+            return View();
+        }
 
         //TODO: Add Get method and add exceptions
         [HttpPost]

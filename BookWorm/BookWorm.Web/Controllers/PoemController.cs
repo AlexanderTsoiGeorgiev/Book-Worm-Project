@@ -56,12 +56,15 @@
             PoemReadViewModel model;
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
                 bool exists = await poemService.ExistsByIdAsync(id);
                 if (!exists) return NotFound();
                 bool isDeleted = await poemService.IsPoemDeletedAsync(id);
                 if (isDeleted) return BadRequest();
                 bool isPrivate = await poemService.IsPoemPrivateAsync(id);
-                if (isPrivate) return BadRequest();
+                bool isUserOwner = await poemService.IsUserPoemOwnerAsync(userId!, id);
+                if (isPrivate && !isUserOwner) return BadRequest();
 
                 model = await poemService.FindPoemReadModelByIdAsync(id);
                 model.Reviews = await reviewService.GetAllPoemReviewsAsync(id);
