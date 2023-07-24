@@ -6,7 +6,6 @@
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Models.Poem;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     public class PoemController : BaseController
     {
@@ -19,6 +18,9 @@
             this.reviewService = reviewService;
         }
 
+
+        //Add generic view
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -235,8 +237,6 @@
 
                 throw;
             }
-
-            return Ok();
         }
 
         //Not implemented
