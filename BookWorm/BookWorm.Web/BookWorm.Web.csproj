@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Book\" />
-    <Folder Include="Views\Review\" />
   </ItemGroup>
 
 </Project>
