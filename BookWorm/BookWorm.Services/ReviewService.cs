@@ -76,9 +76,9 @@
         {
             Review? entity = await dbContext.Reviews.FindAsync(Guid.Parse(id));
 
-            entity.Content = model.Content;
-            entity.Rating = model.Rating;
-            entity.Title = model.Title;
+            entity!.Content = model.Content;
+            entity!.Rating = model.Rating;
+            entity!.Title = model.Title;
 
             await dbContext.SaveChangesAsync();
         }

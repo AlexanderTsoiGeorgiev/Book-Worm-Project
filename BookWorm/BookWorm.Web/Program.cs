@@ -6,6 +6,7 @@ namespace BookWorm.Web
     using BookWorm.Services;
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Program
     {
@@ -34,7 +35,11 @@ namespace BookWorm.Web
             })
                 .AddEntityFrameworkStores<BookWormDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddMvcOptions(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
+
 
             builder.Services.AddScoped<IPoemService, PoemService>();
             builder.Services.AddScoped<IBookService, BookService>();
