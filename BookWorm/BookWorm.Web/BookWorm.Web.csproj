@@ -29,8 +29,4 @@
     <ProjectReference Include="..\BookWorm.Web.ViewModels\BookWorm.Web.ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Book\" />
-  </ItemGroup>
-
 </Project>

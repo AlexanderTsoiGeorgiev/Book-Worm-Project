@@ -1,12 +1,13 @@
 namespace BookWorm.Web
 {
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
     using BookWorm.Data;
     using BookWorm.Services;
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
-    using Microsoft.AspNetCore.Mvc;
+    using BookWorm.Web.Infrastructure.ModelBinders;
 
     public class Program
     {
@@ -37,6 +38,7 @@ namespace BookWorm.Web
 
             builder.Services.AddControllersWithViews().AddMvcOptions(options =>
             {
+                options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
 

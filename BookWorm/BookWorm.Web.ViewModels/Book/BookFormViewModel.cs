@@ -21,7 +21,7 @@
         public string ImageUrl { get; set; } = null!;
 
         [Required]
-        [Range(MinPrice, MaxPrice)]
+        [Range(typeof(decimal), MinPriceAsString, MaxPriceAsString)]
         public decimal Price { get; set; }
 
         [Required]
@@ -29,5 +29,6 @@
         public int Quantity { get; set; }
 
         public IEnumerable<PoemBookSelectViewModel> Poems { get; set; } = null!;
+        public ICollection<Guid> PoemIds { get; set; } = null!;
     }
 }

@@ -22,7 +22,7 @@
         //TODO: Add exeptions and Author id should be recieved as a parameter
         public async Task CreateBookAsync(string authorId, BookFormViewModel model)
         {
-            var entity = new Book
+            Book entity = new Book
             {
                 Title = model.Title,
                 Description = model.Description,
@@ -32,7 +32,16 @@
                 AuthorId = Guid.Parse(authorId)
             };
 
+            Guid[]? poemIds = model.PoemIds.Distinct().ToArray();
+
+            ICollection<BookPoem> mappingEntites = new HashSet<BookPoem>();
+            foreach (Guid poemId in model.PoemIds)
+            {
+                mappingEntites.Add(new BookPoem { BookId = entity.Id, PoemId = poemId });
+            }
+
             await dbContext.AddAsync(entity);
+            await dbContext.AddRangeAsync(mappingEntites);
             await dbContext.SaveChangesAsync();
         }
 

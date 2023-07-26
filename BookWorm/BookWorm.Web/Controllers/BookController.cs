@@ -53,14 +53,11 @@
                 return View(model);
             }
 
-            string? authorId = User.GetUserId();
-            if (authorId == null)
-            {
-                throw new Exception();
-            }
 
             try
             {
+                string? authorId = User.GetUserId();
+                if (authorId == null) return BadRequest();
                 await bookService.CreateBookAsync(authorId, model);
 
             }

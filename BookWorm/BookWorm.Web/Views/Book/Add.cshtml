@@ -41,14 +41,16 @@
             <div class="mb-3">
                 <label asp-for="@Model.Quantity" class="form-label"></label>
                 <input asp-for="@Model.Quantity" class="form-control" step="1" />
+                <span asp-validation-for="@Model.Quantity"></span>
             </div>
 
             <div class="mb-3">
-                <select class="form-select" multiple aria-label="multiple select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <label asp-for="@Model.Poems" class="form-label"></label>
+                <select asp-for="@Model.PoemIds" class="form-select" multiple aria-label="multiple select example">
+                    @foreach(var poem in Model.Poems)
+                    {
+                        <option value="@poem.Id">@poem.Title</option>
+                    }
                 </select>
             </div>
 
@@ -58,3 +60,8 @@
         </form>
     </div>
 </div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

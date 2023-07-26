@@ -26,11 +26,11 @@
             public const int ImageUrlMinLenght = 5;
             public const int ImageUrlMaxLenght = 2_048;
 
-            public const int MinQuantity = 0;
+            public const int MinQuantity = 1;
             public const int MaxQuantity = 1_000_000;
 
-            public const int MinPrice = 10;
-            public const int MaxPrice = 1_000;
+            public const string MinPriceAsString = "10";
+            public const string MaxPriceAsString = "1000";
         }
 
         public static class ReviewValidationConstants
