@@ -1,5 +1,6 @@
 ﻿namespace BookWorm.Web.ViewModels.Book
 {
+    using BookWorm.Web.ViewModels.Poem;
     using System.ComponentModel.DataAnnotations;
 
     using static BookWorm.Data.Common.DataModelsValidationConstants.BookValidationConstants;
@@ -26,5 +27,7 @@
         [Required]
         [Range(MinQuantity, MaxQuantity)]
         public int Quantity { get; set; }
+
+        public IEnumerable<PoemBookSelectViewModel> Poems { get; set; } = null!;
     }
 }

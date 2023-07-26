@@ -40,5 +40,8 @@
         //Note: This may require its own service
         public Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync();
         public Task<IEnumerable<string>> GetAllCategoryNamesAsync();
+
+        //Used by BookService
+        public Task<IEnumerable<PoemBookSelectViewModel>> GetUserPoemsAsPoemBookSelectViewModelAsync(string userId);
     }
 }

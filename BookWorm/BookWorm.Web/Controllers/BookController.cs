@@ -9,10 +9,12 @@
     public class BookController : BaseController
     {
         private readonly IBookService bookService;
+        private readonly IPoemService poemService;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, IPoemService poemService)
         {
             this.bookService = bookService;
+            this.poemService = poemService;
         }
 
         public IActionResult Index()
@@ -22,9 +24,26 @@
 
         //TODO: Add Exceptions & Redirects
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+                BookFormViewModel model = new BookFormViewModel
+                {
+                    Poems = await poemService.GetUserPoemsAsPoemBookSelectViewModelAsync(userId),
+                };
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
         }
         [HttpPost]
         public async Task<IActionResult> Add(BookFormViewModel model)

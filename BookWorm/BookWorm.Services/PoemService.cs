@@ -301,5 +301,18 @@
 
             return entity!.AuthorId == Guid.Parse(userId);
         }
+
+
+        //Used by BookController
+        public async Task<IEnumerable<PoemBookSelectViewModel>> GetUserPoemsAsPoemBookSelectViewModelAsync(string userId)
+        {
+            PoemBookSelectViewModel[] poems = await dbContext.Poems.AsNoTracking().Where(p => p.AuthorId.ToString() == userId).Select(p => new PoemBookSelectViewModel
+            {
+                Id = p.Id,
+                Title = p.Title
+            }).ToArrayAsync();
+
+            return poems;
+        }
     }
 }

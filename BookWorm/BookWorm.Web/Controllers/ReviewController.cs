@@ -24,8 +24,7 @@
             return View();
         }
 
-        //TODO: Check whether or not passing the id of the poem is necessary
-        //Something is not right debug this.!!!!!!
+        //Works
         [HttpGet]
         public async Task<IActionResult> AddPoem(string id)
         {
@@ -113,7 +112,7 @@
             return View();
         }
 
-        //TODO: Add exceptions and redirects
+        //Works
         [HttpGet]
         public async Task<IActionResult> EditPoem(string id)
         {
@@ -207,6 +206,7 @@
         }
 
         //TODO: Add Get method and add exceptions
+        //TODO: Implement after finishing User Controller
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
