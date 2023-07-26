@@ -1,32 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-BookWorm.Web-74117d21-a68e-419f-836f-9f733d7d5cac</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>aspnet-BookWorm.Web-74117d21-a68e-419f-836f-9f733d7d5cac</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.18" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.18" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.18" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.18">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.13" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.18" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.18" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.18" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.18">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BookWorm.Common\BookWorm.Common.csproj" />
-    <ProjectReference Include="..\BookWorm.Data.Common\BookWorm.Data.Common.csproj" />
-    <ProjectReference Include="..\BookWorm.Data\BookWorm.Data.csproj" />
-    <ProjectReference Include="..\BookWorm.Services.Models\BookWorm.Services.Models.csproj" />
-    <ProjectReference Include="..\BookWorm.Services\BookWorm.Services.csproj" />
-    <ProjectReference Include="..\BookWorm.Web.Infrastructure\BookWorm.Web.Infrastructure.csproj" />
-    <ProjectReference Include="..\BookWorm.Web.ViewModels\BookWorm.Web.ViewModels.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BookWorm.Common\BookWorm.Common.csproj" />
+		<ProjectReference Include="..\BookWorm.Data.Common\BookWorm.Data.Common.csproj" />
+		<ProjectReference Include="..\BookWorm.Data\BookWorm.Data.csproj" />
+		<ProjectReference Include="..\BookWorm.Services.Models\BookWorm.Services.Models.csproj" />
+		<ProjectReference Include="..\BookWorm.Services\BookWorm.Services.csproj" />
+		<ProjectReference Include="..\BookWorm.Web.Infrastructure\BookWorm.Web.Infrastructure.csproj" />
+		<ProjectReference Include="..\BookWorm.Web.ViewModels\BookWorm.Web.ViewModels.csproj" />
+	</ItemGroup>
 
 </Project>

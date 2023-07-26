@@ -12,6 +12,7 @@
         public Book()
         {
             Reviews = new HashSet<Review>();
+            BooksPoems = new HashSet<BookPoem>();
         }
 
         [Key]

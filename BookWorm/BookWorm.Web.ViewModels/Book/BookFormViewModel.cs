@@ -28,7 +28,7 @@
         [Range(MinQuantity, MaxQuantity)]
         public int Quantity { get; set; }
 
-        public IEnumerable<PoemBookSelectViewModel> Poems { get; set; } = null!;
+        public IEnumerable<PoemBookSelectViewModel>? Poems { get; set; }
         public ICollection<Guid> PoemIds { get; set; } = null!;
     }
 }

@@ -48,12 +48,21 @@
         [HttpPost]
         public async Task<IActionResult> Add(BookFormViewModel model)
         {
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+                model.Poems = await poemService.GetUserPoemsAsPoemBookSelectViewModelAsync(userId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
-
             try
             {
                 string? authorId = User.GetUserId();

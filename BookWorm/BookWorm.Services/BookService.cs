@@ -39,9 +39,9 @@
             {
                 mappingEntites.Add(new BookPoem { BookId = entity.Id, PoemId = poemId });
             }
+            entity.BooksPoems = mappingEntites.ToArray();
 
             await dbContext.AddAsync(entity);
-            await dbContext.AddRangeAsync(mappingEntites);
             await dbContext.SaveChangesAsync();
         }
 
