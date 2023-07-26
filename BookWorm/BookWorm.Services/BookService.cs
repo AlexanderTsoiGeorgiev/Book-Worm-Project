@@ -32,12 +32,12 @@
                 AuthorId = Guid.Parse(authorId)
             };
 
-            Guid[]? poemIds = model.PoemIds.Distinct().ToArray();
+            string[]? poemIds = model.PoemIds.Distinct().ToArray();
 
             ICollection<BookPoem> mappingEntites = new HashSet<BookPoem>();
-            foreach (Guid poemId in model.PoemIds)
+            foreach (string poemId in model.PoemIds)
             {
-                mappingEntites.Add(new BookPoem { BookId = entity.Id, PoemId = poemId });
+                mappingEntites.Add(new BookPoem { BookId = entity.Id, PoemId = Guid.Parse(poemId) });
             }
             entity.BooksPoems = mappingEntites.ToArray();
 
@@ -120,6 +120,21 @@
         {
             Book? book = await dbContext.Books.FindAsync(Guid.Parse(userId));
             return book!.AuthorId.ToString() == userId;
+        }
+
+
+
+        //Validation
+        public async Task<bool> DoesUserOwnAllPoemsAsync(string userId, string[] poemIds)
+        {
+            ApplicationUser? user = await dbContext.Users.FindAsync(userId);
+            ICollection<bool> allOwned = new List<bool>(); 
+            foreach (string poemId in poemIds)
+            {
+                allOwned.Add(user!.Poems.Any(p => p.Id == Guid.Parse(poemId)));
+            }
+
+            return allOwned.All(b => b == true);
         }
     }
 }

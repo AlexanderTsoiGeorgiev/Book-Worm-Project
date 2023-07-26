@@ -178,7 +178,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.BookPoem", b =>
@@ -193,7 +193,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookPoem");
+                    b.ToTable("BookPoem", (string)null);
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.Category", b =>
@@ -211,7 +211,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -291,7 +291,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Poems");
+                    b.ToTable("Poems", (string)null);
 
                     b.HasData(
                         new
@@ -383,7 +383,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("PoemId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

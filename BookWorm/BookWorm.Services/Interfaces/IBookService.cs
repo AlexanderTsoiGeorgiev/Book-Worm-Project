@@ -16,5 +16,7 @@
         public Task SoftDeleteBookAsync(int id);
         public Task<bool> IsUserOwnerAsync(string userId);
 
+        //Validation
+        public Task<bool> DoesUserOwnAllPoemsAsync(string userId, string[] poemIds);
     }
 }

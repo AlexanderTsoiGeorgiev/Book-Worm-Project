@@ -43,5 +43,7 @@
 
         //Used by BookService
         public Task<IEnumerable<PoemBookSelectViewModel>> GetUserPoemsAsPoemBookSelectViewModelAsync(string userId);
+        //this one may need its own UserService
+        public Task<bool> UserHasPoemsAsync(string id);
     }
 }

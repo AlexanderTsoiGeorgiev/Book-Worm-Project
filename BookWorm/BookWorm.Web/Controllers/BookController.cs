@@ -30,11 +30,15 @@
             {
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
+
                 BookFormViewModel model = new BookFormViewModel
                 {
                     Poems = await poemService.GetUserPoemsAsPoemBookSelectViewModelAsync(userId),
                 };
 
+                bool hasPoems = await poemService.UserHasPoemsAsync(userId);
+                if (!hasPoems) return RedirectToAction("Add", "Poem");
+                
                 return View(model);
             }
             catch (Exception)
@@ -48,17 +52,6 @@
         [HttpPost]
         public async Task<IActionResult> Add(BookFormViewModel model)
         {
-            try
-            {
-                string? userId = User.GetUserId();
-                if (userId == null) return BadRequest();
-                model.Poems = await poemService.GetUserPoemsAsPoemBookSelectViewModelAsync(userId);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -67,8 +60,11 @@
             {
                 string? authorId = User.GetUserId();
                 if (authorId == null) return BadRequest();
-                await bookService.CreateBookAsync(authorId, model);
 
+                bool userOwnsAllPoems = await bookService.DoesUserOwnAllPoemsAsync(authorId, model.PoemIds.ToArray());
+                if (!userOwnsAllPoems) return BadRequest();
+
+                await bookService.CreateBookAsync(authorId, model);
             }
             catch (Exception)
             {

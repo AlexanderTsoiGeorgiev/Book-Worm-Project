@@ -273,12 +273,6 @@
             return model;
         }
 
-        private static string[] SplitContentToReadableFormat(string content)
-        {
-            return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToArray();
-        }
-
-
         //Validation
         public async Task<bool> ExistsByIdAsync(string id)
         {
@@ -313,6 +307,18 @@
             }).ToArrayAsync();
 
             return poems;
+        }
+
+        public async Task<bool> UserHasPoemsAsync(string id)
+        {
+            bool hasPoems = await dbContext.Poems.AnyAsync(p => p.AuthorId.ToString() == id);
+            return hasPoems;
+        }
+
+        //Utility
+        private static string[] SplitContentToReadableFormat(string content)
+        {
+            return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToArray();
         }
     }
 }
