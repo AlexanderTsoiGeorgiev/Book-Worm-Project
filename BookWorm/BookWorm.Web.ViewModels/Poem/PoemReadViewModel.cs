@@ -22,6 +22,6 @@
         public DateTime? DateEdited { get; set; }
 
 
-        public IEnumerable<ReviewDisplayViewModel> Reviews { get; set; }
+        public IEnumerable<ReviewDisplayViewModel>? Reviews { get; set; }
     }
 }

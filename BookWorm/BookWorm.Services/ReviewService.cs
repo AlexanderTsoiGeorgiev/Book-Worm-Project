@@ -93,14 +93,18 @@
                                       r.IsDeleted == false)
                 .Select(r => new ReviewDisplayViewModel
                 {
+                    Id = r.Id,
+                    PoemId = r.PoemId,
+                    BookId = r.BookId,
+                    Title = r.Title,
                     Content = r.Content,
-                    Rating = r.Rating,
-                    DatePosted = r.DatePosted,
-                    DateEdited = r.DateEdited,
                     Upvotes = r.Upvotes,
                     Downvotes = r.Downvotes,
-                    PoemName = r.Poem.Title ?? string.Empty, //??
-                    BookName = r.Book.Title ?? string.Empty, //??
+                    AuthorId = r.AuthorId,
+                    AuthorName = r.Author.UserName,
+                    Rating = r.Rating,
+                    DatePosted = r.DatePosted,
+                    DateEdited = r.DateEdited
                 })
                 .ToArrayAsync();
 
@@ -127,21 +131,26 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ReviewDisplayViewModel>> GetAllPoemReviewsAsync(string poemId)
+        public async Task<IEnumerable<ReviewDisplayViewModel>?> GetAllPoemReviewsAsync(string poemId)
         {
             ReviewDisplayViewModel[]? reviews = await dbContext.Reviews
                 .Include(r => r.Poem)
+                .Include(r => r.Author)
                 .Where(r => r.PoemId != null &&
                             r.PoemId.ToString() == poemId)
                 .Select(r => new ReviewDisplayViewModel
                 {
+                    Id = r.Id,
+                    PoemId = r.PoemId,
+                    Title = r.Title,
                     Content = r.Content,
                     Upvotes = r.Upvotes,
                     Downvotes = r.Downvotes,
+                    AuthorId = r.AuthorId,
+                    AuthorName = r.Author.UserName,
                     Rating = r.Rating,
                     DatePosted = r.DatePosted,
-                    DateEdited = r.DateEdited,
-                    PoemName = r.Poem!.Title
+                    DateEdited = r.DateEdited
                 }).ToArrayAsync();
 
 

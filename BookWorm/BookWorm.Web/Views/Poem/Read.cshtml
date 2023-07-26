@@ -24,3 +24,30 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-8 offset-4">
+        @if (Model.Reviews == null)
+        {
+            <p>No review yet!</p>
+        }
+        <div class="accordion" id="reviewAccordion">
+            @foreach (ReviewDisplayViewModel review in Model.Reviews!)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="@review.Title">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#id_@review.Id" aria-expanded="true" aria-controls="id_@review.Id">
+                            @review.Title
+                        </button>
+                    </h2>
+                    <div id="id_@review.Id" class="accordion-collapse collapse" aria-labelledby="@review.Title" data-bs-parent="#reviewAccordion">
+                        <div class="accordion-body">
+                            @review.Content
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
