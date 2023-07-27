@@ -29,6 +29,7 @@
         public int Quantity { get; set; }
 
         public IEnumerable<PoemBookSelectViewModel>? Poems { get; set; }
+        public IEnumerable<string>? SelectedPoemsIds { get; set; } 
         public ICollection<string> PoemIds { get; set; } = null!;
     }
 }

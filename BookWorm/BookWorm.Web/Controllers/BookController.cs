@@ -79,12 +79,18 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            BookFormViewModel? model;
+            BookFormViewModel model;
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                bool exists = await bookService.ExistsByIdAsync(id);
+                if (!exists) return BadRequest();
+
                 model = await bookService.FindBookByIdFormModelAsync(id);
-                if (model == null) return BadRequest();
-                model.Poems = await bookService.LoadPoemsIntoFromViewModelAsync(id);
+                model.Poems = await poemService.GetUserPoemsAsPoemBookSelectViewModelAsync(userId);
+                model.SelectedPoemsIds = await bookService.GetSelectedPoemIdsAsync(id);
                 return View(model);
             }
             catch (Exception)
@@ -108,10 +114,13 @@
 
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
-                bool isUserOwner = await bookService.IsUserOwnerAsync(userId);
-                if(!isUserOwner) return BadRequest();
+                bool isUserOwner = await bookService.IsUserOwnerAsync(userId, id);
+                if (!isUserOwner) return BadRequest();
 
+
+                //Error occurs here figgure it out
                 await bookService.EditBookAsync(id, model);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
@@ -119,7 +128,6 @@
                 throw;
             }
 
-            return View(model);
         }
 
         //TODO: Add exceptions and Get action

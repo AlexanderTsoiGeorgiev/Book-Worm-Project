@@ -46,7 +46,7 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<BookFormViewModel?> FindBookByIdFormModelAsync(int id)
+        public async Task<BookFormViewModel> FindBookByIdFormModelAsync(int id)
         {
             BookFormViewModel? book = await dbContext.Books
                 .AsNoTracking()
@@ -59,13 +59,13 @@
                     Price = b.Price,
                     Quantity = b.Quantity,
                 })
-                .FirstOrDefaultAsync();
+                .FirstAsync();
 
             return book;
         }
         public async Task EditBookAsync(int id, BookFormViewModel model)
         {
-            Book entity = await FindBookByIdAsync(id);
+            Book entity = await dbContext.Books.Include(b => b.BooksPoems).Where(b => b.Id == id).FirstAsync();
             entity.Title = model.Title;
             entity.Description = model.Description;
             entity.ImageUrl = model.ImageUrl;
@@ -77,7 +77,8 @@
             {
                 mappingEntites.Add(new BookPoem { BookId = entity.Id, PoemId = Guid.Parse(poemId) });
             }
-            entity.BooksPoems = mappingEntites.ToArray();
+            //error occurs here probablly
+            entity.BooksPoems = mappingEntites.ToList();
 
             await dbContext.SaveChangesAsync();
         }
@@ -115,9 +116,9 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsUserOwnerAsync(string userId)
+        public async Task<bool> IsUserOwnerAsync(string userId, int bookId)
         {
-            Book? book = await dbContext.Books.FindAsync(Guid.Parse(userId));
+            Book? book = await dbContext.Books.FindAsync(bookId);
             return book!.AuthorId.ToString() == userId;
         }
 
@@ -136,16 +137,13 @@
             return allOwned.All(b => b == true);
         }
 
-        public async Task<IEnumerable<PoemBookSelectViewModel>> LoadPoemsIntoFromViewModelAsync(int id)
+        public async Task<IEnumerable<string>> GetSelectedPoemIdsAsync(int id)
         {
-            PoemBookSelectViewModel[] poems = await dbContext.BookPoem
+            string[] poems = await dbContext.BookPoem
                .Include(bp => bp.Poem)
                .Where(bp => bp.BookId == id)
-               .Select(bp => new PoemBookSelectViewModel
-               {
-                   Id = bp.Poem.Id,
-                   Title = bp.Poem.Title
-               }).ToArrayAsync();
+               .Select(bp => bp.Poem.Id.ToString())
+               .ToArrayAsync();
 
             return poems;
         }
