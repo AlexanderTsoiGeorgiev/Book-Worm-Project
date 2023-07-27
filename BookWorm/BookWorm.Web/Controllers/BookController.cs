@@ -38,7 +38,7 @@
 
                 bool hasPoems = await poemService.UserHasPoemsAsync(userId);
                 if (!hasPoems) return RedirectToAction("Add", "Poem");
-                
+
                 return View(model);
             }
             catch (Exception)
@@ -79,17 +79,19 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            BookFormViewModel model;
+            BookFormViewModel? model;
             try
             {
                 model = await bookService.FindBookByIdFormModelAsync(id);
+                if (model == null) return BadRequest();
+                model.Poems = await bookService.LoadPoemsIntoFromViewModelAsync(id);
+                return View(model);
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(int id, BookFormViewModel model)
@@ -101,6 +103,14 @@
 
             try
             {
+                bool exists = await bookService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+                bool isUserOwner = await bookService.IsUserOwnerAsync(userId);
+                if(!isUserOwner) return BadRequest();
+
                 await bookService.EditBookAsync(id, model);
             }
             catch (Exception)

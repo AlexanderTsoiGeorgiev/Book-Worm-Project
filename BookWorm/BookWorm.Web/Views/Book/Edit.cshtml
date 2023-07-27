@@ -1,0 +1,17 @@
+﻿@model BookFormViewModel
+@{
+    ViewData["Title"] = "Edit Book";
+    ViewData["Action"] = "Edit";
+}
+
+<h2 class="text-center">
+    @ViewData["Title"]
+</h2>
+<hr />
+
+<partial name="_BookFormPartial" model="@Model"></partial>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

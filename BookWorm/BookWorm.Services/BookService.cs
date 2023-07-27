@@ -9,6 +9,7 @@
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Book;
+    using BookWorm.Web.ViewModels.Poem;
 
     public class BookService : IBookService
     {
@@ -45,7 +46,7 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<BookFormViewModel> FindBookByIdFormModelAsync(int id)
+        public async Task<BookFormViewModel?> FindBookByIdFormModelAsync(int id)
         {
             BookFormViewModel? book = await dbContext.Books
                 .AsNoTracking()
@@ -56,14 +57,9 @@
                     Description = b.Description,
                     ImageUrl = b.ImageUrl,
                     Price = b.Price,
-                    Quantity = b.Quantity
+                    Quantity = b.Quantity,
                 })
                 .FirstOrDefaultAsync();
-
-            if (book == null)
-            {
-                throw new Exception();
-            }
 
             return book;
         }
@@ -75,6 +71,13 @@
             entity.ImageUrl = model.ImageUrl;
             entity.Price = model.Price;
             entity.Quantity = model.Quantity;
+
+            ICollection<BookPoem> mappingEntites = new HashSet<BookPoem>();
+            foreach (string poemId in model.PoemIds)
+            {
+                mappingEntites.Add(new BookPoem { BookId = entity.Id, PoemId = Guid.Parse(poemId) });
+            }
+            entity.BooksPoems = mappingEntites.ToArray();
 
             await dbContext.SaveChangesAsync();
         }
@@ -100,11 +103,7 @@
         {
             Book? entity = await dbContext.Books.FindAsync(id);
 
-            if (entity == null)
-            {
-                throw new Exception();
-            }
-            return entity;
+            return entity!;
         }
 
         public async Task SoftDeleteBookAsync(int id)
@@ -128,13 +127,33 @@
         public async Task<bool> DoesUserOwnAllPoemsAsync(string userId, string[] poemIds)
         {
             ApplicationUser? user = await dbContext.Users.FindAsync(userId);
-            ICollection<bool> allOwned = new List<bool>(); 
+            ICollection<bool> allOwned = new List<bool>();
             foreach (string poemId in poemIds)
             {
                 allOwned.Add(user!.Poems.Any(p => p.Id == Guid.Parse(poemId)));
             }
 
             return allOwned.All(b => b == true);
+        }
+
+        public async Task<IEnumerable<PoemBookSelectViewModel>> LoadPoemsIntoFromViewModelAsync(int id)
+        {
+            PoemBookSelectViewModel[] poems = await dbContext.BookPoem
+               .Include(bp => bp.Poem)
+               .Where(bp => bp.BookId == id)
+               .Select(bp => new PoemBookSelectViewModel
+               {
+                   Id = bp.Poem.Id,
+                   Title = bp.Poem.Title
+               }).ToArrayAsync();
+
+            return poems;
+        }
+
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            bool exists = await dbContext.Books.AnyAsync(b => b.Id == id); 
+            return exists;
         }
     }
 }
