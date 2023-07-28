@@ -117,9 +117,8 @@
                 bool isUserOwner = await bookService.IsUserOwnerAsync(userId, id);
                 if (!isUserOwner) return BadRequest();
 
-
-                //Error occurs here figgure it out
                 await bookService.EditBookAsync(id, model);
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -136,6 +135,15 @@
         {
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                bool exists = await bookService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isOwner = await bookService.IsUserOwnerAsync(userId, id);
+                if (!isOwner) return BadRequest();
+
                 await bookService.SoftDeleteBookAsync(id);
             }
             catch (Exception)

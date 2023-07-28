@@ -116,15 +116,20 @@
             await dbContext.SaveChangesAsync();
         }
 
+
+        //Validation
         public async Task<bool> IsUserOwnerAsync(string userId, int bookId)
         {
             Book? book = await dbContext.Books.FindAsync(bookId);
             return book!.AuthorId.ToString() == userId;
         }
 
+        public async Task<bool> ExistsByIdAsync(int id)
+        {
+            bool exists = await dbContext.Books.AnyAsync(b => b.Id == id); 
+            return exists;
+        }
 
-
-        //Validation
         public async Task<bool> DoesUserOwnAllPoemsAsync(string userId, string[] poemIds)
         {
             ApplicationUser? user = await dbContext.Users.FindAsync(userId);
@@ -146,12 +151,6 @@
                .ToArrayAsync();
 
             return poems;
-        }
-
-        public async Task<bool> ExistsByIdAsync(int id)
-        {
-            bool exists = await dbContext.Books.AnyAsync(b => b.Id == id); 
-            return exists;
         }
     }
 }
