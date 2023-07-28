@@ -87,6 +87,9 @@
                 bool exists = await bookService.ExistsByIdAsync(id);
                 if (!exists) return BadRequest();
 
+                bool isDeleted = await bookService.IsDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
                 model = await bookService.FindBookByIdFormModelAsync(id);
                 model.Poems = await poemService.GetUserPoemsAsPoemBookSelectViewModelAsync(userId);
                 model.SelectedPoemsIds = await bookService.GetSelectedPoemIdsAsync(id);
@@ -113,8 +116,12 @@
 
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
+
                 bool isUserOwner = await bookService.IsUserOwnerAsync(userId, id);
                 if (!isUserOwner) return BadRequest();
+
+                bool isDelete = await bookService.IsDeletedAsync(id);
+                if (isDelete) return NotFound();
 
                 await bookService.EditBookAsync(id, model);
 
@@ -147,6 +154,12 @@
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Read(int id)
+        {
+            return View();
+        }
+
         //TODO: Add exceptions and Get action
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
@@ -163,6 +176,7 @@
                 if (!isOwner) return BadRequest();
 
                 await bookService.SoftDeleteBookAsync(id);
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
@@ -170,7 +184,6 @@
                 throw;
             }
 
-            return RedirectToAction("Index");
         }
     }
 }

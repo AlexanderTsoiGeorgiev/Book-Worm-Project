@@ -9,7 +9,6 @@
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Book;
-    using BookWorm.Web.ViewModels.Poem;
 
     public class BookService : IBookService
     {
@@ -52,7 +51,7 @@
         {
             string userName = dbContext.Users.Find(Guid.Parse(authorId))!.UserName;
             BookDisplayViewModel[]? userBooks = await dbContext.Books
-                .Where(b => b.AuthorId.ToString() == authorId)
+                .Where(b => b.AuthorId.ToString() == authorId && b.IsDeleted == false)
                 .Select(b => new BookDisplayViewModel
                 {
                     Id = b.Id,
@@ -129,6 +128,11 @@
 
             return allOwned.All(b => b == true);
         }
+        public async Task<bool> IsDeletedAsync(int id)
+        {
+            Book? entity = await FindBookByIdAsync(id);
+            return entity!.IsDeleted;
+        }
 
         //Utility
         public async Task<Book> FindBookByIdAsync(int id)
@@ -154,5 +158,7 @@
 
             return book;
         }
+
+       
     }
 }

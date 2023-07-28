@@ -22,6 +22,7 @@
         //Validation
         public Task<bool> ExistsByIdAsync(int id);
         public Task<bool> IsUserOwnerAsync(string userId, int bookId);
+        public Task<bool> IsDeletedAsync(int id);
         public Task<bool> DoesUserOwnAllPoemsAsync(string userId, string[] poemIds);
 
         //Utility
