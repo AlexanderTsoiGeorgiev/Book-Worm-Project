@@ -1,0 +1,19 @@
+﻿@model BookDisplayViewModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img src="@Model.ImageUrl" class="card-img-top" alt="Book Image">
+        <div class="card-body text-center">
+
+            <h4>
+                @Model.Title - by @Model.AuthorName
+            </h4>
+            <p>
+                @Model.Description
+            </p>
+            <a asp-controller="Book" asp-action="Read" asp-route-id="@Model.Id" class="btn btn-primary">
+                Read
+            </a>
+        </div>
+    </div>
+</div>

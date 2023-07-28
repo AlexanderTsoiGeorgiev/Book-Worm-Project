@@ -9,20 +9,23 @@
         //Add
         public Task CreateBookAsync(string authorId, BookFormViewModel model);
 
-        public Task<IEnumerable<BookDisplayViewModel>> GetAllUserBooksAsync(string authorId);
+        //Mine
+        public Task<IEnumerable<BookDisplayViewModel>?> GetAllUserBooksAsync(string authorId);
 
         //Edit
         public Task EditBookAsync(int id, BookFormViewModel model);
         public Task<IEnumerable<string>> GetSelectedPoemIdsAsync(int id);
-        public Task<BookFormViewModel> FindBookByIdFormModelAsync(int id);
 
         //Delete
         public Task SoftDeleteBookAsync(int id);
 
         //Validation
         public Task<bool> ExistsByIdAsync(int id);
-        public Task<Book> FindBookByIdAsync(int id);
         public Task<bool> IsUserOwnerAsync(string userId, int bookId);
         public Task<bool> DoesUserOwnAllPoemsAsync(string userId, string[] poemIds);
+
+        //Utility
+        public Task<Book> FindBookByIdAsync(int id);
+        public Task<BookFormViewModel> FindBookByIdFormModelAsync(int id);
     }
 }

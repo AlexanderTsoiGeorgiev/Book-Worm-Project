@@ -20,7 +20,7 @@
             this.dbContext = dbContext;
         }
 
-        //TODO: Add exeptions and Author id should be recieved as a parameter
+        //Add
         public async Task CreateBookAsync(string authorId, BookFormViewModel model)
         {
             Book entity = new Book
@@ -46,23 +46,26 @@
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<BookFormViewModel> FindBookByIdFormModelAsync(int id)
+
+        //Mine
+        public async Task<IEnumerable<BookDisplayViewModel>?> GetAllUserBooksAsync(string authorId)
         {
-            BookFormViewModel? book = await dbContext.Books
-                .AsNoTracking()
-                .Where(b => b.Id == id)
-                .Select(b => new BookFormViewModel
+            string userName = dbContext.Users.Find(Guid.Parse(authorId))!.UserName;
+            BookDisplayViewModel[]? userBooks = await dbContext.Books
+                .Where(b => b.AuthorId.ToString() == authorId)
+                .Select(b => new BookDisplayViewModel
                 {
+                    Id = b.Id,
                     Title = b.Title,
                     Description = b.Description,
                     ImageUrl = b.ImageUrl,
-                    Price = b.Price,
-                    Quantity = b.Quantity,
-                })
-                .FirstAsync();
+                    AuthorName = userName
+                }).ToArrayAsync();
 
-            return book;
+            return userBooks!;
         }
+
+        //Edit
         public async Task EditBookAsync(int id, BookFormViewModel model)
         {
             Book entity = await dbContext.Books.Include(b => b.BooksPoems).Where(b => b.Id == id).FirstAsync();
@@ -82,31 +85,18 @@
 
             await dbContext.SaveChangesAsync();
         }
-
-
-        //TODO: FIX THIS METHOD!
-        //idk what to fix
-        public async Task<IEnumerable<BookDisplayViewModel>> GetAllUserBooksAsync(string authorId)
+        public async Task<IEnumerable<string>> GetSelectedPoemIdsAsync(int id)
         {
-            var userName = dbContext.Users.Find(Guid.Parse(authorId))?.UserName ?? throw new ArgumentNullException();
-            var userBooks = await dbContext.Books.Where(b => b.AuthorId.ToString() == authorId).Select(b => new BookDisplayViewModel
-            {
-                Title = b.Title,
-                Description = b.Description,
-                ImageUrl = b.ImageUrl,
-                AuthorName = userName
-            }).ToArrayAsync();
+            string[] poems = await dbContext.BookPoem
+               .Include(bp => bp.Poem)
+               .Where(bp => bp.BookId == id)
+               .Select(bp => bp.Poem.Id.ToString())
+               .ToArrayAsync();
 
-            return userBooks!;
+            return poems;
         }
 
-        public async Task<Book> FindBookByIdAsync(int id)
-        {
-            Book? entity = await dbContext.Books.FindAsync(id);
-
-            return entity!;
-        }
-
+        //Delete
         public async Task SoftDeleteBookAsync(int id)
         {
             Book entity = await FindBookByIdAsync(id);
@@ -123,13 +113,11 @@
             Book? book = await dbContext.Books.FindAsync(bookId);
             return book!.AuthorId.ToString() == userId;
         }
-
         public async Task<bool> ExistsByIdAsync(int id)
         {
-            bool exists = await dbContext.Books.AnyAsync(b => b.Id == id); 
+            bool exists = await dbContext.Books.AnyAsync(b => b.Id == id);
             return exists;
         }
-
         public async Task<bool> DoesUserOwnAllPoemsAsync(string userId, string[] poemIds)
         {
             ApplicationUser? user = await dbContext.Users.FindAsync(userId);
@@ -142,15 +130,29 @@
             return allOwned.All(b => b == true);
         }
 
-        public async Task<IEnumerable<string>> GetSelectedPoemIdsAsync(int id)
+        //Utility
+        public async Task<Book> FindBookByIdAsync(int id)
         {
-            string[] poems = await dbContext.BookPoem
-               .Include(bp => bp.Poem)
-               .Where(bp => bp.BookId == id)
-               .Select(bp => bp.Poem.Id.ToString())
-               .ToArrayAsync();
+            Book? entity = await dbContext.Books.FindAsync(id);
 
-            return poems;
+            return entity!;
+        }
+        public async Task<BookFormViewModel> FindBookByIdFormModelAsync(int id)
+        {
+            BookFormViewModel? book = await dbContext.Books
+                .AsNoTracking()
+                .Where(b => b.Id == id)
+                .Select(b => new BookFormViewModel
+                {
+                    Title = b.Title,
+                    Description = b.Description,
+                    ImageUrl = b.ImageUrl,
+                    Price = b.Price,
+                    Quantity = b.Quantity,
+                })
+                .FirstAsync();
+
+            return book;
         }
     }
 }

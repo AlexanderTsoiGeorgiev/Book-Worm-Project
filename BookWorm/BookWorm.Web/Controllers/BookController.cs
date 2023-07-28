@@ -75,7 +75,6 @@
             return View(model);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -127,6 +126,25 @@
                 throw;
             }
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                IEnumerable<BookDisplayViewModel>? model = await bookService.GetAllUserBooksAsync(userId);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         //TODO: Add exceptions and Get action
