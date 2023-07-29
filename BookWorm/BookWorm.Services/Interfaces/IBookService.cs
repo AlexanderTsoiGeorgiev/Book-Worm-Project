@@ -16,6 +16,9 @@
         public Task EditBookAsync(int id, BookFormViewModel model);
         public Task<IEnumerable<string>> GetSelectedPoemIdsAsync(int id);
 
+        //Read
+        public Task<IEnumerable<PoemBookReadViewModel>> GetBookPoemsAsPoemBookReadModelAsync(int id);
+
         //Delete
         public Task SoftDeleteBookAsync(int id);
 
@@ -28,5 +31,6 @@
         //Utility
         public Task<Book> FindBookByIdAsync(int id);
         public Task<BookFormViewModel> FindBookByIdFormModelAsync(int id);
+        public Task<BookReadViewModel> FindBookByIdReadModelAsync(int id);
     }
 }

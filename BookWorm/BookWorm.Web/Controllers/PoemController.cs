@@ -34,6 +34,9 @@
             try
             {
                 filteredPoems = await poemService.GetAllPoemsFilteredAsync(model);
+                model.Poems = filteredPoems.Poems;
+                model.PoemsCount = filteredPoems.AllPoemsCount;
+                model.Categories = await poemService.GetAllCategoryNamesAsync();
 
             }
             catch (Exception)
@@ -42,9 +45,6 @@
                 throw;
             }
 
-            model.Poems = filteredPoems.Poems;
-            model.PoemsCount = filteredPoems.AllPoemsCount;
-            model.Categories = await poemService.GetAllCategoryNamesAsync();
 
             return View(model);
         }

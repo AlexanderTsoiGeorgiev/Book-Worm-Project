@@ -9,6 +9,7 @@
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Book;
+    using BookWorm.Web.ViewModels.Poem;
 
     public class BookService : IBookService
     {
@@ -95,6 +96,24 @@
             return poems;
         }
 
+        //Read
+        public async Task<IEnumerable<PoemBookReadViewModel>> GetBookPoemsAsPoemBookReadModelAsync(int id)
+        {
+            PoemBookReadViewModel[] poems = await dbContext.BookPoem
+                .Include(bp => bp.Poem)
+                .AsNoTracking()
+                .Where(bp => bp.BookId == id)
+                .Select(bp => new PoemBookReadViewModel
+                {
+                    Id = bp.PoemId.ToString(),
+                    Title = bp.Poem.Title,
+                    Content = bp.Poem.Content
+                }).ToArrayAsync();
+
+            return poems;
+        }
+
+
         //Delete
         public async Task SoftDeleteBookAsync(int id)
         {
@@ -158,7 +177,19 @@
 
             return book;
         }
+        public async Task<BookReadViewModel> FindBookByIdReadModelAsync(int id)
+        {
+            BookReadViewModel entity = await dbContext.Books
+                .Include(b => b.Author)
+                .AsNoTracking()
+                .Where(b => b.Id == id)
+                .Select(b => new BookReadViewModel
+                {
+                    Title = b.Title,
+                    AuthorUserName = b.Author.UserName
+                }).FirstAsync();
 
-       
+            return entity;
+        }
     }
 }

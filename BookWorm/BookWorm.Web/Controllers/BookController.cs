@@ -155,8 +155,17 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Read(int id)
+        public async Task<IActionResult> Read(int id, [FromQuery]BookReadViewModel model)
         {
+            try
+            {
+                model.Title 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return View();
         }
 
