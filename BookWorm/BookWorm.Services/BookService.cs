@@ -116,11 +116,15 @@
         }
         public async Task<BookReadViewModel> GetBookAsBookReadModelAsync(int id)
         {
-            BookReadViewModel model = await dbContext.Books.Include(b => b.Author).AsNoTracking().Where(b => b.Id == id).Select(b => new BookReadViewModel
-            {
-                Title = b.Title,
-                AuthorUserName = b.Author.UserName,
-            }).FirstAsync();
+            BookReadViewModel model = await dbContext.Books
+                .Include(b => b.Author)
+                .AsNoTracking()
+                .Where(b => b.Id == id)
+                .Select(b => new BookReadViewModel
+                {
+                    Title = b.Title,
+                    AuthorUserName = b.Author.UserName,
+                }).FirstAsync();
 
             return model;
         }

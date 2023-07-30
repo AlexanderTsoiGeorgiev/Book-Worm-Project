@@ -34,10 +34,16 @@
 
                 if (userId == null) return BadRequest();
 
+                bool exists = await poemService.ExistsByIdAsync(id);
+                if (!exists) return BadRequest();
+
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
                 bool isPrivete = await poemService.IsPoemPrivateAsync(id);
 
                 if (isPrivete && !isOwner) return BadRequest();
+
+                bool isDeleted = await poemService.IsPoemDeletedAsync(id);
+                if (isDeleted) return NotFound();
             }
             catch (Exception)
             {
@@ -60,10 +66,16 @@
                 string? userId = User.GetUserId();
                 if (userId == null) BadRequest();
 
+                bool exists = await poemService.ExistsByIdAsync(id);
+                if (!exists) return BadRequest();
+
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId!, id);
                 bool isPrivete = await poemService.IsPoemPrivateAsync(id);
 
                 if (isPrivete && !isOwner) return BadRequest();
+
+                bool isDeleted = await poemService.IsPoemDeletedAsync(id);
+                if (isDeleted) return NotFound();
 
                 model.PoemId = Guid.Parse(id);
                 await reviewService.CreatePoemReviewAsync(userId!, model);
@@ -81,27 +93,45 @@
         //Not implemented
         //Do these two after completing the book controller
         [HttpGet]
-        public IActionResult AddBook(int id)
+        public async Task<IActionResult> AddBook(int id)
         {
-            ReviewFormViewModel model = new ReviewFormViewModel
+            try
             {
-                BookId = id
-            };
-            return View(model);
+                bool exists = await bookService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await bookService.IsDeletedAsync(id);
+                if (isDeleted) return NotFound();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+            return View(new ReviewFormViewModel());
         }
         [HttpPost]
-        public async Task<IActionResult> AddBook(ReviewFormViewModel model)
+        public async Task<IActionResult> AddBook(int id, ReviewFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 throw new Exception();
             }
 
-            string? userId = User.GetUserId();
-            if (userId == null) return BadRequest();
 
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                bool exists = await bookService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await bookService.IsDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
                 await reviewService.CreatePoemReviewAsync(userId!, model);
             }
             catch (Exception)
