@@ -17,7 +17,8 @@
         public Task<IEnumerable<string>> GetSelectedPoemIdsAsync(int id);
 
         //Read
-        public Task<IEnumerable<PoemBookReadViewModel>> GetBookPoemsAsPoemBookReadModelAsync(int id);
+        public Task<BookReadViewModel> GetBookAsBookReadModelAsync(int id);
+        public Task<IList<PoemBookReadViewModel>> GetBookPoemsAsPoemBookReadModelAsync(int id);
 
         //Delete
         public Task SoftDeleteBookAsync(int id);

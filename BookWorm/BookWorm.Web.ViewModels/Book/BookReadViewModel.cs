@@ -8,7 +8,7 @@
     {
         public BookReadViewModel()
         {
-            Poems = new HashSet<PoemBookReadViewModel>();
+            Poems = new List<PoemBookReadViewModel>();
             CurrentPage = CurrentPageDefault;
         }
 
@@ -17,7 +17,7 @@
         public int CurrentPage { get; set; }
         public int PreviousPage { get; set; }
         public int TotalPages { get; set; }
-        public IEnumerable<PoemBookReadViewModel> Poems { get; set; }
+        public IList<PoemBookReadViewModel> Poems { get; set; }
         public PoemBookReadViewModel CurrentPoem { get; set; } = null!;
         public IEnumerable<ReviewDisplayViewModel>? Reviews { get; set; }
     }

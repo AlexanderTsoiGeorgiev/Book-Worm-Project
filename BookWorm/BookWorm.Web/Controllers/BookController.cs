@@ -159,14 +159,20 @@
         {
             try
             {
-                model.Title 
+                bool exists = await bookService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                BookReadViewModel placeholder = await bookService.GetBookAsBookReadModelAsync(id);
+                model.Title = placeholder.Title;
+                model.AuthorUserName = placeholder.AuthorUserName;
+                model.Poems = await bookService.GetBookPoemsAsPoemBookReadModelAsync(id);
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return View();
+            return View(model);
         }
 
         //TODO: Add exceptions and Get action

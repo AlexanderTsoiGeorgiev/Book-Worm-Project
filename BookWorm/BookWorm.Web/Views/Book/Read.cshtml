@@ -8,14 +8,29 @@
 
 @{
     int previousPage = Model.CurrentPage - 1;
+    int nextPage = Model.CurrentPage + 1;
     if (previousPage < 1)
     {
         previousPage = 1;
     }
+    Model.TotalPages = Model.Poems.Count();
+    Model.CurrentPoem = Model.Poems[Model.CurrentPage - 1];
 
-    <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+}
+
+<a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
    asp-controller="Book"
    asp-action="Read"
    asp-route-currentPage="@previousPage">
-    </a>
-}
+    Previous
+</a>
+
+<a class="btn btn-primary @(Model.CurrentPage == Model.TotalPages ? "disabled" : string.Empty)"
+   asp-controller="Book"
+   asp-action="Read"
+   asp-route-currentPage="@nextPage">
+    Next
+</a>
+
+<h3 class="text-center">@Model.CurrentPoem.Title</h3>
+<p>@Model.CurrentPoem.Content</p>

@@ -97,7 +97,8 @@
         }
 
         //Read
-        public async Task<IEnumerable<PoemBookReadViewModel>> GetBookPoemsAsPoemBookReadModelAsync(int id)
+
+        public async Task<IList<PoemBookReadViewModel>> GetBookPoemsAsPoemBookReadModelAsync(int id)
         {
             PoemBookReadViewModel[] poems = await dbContext.BookPoem
                 .Include(bp => bp.Poem)
@@ -111,6 +112,16 @@
                 }).ToArrayAsync();
 
             return poems;
+        }
+        public async Task<BookReadViewModel> GetBookAsBookReadModelAsync(int id)
+        {
+            BookReadViewModel model = await dbContext.Books.Include(b => b.Author).AsNoTracking().Where(b => b.Id == id).Select(b => new BookReadViewModel
+            {
+                Title = b.Title,
+                AuthorUserName = b.Author.UserName,
+            }).FirstAsync();
+
+            return model;
         }
 
 
@@ -191,5 +202,7 @@
 
             return entity;
         }
+
+
     }
 }
