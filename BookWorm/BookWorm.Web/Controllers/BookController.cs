@@ -169,7 +169,6 @@
             }
             catch (Exception)
             {
-
                 throw;
             }
             return View(model);

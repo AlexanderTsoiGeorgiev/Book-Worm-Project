@@ -33,4 +33,7 @@
 </a>
 
 <h3 class="text-center">@Model.CurrentPoem.Title</h3>
-<p>@Model.CurrentPoem.Content</p>
+@foreach (string lyric in Model.CurrentPoem.ReadableContent)
+{
+    <p>@lyric</p>
+}

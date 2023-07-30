@@ -108,7 +108,8 @@
                 {
                     Id = bp.PoemId.ToString(),
                     Title = bp.Poem.Title,
-                    Content = bp.Poem.Content
+                    Content = bp.Poem.Content,
+                    ReadableContent = SplitContentToReadableFormat(bp.Poem.Content)
                 }).ToArrayAsync();
 
             return poems;
@@ -203,6 +204,9 @@
             return entity;
         }
 
-
+        private static string[] SplitContentToReadableFormat(string content)
+        {
+            return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToArray();
+        }
     }
 }
