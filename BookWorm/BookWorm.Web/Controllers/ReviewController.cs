@@ -51,6 +51,7 @@
                 throw;
             }
 
+            ViewData["Title"] = "Add Poem Review";
             return View(new ReviewFormViewModel());
         }
         [HttpPost]
@@ -109,7 +110,7 @@
                 throw;
             }
 
-
+            ViewData["Title"] = "Add Book Review";
             return View(new ReviewFormViewModel());
         }
         [HttpPost]
