@@ -63,6 +63,7 @@
                 .Where(r => r.Id.ToString() == id)
                 .Select(r => new ReviewFormViewModel
                 {
+                    Title = r.Title,
                     Content = r.Content,
                     Rating = r.Rating,
                     PoemId = r.PoemId,
@@ -174,18 +175,19 @@
             Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
             return review!.AuthorId.ToString() == authorId;
         }
-        public async Task<string?> RetrivePoemIdAsync(string id)
+        public async Task<string?> RetriveReviewPoemIdAsync(string id)
         {
             Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
 
             return review!.PoemId.ToString();
         }
 
-        public async Task<int?> RetriveBookIdAsync(string id)
+        public async Task<int?> RetriveReviewBookIdAsync(string id)
         {
             Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
 
             return review!.BookId;
         }
+
     }
 }

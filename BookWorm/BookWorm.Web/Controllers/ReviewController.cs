@@ -52,6 +52,7 @@
             }
 
             ViewData["Title"] = "Add Poem Review";
+            ViewData["Action"] = "Submit";
             return View(new ReviewFormViewModel());
         }
         [HttpPost]
@@ -91,8 +92,7 @@
         }
 
 
-        //Not implemented
-        //Do these two after completing the book controller
+        //Works, but add proper exceptions and error pages
         [HttpGet]
         public async Task<IActionResult> AddBook(int id)
         {
@@ -111,6 +111,7 @@
             }
 
             ViewData["Title"] = "Add Book Review";
+            ViewData["Action"] = "Submit";
             return View(new ReviewFormViewModel());
         }
         [HttpPost]
@@ -133,14 +134,15 @@
                 bool isDeleted = await bookService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
 
-                await reviewService.CreatePoemReviewAsync(userId!, model);
+                model.BookId = id;
+                await reviewService.CreateBookReviewAsync(userId!, model);
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         //Works
@@ -155,11 +157,12 @@
                 bool reviewExists = await reviewService.ExistsByIdAsync(id);
                 if (!reviewExists) return NotFound();
 
-
-                string? poemId = await reviewService.RetrivePoemIdAsync(id);
+                string? poemId = await reviewService.RetriveReviewPoemIdAsync(id);
                 if (poemId == null) return BadRequest();
+
                 bool poemExists = await poemService.ExistsByIdAsync(poemId);
                 if (!poemExists) return BadRequest();
+
                 bool isPoemDeleted = await poemService.IsPoemDeletedAsync(poemId);
                 if (isPoemDeleted) return BadRequest();
 
@@ -173,6 +176,9 @@
 
                 ReviewFormViewModel model = await reviewService.FindReviewByIdAsync(id);
 
+
+                ViewData["Title"] = "Edit Poem Review";
+                ViewData["Action"] = "Edit";
                 return View(model);
             }
             catch (Exception)
@@ -197,11 +203,12 @@
                 bool reviewExists = await reviewService.ExistsByIdAsync(id);
                 if (!reviewExists) return NotFound();
 
-
-                string? poemId = await reviewService.RetrivePoemIdAsync(id);
+                string? poemId = await reviewService.RetriveReviewPoemIdAsync(id);
                 if (poemId == null) return BadRequest();
+
                 bool poemExists = await poemService.ExistsByIdAsync(poemId);
                 if (!poemExists) return BadRequest();
+
                 bool isPoemDeleted = await poemService.IsPoemDeletedAsync(poemId);
                 if (isPoemDeleted) return BadRequest();
 
@@ -226,14 +233,69 @@
 
         //Not Implemented
         [HttpGet]
-        public IActionResult EditBook(int id)
+        public async Task<IActionResult> EditBook(string id)
         {
-            return View();
+            try
+            {
+                bool exists = await reviewService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                int? bookId = await reviewService.RetriveReviewBookIdAsync(id); 
+                if(bookId == null) return NotFound();
+
+                bool bookExists = await bookService.ExistsByIdAsync((int)bookId);
+                if (!bookExists) return NotFound();
+
+                bool isBookDeleted = await bookService.IsDeletedAsync((int)bookId);
+                if (isBookDeleted) return NotFound();
+
+                ReviewFormViewModel model = await reviewService.FindReviewByIdAsync(id);
+
+                ViewData["Title"] = "Edit Book Review";
+                ViewData["Action"] = "Edit";
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         [HttpPost]
-        public IActionResult EditBook(int id, ReviewFormViewModel model)
+        public async Task<IActionResult> EditBook(string id, ReviewFormViewModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                bool exists = await reviewService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                int? bookId = await reviewService.RetriveReviewBookIdAsync(id);
+                if (bookId == null) return NotFound();
+
+                bool bookExists = await bookService.ExistsByIdAsync((int)bookId);
+                if (!bookExists) return NotFound();
+
+                bool isBookDeleted = await bookService.IsDeletedAsync((int)bookId);
+                if (isBookDeleted) return NotFound();
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         //TODO: Add Get method and add exceptions

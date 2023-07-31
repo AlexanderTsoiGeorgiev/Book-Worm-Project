@@ -23,7 +23,7 @@
         public Task<bool> ExistsByIdAsync(string id);
         public Task<bool> IsReviewDeletedAsync(string id);
         public Task<bool> IsUserReviewOwnerAsync(string authorId, string id);
-        public Task<string?> RetrivePoemIdAsync(string id);
-        public Task<int?> RetriveBookIdAsync(string id);
+        public Task<string?> RetriveReviewPoemIdAsync(string id);
+        public Task<int?> RetriveReviewBookIdAsync(string id);
     }
 }

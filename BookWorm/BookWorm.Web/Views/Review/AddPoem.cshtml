@@ -1,14 +1,10 @@
 ﻿@model ReviewFormViewModel
 
-@{
-    ViewData["Action"] = "Submit";
-}
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
 <partial name="_ReviewFormPartial" model="@Model"></partial>
-
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial"></partial>
