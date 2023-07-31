@@ -3,6 +3,7 @@
     using BookWorm.Data.Models;
     using BookWorm.Web.ViewModels.Book;
     using BookWorm.Web.ViewModels.Poem;
+    using BookWorm.Web.ViewModels.Review;
 
     public interface IBookService
     {
@@ -19,6 +20,7 @@
         //Read
         public Task<BookReadViewModel> GetBookAsBookReadModelAsync(int id);
         public Task<IList<PoemBookReadViewModel>> GetBookPoemsAsPoemBookReadModelAsync(int id);
+        public Task<IEnumerable<ReviewDisplayViewModel>?> GetBookReviewsAsReviewDisplayViewModel(int id);
 
         //Delete
         public Task SoftDeleteBookAsync(int id);

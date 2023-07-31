@@ -10,6 +10,7 @@
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Book;
     using BookWorm.Web.ViewModels.Poem;
+    using BookWorm.Web.ViewModels.Review;
 
     public class BookService : IBookService
     {
@@ -98,6 +99,20 @@
 
         //Read
 
+        public async Task<BookReadViewModel> GetBookAsBookReadModelAsync(int id)
+        {
+            BookReadViewModel model = await dbContext.Books
+                .Include(b => b.Author)
+                .AsNoTracking()
+                .Where(b => b.Id == id)
+                .Select(b => new BookReadViewModel
+                {
+                    Title = b.Title,
+                    AuthorUserName = b.Author.UserName,
+                }).FirstAsync();
+
+            return model;
+        }
         public async Task<IList<PoemBookReadViewModel>> GetBookPoemsAsPoemBookReadModelAsync(int id)
         {
             PoemBookReadViewModel[] poems = await dbContext.BookPoem
@@ -114,19 +129,24 @@
 
             return poems;
         }
-        public async Task<BookReadViewModel> GetBookAsBookReadModelAsync(int id)
+        public async Task<IEnumerable<ReviewDisplayViewModel>?> GetBookReviewsAsReviewDisplayViewModel(int id)
         {
-            BookReadViewModel model = await dbContext.Books
-                .Include(b => b.Author)
-                .AsNoTracking()
-                .Where(b => b.Id == id)
-                .Select(b => new BookReadViewModel
-                {
-                    Title = b.Title,
-                    AuthorUserName = b.Author.UserName,
-                }).FirstAsync();
+            ReviewDisplayViewModel[]? reviews = await dbContext.Reviews.Include(r => r.Author).AsNoTracking().Where(r => r.BookId == id).Select(r => new ReviewDisplayViewModel
+            {
+                Id = r.Id,
+                AuthorId = r.AuthorId,
+                AuthorName = r.Author.UserName,
+                Title = r.Title,
+                Content = r.Content,
+                BookId = id,
+                DatePosted = r.DatePosted,
+                DateEdited = r.DateEdited,
+                Rating = r.Rating,
+                Upvotes = r.Upvotes,
+                Downvotes = r.Downvotes,
+            }).ToArrayAsync();
 
-            return model;
+            return reviews;
         }
 
 
@@ -212,5 +232,7 @@
         {
             return content.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries).ToArray();
         }
+
+        
     }
 }

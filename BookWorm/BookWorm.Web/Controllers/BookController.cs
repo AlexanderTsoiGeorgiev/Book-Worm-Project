@@ -169,6 +169,7 @@
                 model.Title = placeholder.Title;
                 model.AuthorUserName = placeholder.AuthorUserName;
                 model.Poems = await bookService.GetBookPoemsAsPoemBookReadModelAsync(id);
+                model.Reviews = await bookService.GetBookReviewsAsReviewDisplayViewModel(id);
             }
             catch (Exception)
             {
