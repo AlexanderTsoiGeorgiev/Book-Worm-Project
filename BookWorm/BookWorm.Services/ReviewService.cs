@@ -80,6 +80,7 @@
             entity!.Content = model.Content;
             entity!.Rating = model.Rating;
             entity!.Title = model.Title;
+            entity!.DateEdited = DateTime.Now;
 
             await dbContext.SaveChangesAsync();
         }
@@ -108,11 +109,6 @@
                     DateEdited = r.DateEdited
                 })
                 .ToArrayAsync();
-
-            if (userReviews.Any())
-            {
-                throw new Exception();
-            }
 
             return userReviews;
         }

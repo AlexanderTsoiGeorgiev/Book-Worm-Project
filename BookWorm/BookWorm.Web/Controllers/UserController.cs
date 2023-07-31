@@ -8,5 +8,25 @@
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult MyPoems()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult MyBooks()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult MyReviews()
+        {
+            return View();
+        }
+
+
     }
 }
