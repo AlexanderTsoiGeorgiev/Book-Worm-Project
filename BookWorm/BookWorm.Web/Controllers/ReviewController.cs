@@ -231,7 +231,9 @@
             }
         }
 
-        //Not Implemented
+        //Semi-implemented
+        //Test it
+        //Add Exceptions
         [HttpGet]
         public async Task<IActionResult> EditBook(string id)
         {
@@ -305,6 +307,12 @@
         {
             try
             {
+                bool exists = await reviewService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
                 await reviewService.SoftDeleteReviewAsync(id);
             }
             catch (Exception)
