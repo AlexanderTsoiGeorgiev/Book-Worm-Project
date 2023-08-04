@@ -154,5 +154,108 @@
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Read(string id)
+        {
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null!) return BadRequest();
+
+                bool articleExists = await articleService.ExistsByIdAsync(id);
+                if (!articleExists) return NotFound();
+
+                bool isDeleted = await articleService.IsDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                ArticleReadViewModel model = await articleService.FindArticleAsArticleReadViewModelByIdAsync(id);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                IEnumerable<ArticleDisplayViewModel> model = await articleService.GetAllUserArticlesAsync(userId);
+
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                bool exists = await articleService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await articleService.IsDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
+                if (!isUserOwner) return BadRequest();
+
+
+                ArticleDetailsViewModel model = await articleService.FindArticleAsArticleDetailsViewModelByIdAsync(id);
+                return View(model);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                bool exists = await articleService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await articleService.IsDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
+                if (!isUserOwner) return BadRequest();
+
+
+                await articleService.SoftDeleteAsync(id);
+                return RedirectToAction(nameof(Index));
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

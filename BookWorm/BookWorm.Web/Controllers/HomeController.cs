@@ -31,17 +31,15 @@
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
         {
-            if (statusCode == 400 || statusCode == 404)
+            switch (statusCode)
             {
-                return View("Error404");
+                case 400:
+                    return View("Error400");
+                case 404:
+                    return View("Error404");
+                default:
+                    return View();
             }
-
-            if (statusCode == 401)
-            {
-                return View("Error401");
-            }
-
-            return View();
         }
     }
 }

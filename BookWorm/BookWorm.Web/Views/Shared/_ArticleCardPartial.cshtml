@@ -1,0 +1,17 @@
+﻿@model ArticleDisplayViewModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <a asp-controller="Article" asp-action="Read" asp-route-id="@Model.Id" class="page-link">
+                <h4>
+                    @Model.Title
+                </h4>
+            </a>
+            <h6>
+                @Model.DateCreated
+            </h6>
+            <a asp-controller="Article" asp-action="Details" asp-route-itemid="@Model.Id" class="btn btn-primary">Details</a>
+        </div>
+    </div>
+</div>

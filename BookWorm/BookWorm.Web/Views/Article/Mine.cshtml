@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ArticleDisplayViewModel>
+
+@{
+    ViewData["Title"] = "My Articles";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+
+<div class="row mt-5">
+    @foreach (var article in Model)
+    {
+        <partial name="_ArticleCardPartial" model="@article" />
+    }
+</div>

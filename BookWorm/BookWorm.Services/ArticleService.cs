@@ -8,6 +8,7 @@
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Article;
+    using System.Collections.Generic;
 
     public class ArticleService : IArticleService
     {
@@ -37,10 +38,10 @@
         //Edit
         public async Task EditArticleAsync(string id, ArticleFormViewModel model)
         {
-            Article article = await FindArticleByIdAsync(id);
-            article.Title = model.Title;
-            article.Content = model.Content;
-            article.DateEdited = DateTime.Now;
+            Article? article = await dbContext.Articles.FindAsync(Guid.Parse(id));
+            article!.Title = model.Title;
+            article!.Content = model.Content;
+            article!.DateEdited = DateTime.Now;
 
             await dbContext.SaveChangesAsync();
         }
@@ -50,6 +51,14 @@
             return article.PoemId;
         }
 
+        //Delete
+        public async Task SoftDeleteAsync(string id)
+        {
+            Article? entity = await dbContext.Articles.FindAsync(Guid.Parse(id));
+            entity!.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync();
+        }
 
         //Validation
         public async Task<bool> ExistsByIdAsync(string id)
@@ -89,7 +98,48 @@
 
             return model;
         }
+        public async Task<ArticleReadViewModel> FindArticleAsArticleReadViewModelByIdAsync(string id)
+        {
+            ArticleReadViewModel model = await dbContext.Articles
+                .Where(a => a.Id == Guid.Parse(id))
+                .Select(a => new ArticleReadViewModel
+                {
+                    Title = a.Title,
+                    Content = a.Content,
+                }).FirstAsync();
 
-      
+            return model;
+        }
+        public async Task<ArticleDetailsViewModel> FindArticleAsArticleDetailsViewModelByIdAsync(string id)
+        {
+            ArticleDetailsViewModel model = await dbContext.Articles
+                .Where(a => a.Id == Guid.Parse(id))
+                .Select(a => new ArticleDetailsViewModel
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Content = a.Content,
+                    DateCreated = a.DatePosted,
+                    DateEdited = a.DateEdited
+                }).FirstAsync();
+
+            return model;
+        }
+
+        public async Task<IEnumerable<ArticleDisplayViewModel>> GetAllUserArticlesAsync(string authorId)
+        {
+            ArticleDisplayViewModel[] articles = await dbContext.Articles
+                .Where(a => a.AuthorId.ToString() == authorId && a.IsDeleted == false)
+                .Select(a => new ArticleDisplayViewModel
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    DateCreated = a.DatePosted
+                }).ToArrayAsync();
+
+            return articles;
+        }
+
+        
     }
 }

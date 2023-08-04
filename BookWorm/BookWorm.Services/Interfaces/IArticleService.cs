@@ -12,6 +12,9 @@
         public Task EditArticleAsync(string id, ArticleFormViewModel model);
         public Task<Guid> GetArticlePoemIdAsync(string id);
 
+        //Delete
+        public Task SoftDeleteAsync(string id);
+
         //Validation
         public Task<bool> ExistsByIdAsync(string id);
         public Task<bool> IsUserArticleOwner(string authorId, string articleId);
@@ -20,5 +23,8 @@
         //Utility
         public Task<Article> FindArticleByIdAsync(string id);
         public Task<ArticleFormViewModel> FindArticleAsArticleFormViewModelByIdAsync(string id);
+        public Task<ArticleReadViewModel> FindArticleAsArticleReadViewModelByIdAsync(string id);
+        public Task<ArticleDetailsViewModel> FindArticleAsArticleDetailsViewModelByIdAsync(string id);
+        public Task<IEnumerable<ArticleDisplayViewModel>> GetAllUserArticlesAsync(string authorId);
     }
 }

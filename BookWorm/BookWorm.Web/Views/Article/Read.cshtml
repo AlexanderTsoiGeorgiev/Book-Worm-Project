@@ -1,0 +1,16 @@
+﻿@model ArticleReadViewModel
+
+@{
+    ViewData["Title"] = $"Read {Model.Title}";
+}
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <h2 class="text-center fw-bold">@Model.Title</h2>
+        <hr />
+    </div>
+
+    <div class="mt-3">
+        @Model.Content
+    </div>
+</div>
