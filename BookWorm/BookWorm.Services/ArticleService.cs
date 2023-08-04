@@ -22,7 +22,8 @@
                 Title = model.Title,
                 Content = model.Content,
                 AuthorId = Guid.Parse(authorId),
-                PoemId = model.PoemId
+                PoemId = model.PoemId,
+
             };
 
             await dbContext.AddAsync(article);

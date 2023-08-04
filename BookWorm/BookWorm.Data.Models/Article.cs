@@ -41,7 +41,6 @@
         [Required]
         public DateTime DatePosted { get; set; }
 
-        [Required]
-        public DateTime DateEdited { get; set; } 
+        public DateTime? DateEdited { get; set; } 
     }
 }
