@@ -37,5 +37,11 @@
         public Guid AuthorId { get; set; }
         [Required]
         public ApplicationUser Author { get; set; } = null!;
+
+        [Required]
+        public DateTime DatePosted { get; set; }
+
+        [Required]
+        public DateTime DateEdited { get; set; } 
     }
 }
