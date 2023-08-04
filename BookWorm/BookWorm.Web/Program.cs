@@ -46,6 +46,7 @@ namespace BookWorm.Web
             builder.Services.AddScoped<IPoemService, PoemService>();
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
+            builder.Services.AddScoped<IArticleService, ArticleService>();
 
             var app = builder.Build();
 
