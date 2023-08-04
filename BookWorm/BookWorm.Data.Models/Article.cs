@@ -3,6 +3,8 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    using static BookWorm.Data.Common.DataModelsValidationConstants.ArticleValidationConstants;
+
     public class Article
     {
         public Article()
@@ -14,9 +16,11 @@
         public Guid Id { get; set; }
 
         [Required]
+        [MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
         [Required]
+        [MaxLength(ContentMaxLength)]
         public string Content { get; set; } = null!;
 
         [Required]

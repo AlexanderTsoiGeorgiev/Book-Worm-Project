@@ -52,5 +52,14 @@
             public const int NameMinLength = 2;
             public const int NameMaxLength = 50;
         }
+
+        public static class ArticleValidationConstants
+        {
+            public const int TitleMinLength = 2;
+            public const int TitleMaxLength = 200;
+
+            public const int ContentMinLength = 100;
+            public const int ContentMaxLength = 100_000;
+        }
     }
 }
