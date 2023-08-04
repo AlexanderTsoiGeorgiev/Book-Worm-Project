@@ -5,6 +5,7 @@
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Article;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
+    using BookWorm.Services;
 
     public class ArticleController : BaseController
     {
@@ -30,6 +31,9 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
 
+                bool exists = await poemService.ExistsByIdAsync(id);
+                if (!exists) return BadRequest();
+
                 bool isDeleted = await poemService.IsPoemDeletedAsync(id);
                 if (isDeleted) return NotFound();
 
@@ -47,7 +51,7 @@
 
                 throw;
             }
-            
+
         }
 
         [HttpPost]
@@ -83,6 +87,72 @@
 
                 throw;
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                bool articleExists = await articleService.ExistsByIdAsync(id);
+                if (!articleExists) return NotFound();
+
+                bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
+                if (!isUserOwner) return BadRequest();
+
+                bool isDeleted = await articleService.IsDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                ArticleFormViewModel model = await articleService.FindArticleAsArticleFormViewModelByIdAsync(id);
+
+                ViewData["Title"] = "Edit Article";
+                ViewData["Action"] = "Edit";
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, ArticleFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Title"] = "Edit Article";
+                ViewData["Action"] = "Edit";
+                return View(model);
+            }
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
+                bool articleExists = await articleService.ExistsByIdAsync(id);
+                if (!articleExists) return NotFound();
+
+                bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
+                if (!isUserOwner) return BadRequest();
+
+                bool isDeleted = await articleService.IsDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                model.PoemId = await articleService.GetArticlePoemIdAsync(id);
+
+                await articleService.EditArticleAsync(id, model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
