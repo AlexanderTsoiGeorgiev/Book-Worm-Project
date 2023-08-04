@@ -23,7 +23,7 @@
                 Content = model.Content,
                 AuthorId = Guid.Parse(authorId),
                 PoemId = model.PoemId,
-
+                DatePosted = DateTime.Now
             };
 
             await dbContext.AddAsync(article);
