@@ -53,5 +53,7 @@
         public IEnumerable<Review> Reviews { get; set; } = null!;
 
         public IEnumerable<BookPoem> BooksPoems { get; set; } = null!;
+
+        public IEnumerable<Article> Articles { get; set; } = null!;
     }
 }
