@@ -21,6 +21,7 @@
 <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
    asp-controller="Book"
    asp-action="Read"
+   asp-area=""
    asp-route-currentPage="@previousPage">
     Previous
 </a>
@@ -28,6 +29,7 @@
 <a class="btn btn-primary @(Model.CurrentPage == Model.TotalPages ? "disabled" : string.Empty)"
    asp-controller="Book"
    asp-action="Read"
+   asp-area=""
    asp-route-currentPage="@nextPage">
     Next
 </a>

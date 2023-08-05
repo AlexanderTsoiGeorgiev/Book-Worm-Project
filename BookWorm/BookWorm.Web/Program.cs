@@ -84,8 +84,17 @@ namespace BookWorm.Web
                 app.SeedModerators(emails);
             }
 
-            app.MapDefaultControllerRoute();
-            app.MapRazorPages();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                       name: "areas",
+                       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapRazorPages();
+            });
 
             app.Run();
         }

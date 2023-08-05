@@ -11,7 +11,7 @@
         <div class="text-end">
             <blockquote class="blockquote">
                 <p>
-                    By - <a class="link-primary" asp-action="" asp-controller="" asp-route-id="@Model.AuthorId">@Model.AuthorName</a>
+                    By - <a class="link-primary" asp-action="Index" asp-controller="User" asp-area="" asp-route-id="@Model.AuthorId">@Model.AuthorName</a>
                 </p>
             </blockquote>
         </div>
@@ -50,6 +50,14 @@
                     <div id="id_@review.Id" class="accordion-collapse collapse" aria-labelledby="@review.Title" data-bs-parent="#reviewAccordion">
                         <div class="accordion-body">
                             @review.Content
+                        </div>
+                        <div>
+                            <a class="btn btn-success">
+                                Like
+                            </a>
+                            <a class="btn btn-danger">
+                                Dislike
+                            </a>
                         </div>
                     </div>
                 </div>

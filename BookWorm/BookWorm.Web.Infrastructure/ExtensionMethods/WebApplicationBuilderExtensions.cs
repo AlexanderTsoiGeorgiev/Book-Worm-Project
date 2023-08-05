@@ -1,10 +1,10 @@
 ﻿namespace BookWorm.Web.Infrastructure.ExtensionMethods
 {
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Identity;
-    using BookWorm.Data.Models;
+    using Microsoft.Extensions.DependencyInjection;
 
+    using BookWorm.Data.Models;
     using static BookWorm.Common.GeneralApplicationConstants;
 
     public static class WebApplicationBuilderExtensions

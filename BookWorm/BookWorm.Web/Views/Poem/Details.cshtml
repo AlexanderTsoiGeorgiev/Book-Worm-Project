@@ -37,7 +37,7 @@
                     <div class="col-6">
                         <div class="text-center">
                             <button type="button" class="btn mt-3 btn-dark text-center">
-                                <a class="text-decoration-none text-center text-light" asp-action="Edit" asp-controller="Poem" asp-route-id="@Model.Id">Edit</a>
+                                <a class="text-decoration-none text-center text-light" asp-action="Edit" asp-controller="Poem" asp-area="" asp-route-id="@Model.Id">Edit</a>
                             </button>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="button" class="btn btn-primary">
-                                                <a class="text-decoration-none text-center text-light" asp-action="Delete" asp-controller="Poem" asp-route-id="@Model.Id.ToString()">Yes</a>
+                                                <a class="text-decoration-none text-center text-light" asp-action="Delete" asp-controller="Poem" asp-area="" asp-route-id="@Model.Id.ToString()">Yes</a>
                                                 </button>
                                         </div>
                                     </div>

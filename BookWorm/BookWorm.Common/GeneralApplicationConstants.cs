@@ -14,5 +14,8 @@
         public const string ModeratorRoleName = "Moderator";
         public const string Moderator1UserEmail = "moderator1@bookworm.com";
         public const string Moderator2UserEmail = "moderator2@bookworm.com";
+
+        public const string AdminAreaName = "Admin";
+        public const string ForumAreaName = "Forum";
     }
 }
