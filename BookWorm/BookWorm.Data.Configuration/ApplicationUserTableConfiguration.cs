@@ -5,6 +5,8 @@
 
     using BookWorm.Data.Models;
     using static BookWorm.Data.Common.AuthorIds;
+    using static BookWorm.Data.Common.StaffIds;
+    using static BookWorm.Common.GeneralApplicationConstants;
 
     public class ApplicationUserTableConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
@@ -78,6 +80,71 @@
             };
             users.Add(user);
 
+
+            //Admin User
+            user = new ApplicationUser()
+            {
+                Id = Guid.Parse(AdminId),
+                UserName = AdminUserEmail,
+                NormalizedUserName = AdminUserEmail.ToUpper(),
+                Email = AdminUserEmail,
+                NormalizedEmail = AdminUserEmail.ToUpper(),
+                EmailConfirmed = false,
+                PasswordHash = "AQAAAAEAACcQAAAAEFAdC3im6xmdFIsf+MsIcopBuSNFz2HU15zaS5SjNu1VMUdSHfYa/iF0NxxiqNA9uw==",
+                SecurityStamp = "T4DMIR6DSDAR5R7QTFMX6MR6QSOXGGHH",
+                ConcurrencyStamp = "f13caeaf-6cbe-4608-8b5b-4434d2d282fd",
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnd = null,
+                LockoutEnabled = true,
+                AccessFailedCount = 0
+            };
+            users.Add(user);
+
+
+            //Moderator1 User
+            user = new ApplicationUser()
+            {
+                Id = Guid.Parse(Moderator1Id),
+                UserName = Moderator1UserEmail,
+                NormalizedUserName = Moderator1UserEmail.ToUpper(),
+                Email = Moderator1UserEmail,
+                NormalizedEmail = Moderator1UserEmail.ToUpper(),
+                EmailConfirmed = false,
+                PasswordHash = "AQAAAAEAACcQAAAAEMajAP3maoVrRPWh5JTafBJE4KzjiKWZoF9LQd6/+xmPFuATvKwZbxIg0+i5mi15mg==",
+                SecurityStamp = "AVBJCLXQD6IX5FDGTE37SHAZGVJWUJVT",
+                ConcurrencyStamp = "cfb269b1-7833-439e-aa6e-f1f9a3fc484d",
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnd = null,
+                LockoutEnabled = true,
+                AccessFailedCount = 0
+            };
+            users.Add(user);
+
+
+            //Moderator2 User
+            user = new ApplicationUser()
+            {
+                Id = Guid.Parse(Moderator2Id),
+                UserName = Moderator2UserEmail,
+                NormalizedUserName = Moderator2UserEmail.ToUpper(),
+                Email = Moderator2UserEmail,
+                NormalizedEmail = Moderator2UserEmail.ToUpper(),
+                EmailConfirmed = false,
+                PasswordHash = "AQAAAAEAACcQAAAAEIvwkhYsdf6k7M0Sv27DYiRxk/kWHv0gNM3dKOEi92hpvt8/YPZZINufnQeDPzzOng==",
+                SecurityStamp = "GBGKNZCL6MTHX3QHMAV4TISDHFRDBAF7",
+                ConcurrencyStamp = "99567f57-06ea-41bf-9e53-6c165534fe5c",
+                PhoneNumber = null,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnd = null,
+                LockoutEnabled = true,
+                AccessFailedCount = 0
+            };
+            users.Add(user);
 
             return users.ToArray();
         }

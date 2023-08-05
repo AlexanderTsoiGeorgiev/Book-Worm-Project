@@ -4432,6 +4432,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "BookWorm.Common": "1.0.0",
+          "BookWorm.Services": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
         },

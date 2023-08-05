@@ -8,6 +8,10 @@ namespace BookWorm.Web
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.Infrastructure.ModelBinders;
+    using BookWorm.Web.Infrastructure.ExtensionMethods;
+    using Microsoft.AspNetCore.Identity;
+
+    using static BookWorm.Common.GeneralApplicationConstants;
 
     public class Program
     {
@@ -34,6 +38,7 @@ namespace BookWorm.Web
 
                 options.Password.RequiredLength = builder.Configuration.GetValue<int>("IdentityConfiguration:Password:RequiredLength");
             })
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<BookWormDbContext>();
 
             builder.Services.AddControllersWithViews().AddMvcOptions(options =>
@@ -71,6 +76,13 @@ namespace BookWorm.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministator(AdminUserEmail);
+                string[] emails = new string[] { Moderator1UserEmail, Moderator2UserEmail };
+                app.SeedModerators(emails);
+            }
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
