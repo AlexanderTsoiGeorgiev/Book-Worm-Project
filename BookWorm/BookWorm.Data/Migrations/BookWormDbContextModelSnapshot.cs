@@ -334,6 +334,46 @@ namespace BookWorm.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BookWorm.Data.Models.ForumPost", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime?>("DateEdited")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatePosted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ForumPosts");
+                });
+
             modelBuilder.Entity("BookWorm.Data.Models.Poem", b =>
                 {
                     b.Property<Guid>("Id")
@@ -384,7 +424,7 @@ namespace BookWorm.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("737e55ff-cb83-45ab-b54c-e9291c10f026"),
+                            Id = new Guid("26e70be1-bcce-402a-b492-4f649025daa3"),
                             AuthorId = new Guid("d470da45-fd3c-4a54-accd-6088db795dfa"),
                             CategoryId = 5,
                             Content = "Shall I compare thee to a summer’s day?\r\nThou art more lovely and more temperate:\r\nRough winds do shake the darling buds of May,\r\nAnd summer’s lease hath all too short a date;\r\nSometime too hot the eye of heaven shines,\r\nAnd often is his gold complexion dimm'd;\r\nAnd every fair from fair sometime declines,\r\nBy chance or nature’s changing course untrimm'd;\r\nBut thy eternal summer shall not fade,\r\nNor lose possession of that fair thou ow’st;\r\nNor shall death brag thou wander’st in his shade,\r\nWhen in eternal lines to time thou grow’st:\r\n   So long as men can breathe or eyes can see,\r\n   So long lives this, and this gives life to thee.",
@@ -396,7 +436,7 @@ namespace BookWorm.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d93bce43-4fc4-4f98-b0c8-3c06b8844e14"),
+                            Id = new Guid("47cbfab3-81aa-4265-9878-d8ea117968bb"),
                             AuthorId = new Guid("dd34d4c5-95fb-4132-a14c-27fd7c53d919"),
                             CategoryId = 6,
                             Content = "“Hope” is the thing with feathers -\r\nThat perches in the soul -\r\nAnd sings the tune without the words -\r\nAnd never stops - at all -\r\n\r\nAnd sweetest - in the Gale - is heard -\r\nAnd sore must be the storm -\r\nThat could abash the little Bird\r\nThat kept so many warm -\r\n\r\nI’ve heard it in the chillest land -\r\nAnd on the strangest Sea -\r\nYet - never - in Extremity,\r\nIt asked a crumb - of me.\r\n",
@@ -408,7 +448,7 @@ namespace BookWorm.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0ce97fb5-e694-45b3-9d0a-055adb374013"),
+                            Id = new Guid("cfde01ec-afd6-4a21-9121-6156726c567e"),
                             AuthorId = new Guid("a5ea65a0-7c43-4575-b825-24d2c12fe926"),
                             CategoryId = 1,
                             Content = "From childhood’s hour I have not been\r\nAs others were—I have not seen\r\nAs others saw—I could not bring\r\nMy passions from a common spring—\r\nFrom the same source I have not taken\r\nMy sorrow—I could not awaken\r\nMy heart to joy at the same tone—\r\nAnd all I lov’d—I lov’d alone—\r\nThen—in my childhood—in the dawn\r\nOf a most stormy life—was drawn\r\nFrom ev’ry depth of good and ill\r\nThe mystery which binds me still—\r\nFrom the torrent, or the fountain—\r\nFrom the red cliff of the mountain—\r\nFrom the sun that ’round me roll’d\r\nIn its autumn tint of gold—\r\nFrom the lightning in the sky\r\nAs it pass’d me flying by—\r\nFrom the thunder, and the storm—\r\nAnd the cloud that took the form\r\n(When the rest of Heaven was blue)\r\nOf a demon in my view—",
@@ -472,6 +512,24 @@ namespace BookWorm.Data.Migrations
                     b.HasIndex("PoemId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -658,6 +716,25 @@ namespace BookWorm.Data.Migrations
                     b.Navigation("Poem");
                 });
 
+            modelBuilder.Entity("BookWorm.Data.Models.ForumPost", b =>
+                {
+                    b.HasOne("BookWorm.Data.Models.ApplicationUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BookWorm.Data.Models.Tag", "Tag")
+                        .WithMany("ForumPosts")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("BookWorm.Data.Models.Poem", b =>
                 {
                     b.HasOne("BookWorm.Data.Models.ApplicationUser", "Author")
@@ -779,6 +856,11 @@ namespace BookWorm.Data.Migrations
                     b.Navigation("BooksPoems");
 
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("BookWorm.Data.Models.Tag", b =>
+                {
+                    b.Navigation("ForumPosts");
                 });
 #pragma warning restore 612, 618
         }

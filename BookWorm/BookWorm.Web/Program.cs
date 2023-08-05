@@ -1,6 +1,7 @@
 namespace BookWorm.Web
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     using BookWorm.Data;
@@ -9,7 +10,6 @@ namespace BookWorm.Web
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.Infrastructure.ModelBinders;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
-    using Microsoft.AspNetCore.Identity;
 
     using static BookWorm.Common.GeneralApplicationConstants;
 

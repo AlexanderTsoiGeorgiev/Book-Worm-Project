@@ -22,6 +22,9 @@
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<BookPoem> BookPoem { get; set; } = null!;
         public DbSet<Article> Articles { get; set; } = null!;
+        public DbSet<ForumPost> ForumPosts { get; set; } = null!;
+        public DbSet<Tag> Tags { get; set; } = null!;
+        //public DbSet<Reply> Replies { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

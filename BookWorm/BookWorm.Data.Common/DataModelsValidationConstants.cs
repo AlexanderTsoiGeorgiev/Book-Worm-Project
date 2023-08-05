@@ -61,5 +61,26 @@
             public const int ContentMinLength = 100;
             public const int ContentMaxLength = 100_000;
         }
+
+        public static class ForumPostValidationConstants
+        {
+            public const int TitleMinLength = 2;
+            public const int TitleMaxLength = 100;
+
+            public const int ContentMinLength = 30;
+            public const int ContentMaxLength = 1_000;
+        }
+
+        public static class TagValidationConstants
+        {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 50;
+        }
+
+        public static class ReplyValidationConstants
+        {
+            public const int ContentMinLength = 1;
+            public const int ContentMaxLength = 500;
+        }
     }
 }
