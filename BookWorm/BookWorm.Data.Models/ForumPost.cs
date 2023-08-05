@@ -10,6 +10,7 @@
         public ForumPost()
         {
             Id = Guid.NewGuid();
+            Replies = new HashSet<Reply>();
         }
 
         [Key]
@@ -42,5 +43,7 @@
         public Guid AuthorId { get; set; }
         [Required]
         public ApplicationUser Author { get; set; } = null!;
+
+        public IEnumerable<Reply> Replies { get; set; }
     }
 }

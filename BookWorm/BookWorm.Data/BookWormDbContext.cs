@@ -24,7 +24,7 @@
         public DbSet<Article> Articles { get; set; } = null!;
         public DbSet<ForumPost> ForumPosts { get; set; } = null!;
         public DbSet<Tag> Tags { get; set; } = null!;
-        //public DbSet<Reply> Replies { get; set; } = null!;
+        public DbSet<Reply> Replies { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -33,7 +33,8 @@
                 .ApplyConfiguration<ApplicationUser>(new ApplicationUserTableConfiguration())
                 .ApplyConfiguration<Category>(new CategoryTableConfiguration())
                 .ApplyConfiguration<BookPoem>(new BookPoemTableConfiguration())
-                .ApplyConfiguration<Poem>(new PoemTableConfiguration());
+                .ApplyConfiguration<Poem>(new PoemTableConfiguration())
+                .ApplyConfiguration<Reply>(new ReplyTableConfiguration());
 
             //base.OnModelCreating(builder);
 
