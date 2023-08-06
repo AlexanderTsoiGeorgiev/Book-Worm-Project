@@ -6,26 +6,46 @@
     using Microsoft.AspNetCore.Authorization;
 
     using BookWorm.Web.Models;
+    using NToastNotify;
+
+    using static BookWorm.Common.ToastMessages;
 
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IToastNotification toastNotification;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IToastNotification toastNotification)
         {
-            _logger = logger;
+            this.toastNotification = toastNotification;
         }
 
         [AllowAnonymous]
         public IActionResult Index()
         {
+            //Testing Default Methods
+
+            //Success
+            toastNotification.AddSuccessToastMessage("Same for success message");
+            // Success with default options (taking into account the overwritten defaults when initializing in Startup.cs)
+            toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "poem"));
+
+            //Info
+            toastNotification.AddInfoToastMessage();
+
+            //Warning
+            toastNotification.AddWarningToastMessage();
+
+            //Error
+            toastNotification.AddErrorToastMessage();
+
             return View();
         }
 
         [AllowAnonymous]
         public IActionResult Privacy()
         {
-            return View();
+            toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+            return RedirectToAction("All", "Poem");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

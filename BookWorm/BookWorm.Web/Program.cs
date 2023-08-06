@@ -4,6 +4,8 @@ namespace BookWorm.Web
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
+    using NToastNotify;
+
     using BookWorm.Data;
     using BookWorm.Services;
     using BookWorm.Data.Models;
@@ -41,11 +43,18 @@ namespace BookWorm.Web
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<BookWormDbContext>();
 
-            builder.Services.AddControllersWithViews().AddMvcOptions(options =>
-            {
-                options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-            });
+            builder.Services.AddControllersWithViews()
+                .AddNToastNotifyToastr(new ToastrOptions
+                {
+                    ProgressBar = true,
+                    CloseButton = true,
+                    TimeOut = 5000
+                })
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                });
 
 
             builder.Services.AddScoped<IPoemService, PoemService>();
@@ -60,8 +69,8 @@ namespace BookWorm.Web
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
-                app.UseExceptionHandler("/Home/Error/500");
-                app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+                //app.UseExceptionHandler("/Home/Error/500");
+                //app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -85,6 +94,8 @@ namespace BookWorm.Web
                 string[] emails = new string[] { Moderator1UserEmail, Moderator2UserEmail };
                 app.SeedModerators(emails);
             }
+
+            app.UseNToastNotify();
 
             app.UseEndpoints(endpoints =>
             {

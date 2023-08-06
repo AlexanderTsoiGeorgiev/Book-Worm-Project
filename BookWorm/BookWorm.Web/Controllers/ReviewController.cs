@@ -307,11 +307,17 @@
         {
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return NotFound();
+
                 bool exists = await reviewService.ExistsByIdAsync(id);
                 if (!exists) return NotFound();
 
                 bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
                 if (isDeleted) return NotFound();
+
+                bool isUserOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
+                if (isUserOwner) return BadRequest();
 
                 await reviewService.SoftDeleteReviewAsync(id);
             }
@@ -325,16 +331,50 @@
 
         //Implement this now
         [HttpGet]
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(string id)
         {
-            return View();
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return NotFound();
+
+                bool exists = await reviewService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                bool isUserOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
+                if (!isUserOwner) return BadRequest();
+
+                ReviewDetailsViewModel model = await reviewService.GetReviewAsDetailsViewModelAsync(id);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         //Implement this now
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
-            return View();
+            try
+            {
+                string? userId = User.GetUserId();
+                if (userId == null) return NotFound();
+
+                IEnumerable<ReviewDisplayViewModel> model = await reviewService.GetAllUserReviewsAsync(userId);
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         [HttpPost]

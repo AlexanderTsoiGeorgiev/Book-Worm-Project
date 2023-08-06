@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ReviewDisplayViewModel>
+
+@{
+    ViewData["Title"] = "My Reviews";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+
+<div class="row mt-5">
+    @foreach (var review in Model)
+    {
+        <partial name="_ReviewCardPartial" model="@review" />
+    }
+</div>

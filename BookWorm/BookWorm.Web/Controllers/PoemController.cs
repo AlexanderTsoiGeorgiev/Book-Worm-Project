@@ -2,20 +2,29 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    using NToastNotify;
+
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Models.Poem;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
+    using static BookWorm.Common.ToastMessages;
 
     public class PoemController : BaseController
     {
         private readonly IPoemService poemService;
         private readonly IReviewService reviewService;
+        private readonly IToastNotification toastNotification;
 
-        public PoemController(IPoemService poemService, IReviewService reviewService)
+        public PoemController(
+            IPoemService poemService,
+            IReviewService reviewService,
+            IToastNotification toastNotification
+            )
         {
             this.poemService = poemService;
             this.reviewService = reviewService;
+            this.toastNotification = toastNotification;
         }
 
 
@@ -38,15 +47,13 @@
                 model.PoemsCount = filteredPoems.AllPoemsCount;
                 model.Categories = await poemService.GetAllCategoryNamesAsync();
 
+                return View(model);
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
-
-
-            return View(model);
         }
 
         //Works
@@ -73,8 +80,8 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -82,11 +89,19 @@
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            PoemFormViemModel model = new PoemFormViemModel
+            try
             {
-                Categories = await poemService.GetAllCategoriesAsync()
-            };
-            return View(model);
+                PoemFormViemModel model = new PoemFormViemModel
+                {
+                    Categories = await poemService.GetAllCategoriesAsync()
+                };
+                return View(model);
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
+            }
         }
         //TODO: fix not valid model state & add try catch when accessing the DB
         [HttpPost]
@@ -94,19 +109,25 @@
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception();
+                toastNotification.AddWarningToastMessage(WarningFulfillFormRequirementsMessage);
+                return View(model);
             }
 
-            string? authorId = User.GetUserId();
-            if (authorId == null)
+            try
             {
-                throw new Exception();
+                string? authorId = User.GetUserId();
+                if (authorId == null) return BadRequest();
+
+                await poemService.CreatePoemAsync(authorId, model);
+
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "poem"));
+                return RedirectToAction(nameof(All));
             }
-
-            //add try catch
-            await poemService.CreatePoemAsync(authorId, model);
-
-            return RedirectToAction(nameof(All));
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction(nameof(All));
+            }
         }
 
         //Works
@@ -116,27 +137,22 @@
             try
             {
                 bool exists = await poemService.ExistsByIdAsync(id);
-                if (!exists)
-                {
-                    return BadRequest();
-                }
+                if (!exists) return BadRequest();
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                if (!isOwner)
-                {
-                    return BadRequest();
-                }
+                if (!isOwner) return BadRequest();
 
                 PoemFormViemModel model = await poemService.FindPoemByIdAsync(id);
                 model.Categories = await poemService.GetAllCategoriesAsync();
 
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "poem"));
                 return View(model);
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction(nameof(All));
             }
         }
         [HttpPost]
@@ -173,7 +189,6 @@
 
         }
 
-        //Decide whether or not an author which is not the owner should be able to view the details page
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
@@ -181,20 +196,16 @@
             try
             {
                 bool exists = await poemService.ExistsByIdAsync(id);
-                if (!exists)
-                {
-                    return BadRequest();
-                }
+                if (!exists) return BadRequest();
+
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
+
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
                 if (!isOwner) return BadRequest();
 
 
                 model = await poemService.GetPoemAsDetailsViewModelByIdAsync(id);
-
-                if (model == null) return BadRequest(); //this check might be unnecessary
-
                 return View(model);
             }
             catch (Exception)
