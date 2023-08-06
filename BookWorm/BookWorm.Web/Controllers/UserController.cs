@@ -4,6 +4,7 @@
 
     public class UserController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -23,6 +24,12 @@
 
         [HttpGet]
         public IActionResult MyReviews()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult MyArticles()
         {
             return View();
         }

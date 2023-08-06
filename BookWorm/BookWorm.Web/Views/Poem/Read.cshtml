@@ -29,14 +29,20 @@
     <div class="col-8 offset-2">
         <hr />
         <div>
-            <h3 class ="text-center">
+            <h3 class="text-center">
                 Reviews:
-            </h3> 
+            </h3>
         </div>
 
         @if (Model.Reviews == null)
         {
             <p>No review yet!</p>
+        }
+
+        @{
+            int likeBtnIdCounter = 1;
+            int dislikeBtnIdCounter = 1;
+            int likesIdCounter = 1;
         }
         <div class="accordion" id="reviewAccordion">
             @foreach (ReviewDisplayViewModel review in Model.Reviews!)
@@ -51,18 +57,40 @@
                         <div class="accordion-body">
                             @review.Content
                         </div>
+
+                        @*Use jquery and ajax to like and dislike*@
+                        @{
+                            string likeBtnId = $"likeBtn{likeBtnIdCounter++}";
+                            string dislikeBtnId = $"dislikeBtn{dislikeBtnIdCounter++}";
+                            string likesId = $"likes{likesIdCounter++}";
+                        }
                         <div>
-                            <a class="btn btn-success">
+                            <script>
+                                function myFunc() {
+                                    $('#likeBtn1').on('click', function (e) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+
+                                        $.get('https://localhost:7250/Review/GetLikes/@review.Id', function (data){
+                                            $('likes1').text(data);
+                                        });
+                                    });
+                                }
+                            </script>
+                            <button id=@likeBtnId class="btn btn-success" onclick="myFunc()">
                                 Like
-                            </a>
-                            <a class="btn btn-danger">
+                            </button>
+                            <button id=@dislikeBtnId class="btn btn-danger">
                                 Dislike
-                            </a>
+                            </button>
+                            <p id=@likesId>@(review.Upvotes - review.Downvotes)</p>
                         </div>
                     </div>
                 </div>
             }
         </div>
-
     </div>
 </div>
+<script>
+    console.log("Hello world!");
+</script>

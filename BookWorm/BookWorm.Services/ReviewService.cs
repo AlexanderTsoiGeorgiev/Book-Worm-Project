@@ -185,5 +185,10 @@
             return review!.BookId;
         }
 
+        public async Task LikeReviewAsync(string id)
+        {
+            Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
+            review!.Upvotes++;
+        }
     }
 }

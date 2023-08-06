@@ -30,9 +30,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Areas\Admin\Models\" />
+	  <Folder Include="Areas\Admin\ViewModels\" />
 	  <Folder Include="Areas\Admin\Views\" />
-	  <Folder Include="Areas\Forum\Models\" />
+	  <Folder Include="Areas\Forum\ViewModels\" />
 	  <Folder Include="Areas\Forum\Views\" />
 	</ItemGroup>
 

@@ -8,8 +8,7 @@
         public Task<IEnumerable<ReviewDisplayViewModel>> GetAllUserReviewsAsync(string userId);
         public Task<IEnumerable<ReviewDisplayViewModel>?> GetAllPoemReviewsAsync(string poemId);
 
-
-        //
+        //Add
         public Task CreatePoemReviewAsync(string authorId, ReviewFormViewModel model);
         public Task CreateBookReviewAsync(string authorId, ReviewFormViewModel model);
 
@@ -17,7 +16,12 @@
         public Task<ReviewFormViewModel> FindReviewByIdAsync(string id);
         public Task EditReviewAsync(string id, ReviewFormViewModel model);
 
+        //Delete
         public Task SoftDeleteReviewAsync(string id);
+
+        //Like  
+        public Task LikeReviewAsync(string id);
+
 
         //Validation
         public Task<bool> ExistsByIdAsync(string id);

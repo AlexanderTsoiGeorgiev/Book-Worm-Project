@@ -245,8 +245,8 @@
                 bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
                 if (isDeleted) return NotFound();
 
-                int? bookId = await reviewService.RetriveReviewBookIdAsync(id); 
-                if(bookId == null) return NotFound();
+                int? bookId = await reviewService.RetriveReviewBookIdAsync(id);
+                if (bookId == null) return NotFound();
 
                 bool bookExists = await bookService.ExistsByIdAsync((int)bookId);
                 if (!bookExists) return NotFound();
@@ -314,6 +314,41 @@
                 if (isDeleted) return NotFound();
 
                 await reviewService.SoftDeleteReviewAsync(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return View();
+        }
+
+
+        //Implement this now
+        [HttpGet]
+        public async Task<IActionResult> Details()
+        {
+            return View();
+        }
+
+        //Implement this now
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Like(string id)
+        {
+            try
+            {
+                bool exists = await reviewService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+
             }
             catch (Exception)
             {

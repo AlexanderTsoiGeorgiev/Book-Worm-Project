@@ -52,6 +52,8 @@ namespace BookWorm.Web
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IArticleService, ArticleService>();
+            builder.Services.AddScoped<IForumPostService, ForumPostService>();
+            builder.Services.AddScoped<IReplyService, ReplyService>();
 
             var app = builder.Build();
 

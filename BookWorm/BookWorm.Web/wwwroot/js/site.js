@@ -2,3 +2,9 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+function likeButton(likeBtnId, dislikeBtnId, likesId) {
+    $('#statistics_btn').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+}
