@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         [HttpGet]
         public IActionResult Index()

@@ -397,27 +397,33 @@
             }
         }
 
-
-        //This should be void 
         [HttpPost]
-        public async Task<IActionResult> Like(string id)
+        public JsonResult Like()
         {
-            try
+            var anon = new
             {
-                bool exists = await reviewService.ExistsByIdAsync(id);
-                if (!exists) return NotFound();
+                Tiltle = "Test",
+                Name = "Test",
+                Age = 5
+            };
+            return new JsonResult(anon);
 
-                bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
-                if (isDeleted) return NotFound();
+            //try
+            //{
+            //    bool exists = await reviewService.ExistsByIdAsync(id);
+            //    if (!exists) return NotFound();
 
-            return View();
+            //    bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
+            //    if (isDeleted) return NotFound();
 
-            }
-            catch (Exception)
-            {
-                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
-                return RedirectToAction("Index", "Home");
-            }
+            //return View();
+
+            //}
+            //catch (Exception)
+            //{
+            //    toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+            //    return RedirectToAction("Index", "Home");
+            //}
         }
     }
 }

@@ -64,6 +64,11 @@ namespace BookWorm.Web
             builder.Services.AddScoped<IForumPostService, ForumPostService>();
             builder.Services.AddScoped<IReplyService, ReplyService>();
 
+            builder.Services.ConfigureApplicationCookie(configure => 
+            {
+                configure.AccessDeniedPath = "/Home/Error/401"; 
+            });
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

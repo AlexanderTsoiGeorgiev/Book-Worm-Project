@@ -65,22 +65,10 @@
                             string likesId = $"likes{likesIdCounter++}";
                         }
                         <div>
-                            <script>
-                                function myFunc() {
-                                    $('#likeBtn1').on('click', function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-
-                                        $.get('https://localhost:7250/Review/GetLikes/@review.Id', function (data){
-                                            $('likes1').text(data);
-                                        });
-                                    });
-                                }
-                            </script>
-                            <button id=@likeBtnId class="btn btn-success" onclick="myFunc()">
+                            <button id="@likeBtnId" class="btn btn-success upvote" onclick="likeButton('@likeBtnId', '@dislikeBtnId', '@likesId')">
                                 Like
                             </button>
-                            <button id=@dislikeBtnId class="btn btn-danger">
+                            <button id=@dislikeBtnId class="btn btn-danger downvote">
                                 Dislike
                             </button>
                             <p id=@likesId>@(review.Upvotes - review.Downvotes)</p>
@@ -91,6 +79,13 @@
         </div>
     </div>
 </div>
-<script>
-    console.log("Hello world!");
-</script>
+
+@*@section Scripts{
+    <script>
+        function likeButton(testPara) {
+            var selector = "paragraph";
+            var asd1 = "#".concat(testPara);
+            $(`#${testPara}`).text("Works");
+        }
+    </script>
+}*@
