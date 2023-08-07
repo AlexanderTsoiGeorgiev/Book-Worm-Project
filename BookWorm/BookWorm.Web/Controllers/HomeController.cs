@@ -22,22 +22,6 @@
         [AllowAnonymous]
         public IActionResult Index()
         {
-            //Testing Default Methods
-
-            //Success
-            toastNotification.AddSuccessToastMessage("Same for success message");
-            // Success with default options (taking into account the overwritten defaults when initializing in Startup.cs)
-            toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "poem"));
-
-            //Info
-            toastNotification.AddInfoToastMessage();
-
-            //Warning
-            toastNotification.AddWarningToastMessage();
-
-            //Error
-            toastNotification.AddErrorToastMessage();
-
             return View();
         }
 

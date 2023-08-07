@@ -2,20 +2,27 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    using NToastNotify;
+
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Article;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
-    using BookWorm.Services;
+    using static BookWorm.Common.ToastMessages;
 
     public class ArticleController : BaseController
     {
         private readonly IArticleService articleService;
         private readonly IPoemService poemService;
+        private readonly IToastNotification toastNotification;
 
-        public ArticleController(IArticleService articleService, IPoemService poemService)
+        public ArticleController(
+            IArticleService articleService,
+            IPoemService poemService,
+            IToastNotification toastNotification)
         {
             this.articleService = articleService;
             this.poemService = poemService;
+            this.toastNotification = toastNotification;
         }
 
         public IActionResult Index()
@@ -32,7 +39,7 @@
                 if (userId == null) return BadRequest();
 
                 bool exists = await poemService.ExistsByIdAsync(id);
-                if (!exists) return BadRequest();
+                if (!exists) return NotFound();
 
                 bool isDeleted = await poemService.IsPoemDeletedAsync(id);
                 if (isDeleted) return NotFound();
@@ -40,7 +47,7 @@
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
                 bool isPrivete = await poemService.IsPoemPrivateAsync(id);
 
-                if (isPrivete && !isOwner) return BadRequest();
+                if (isPrivete && !isOwner) return NotFound();
 
                 ViewData["Title"] = "Add an Article";
                 ViewData["Action"] = "Add";
@@ -48,8 +55,8 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
         }
@@ -79,13 +86,13 @@
 
                 model.PoemId = Guid.Parse(id);
                 await articleService.CreateArticleAsync(userId!, model);
-
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "article"));
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -114,8 +121,8 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -137,7 +144,7 @@
                 if (!articleExists) return NotFound();
 
                 bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
-                if (!isUserOwner) return BadRequest();
+                if (!isUserOwner) return NotFound();
 
                 bool isDeleted = await articleService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
@@ -145,14 +152,15 @@
                 model.PoemId = await articleService.GetArticlePoemIdAsync(id);
 
                 await articleService.EditArticleAsync(id, model);
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "article"));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -175,8 +183,8 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
         }
@@ -196,11 +204,12 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
             try
@@ -215,7 +224,7 @@
                 if (isDeleted) return NotFound();
 
                 bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
-                if (!isUserOwner) return BadRequest();
+                if (!isUserOwner) return NotFound();
 
 
                 ArticleDetailsViewModel model = await articleService.FindArticleAsArticleDetailsViewModelByIdAsync(id);
@@ -224,10 +233,10 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
-           
+
         }
 
         public async Task<IActionResult> Delete(string id)

@@ -2,19 +2,27 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    using NToastNotify;
+
     using BookWorm.Web.ViewModels.Book;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
+    using static BookWorm.Common.ToastMessages;
 
     public class BookController : BaseController
     {
         private readonly IBookService bookService;
         private readonly IPoemService poemService;
+        private readonly IToastNotification toastNotification;
 
-        public BookController(IBookService bookService, IPoemService poemService)
+        public BookController(
+            IBookService bookService,
+            IPoemService poemService,
+            IToastNotification toastNotification)
         {
             this.bookService = bookService;
             this.poemService = poemService;
+            this.toastNotification = toastNotification;
         }
 
         public IActionResult Index()
@@ -43,8 +51,8 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
 
@@ -54,6 +62,7 @@
         {
             if (!ModelState.IsValid)
             {
+                toastNotification.AddWarningToastMessage(WarningFulfillFormRequirementsMessage);
                 return View(model);
             }
             try
@@ -65,14 +74,15 @@
                 if (!userOwnsAllPoems) return BadRequest();
 
                 await bookService.CreateBookAsync(authorId, model);
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "book"));
+                return View(model);
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
-            return View(model);
         }
 
         [HttpGet]
@@ -85,7 +95,7 @@
                 if (userId == null) return BadRequest();
 
                 bool exists = await bookService.ExistsByIdAsync(id);
-                if (!exists) return BadRequest();
+                if (!exists) return NotFound();
 
                 bool isDeleted = await bookService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
@@ -97,8 +107,8 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
         }
         [HttpPost]
@@ -106,6 +116,7 @@
         {
             if (!ModelState.IsValid)
             {
+                toastNotification.AddWarningToastMessage(WarningFulfillFormRequirementsMessage);
                 return View(model);
             }
 
@@ -124,13 +135,13 @@
                 if (isDelete) return NotFound();
 
                 await bookService.EditBookAsync(id, model);
-
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "book"));
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
         }
@@ -149,13 +160,13 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> Read(int id, [FromQuery]BookReadViewModel model)
+        public async Task<IActionResult> Read(int id, [FromQuery] BookReadViewModel model)
         {
             try
             {
@@ -170,16 +181,18 @@
                 model.AuthorUserName = placeholder.AuthorUserName;
                 model.Poems = await bookService.GetBookPoemsAsPoemBookReadModelAsync(id);
                 model.Reviews = await bookService.GetBookReviewsAsReviewDisplayViewModel(id);
+
+                return View(model);
             }
             catch (Exception)
             {
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
-            return View(model);
         }
 
         //TODO: Add exceptions and Get action
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -194,12 +207,13 @@
                 if (!isOwner) return BadRequest();
 
                 await bookService.SoftDeleteBookAsync(id);
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "book"));
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
         }

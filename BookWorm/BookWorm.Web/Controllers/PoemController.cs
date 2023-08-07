@@ -126,7 +126,7 @@
             catch (Exception)
             {
                 toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
-                return RedirectToAction(nameof(All));
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -152,7 +152,7 @@
             catch (Exception)
             {
                 toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
-                return RedirectToAction(nameof(All));
+                return RedirectToAction("Index", "Home");
             }
         }
         [HttpPost]
@@ -160,31 +160,28 @@
         {
             if (!ModelState.IsValid)
             {
+                toastNotification.AddWarningToastMessage(WarningFulfillFormRequirementsMessage);
                 return View(model);
             }
 
             try
             {
                 bool exists = await poemService.ExistsByIdAsync(id);
-                if (!exists)
-                {
-                    return BadRequest();
-                }
+                if (!exists) return BadRequest();
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                if (!isOwner)
-                {
-                    return BadRequest();
-                }
+                if (!isOwner) return BadRequest();
 
                 await poemService.EditPoemAsync(id, model);
+
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "poem"));
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
         }
@@ -210,8 +207,8 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
 
@@ -225,27 +222,22 @@
             try
             {
                 bool poemExists = await poemService.ExistsByIdAsync(id);
-                if (!poemExists)
-                {
-                    return BadRequest();
-                }
+                if (!poemExists) return BadRequest();
+
                 string? userId = User.GetUserId();
-                if (userId == null)
-                {
-                    return BadRequest();
-                }
+                if (userId == null) return BadRequest();
+
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                if (!isOwner)
-                {
-                    return BadRequest();
-                }
+                if (!isOwner) return BadRequest();
+
                 await poemService.SoftDeletePoemAsync(id);
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "poem"));
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -264,8 +256,8 @@
             }
             catch (Exception)
             {
-
-                throw;
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
             }
 
         }
