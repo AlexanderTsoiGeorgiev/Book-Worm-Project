@@ -8,6 +8,7 @@
     using BookWorm.Web.ViewModels.Review;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
     using static BookWorm.Common.ToastMessages;
+    using BookWorm.Services.Models.Review;
 
     public class ReviewController : BaseController
     {
@@ -398,32 +399,49 @@
         }
 
         [HttpPost]
-        public JsonResult Like()
+        public async Task<IActionResult> Like(string id, bool isDisliked)
         {
-            var anon = new
+            try
             {
-                Tiltle = "Test",
-                Name = "Test",
-                Age = 5
-            };
-            return new JsonResult(anon);
+                bool exists = await reviewService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
 
-            //try
-            //{
-            //    bool exists = await reviewService.ExistsByIdAsync(id);
-            //    if (!exists) return NotFound();
+                bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isDeleted) return NotFound();
 
-            //    bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
-            //    if (isDeleted) return NotFound();
+                ReviewLikeServiceModel model = await reviewService.LikeReviewAsync(id, isDisliked);
 
-            //return View();
+                return Ok(model);
 
-            //}
-            //catch (Exception)
-            //{
-            //    toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
-            //    return RedirectToAction("Index", "Home");
-            //}
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Dislike(string id, bool isLiked)
+        {
+            try
+            {
+                bool exists = await reviewService.ExistsByIdAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                ReviewLikeServiceModel model = await reviewService.DislikeReviewAsync(id, isLiked);
+
+                return Ok(model);
+
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

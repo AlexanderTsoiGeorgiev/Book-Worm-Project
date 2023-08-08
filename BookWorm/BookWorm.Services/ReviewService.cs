@@ -9,6 +9,7 @@
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Review;
+    using BookWorm.Services.Models.Review;
 
     public class ReviewService : IReviewService
     {
@@ -108,15 +109,50 @@
         }
 
         //Like
-        public async Task LikeReviewAsync(string id)
+        public async Task<ReviewLikeServiceModel> LikeReviewAsync(string id, bool isDisliked)
         {
             Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
-            review!.Upvotes++;
+
+            if (isDisliked)
+            {
+                review!.Upvotes++;
+                review!.Downvotes--;
+            }
+            else
+            {
+                review!.Upvotes++;
+            }
 
             await dbContext.SaveChangesAsync();
+
+            return new ReviewLikeServiceModel
+            {
+                LikesCount = review!.Upvotes - review!.Downvotes
+            };
         }
 
         //Dislike
+        public async Task<ReviewLikeServiceModel> DislikeReviewAsync(string id, bool isLiked)
+        {
+            Review? review = await dbContext.Reviews.FindAsync(Guid.Parse(id));
+
+            if (isLiked)
+            {
+                review!.Downvotes++;
+                review!.Upvotes--;
+            }
+            else
+            {
+                review!.Downvotes++;
+            }
+
+            await dbContext.SaveChangesAsync();
+
+            return new ReviewLikeServiceModel
+            {
+                LikesCount = review!.Upvotes - review!.Downvotes
+            };
+        }
 
         //Details
         public async Task<ReviewDetailsViewModel> GetReviewAsDetailsViewModelAsync(string id)
@@ -217,5 +253,7 @@
 
             return review!.BookId;
         }
+
+       
     }
 }

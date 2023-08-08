@@ -1,6 +1,7 @@
 ﻿namespace BookWorm.Services.Interfaces
 {
     using BookWorm.Web.ViewModels.Review;
+    using BookWorm.Services.Models.Review;
 
     public interface IReviewService
     {
@@ -18,7 +19,10 @@
         public Task SoftDeleteReviewAsync(string id);
 
         //Like  
-        public Task LikeReviewAsync(string id);
+        public Task<ReviewLikeServiceModel> LikeReviewAsync(string id, bool isDisliked);
+
+        //Dislike
+        public Task<ReviewLikeServiceModel> DislikeReviewAsync(string id, bool isLiked);
 
         //Details
         public Task<ReviewDetailsViewModel> GetReviewAsDetailsViewModelAsync(string id);

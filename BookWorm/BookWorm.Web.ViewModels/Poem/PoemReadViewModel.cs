@@ -9,6 +9,8 @@
             Reviews = new HashSet<ReviewDisplayViewModel>();
         }
 
+        public Guid Id { get; set; }
+
         public string Title { get; set; } = null!;
 
         public Guid AuthorId { get; set; }  

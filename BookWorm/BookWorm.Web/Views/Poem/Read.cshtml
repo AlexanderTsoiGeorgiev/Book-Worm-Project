@@ -63,12 +63,13 @@
                             string likeBtnId = $"likeBtn{likeBtnIdCounter++}";
                             string dislikeBtnId = $"dislikeBtn{dislikeBtnIdCounter++}";
                             string likesId = $"likes{likesIdCounter++}";
+                            string reviewId = review.Id.ToString();
                         }
                         <div>
-                            <button id="@likeBtnId" class="btn btn-success upvote" onclick="likeButton('@likeBtnId', '@dislikeBtnId', '@likesId')">
+                            <button id="@likeBtnId" class="btn btn-success upvote" onclick="likeButton('@likeBtnId', '@dislikeBtnId', '@likesId', '@reviewId')">
                                 Like
                             </button>
-                            <button id=@dislikeBtnId class="btn btn-danger downvote">
+                            <button id=@dislikeBtnId class="btn btn-danger downvote" onclick="dislikeButton('@likeBtnId', '@dislikeBtnId', '@likesId', '@reviewId')">
                                 Dislike
                             </button>
                             <p id=@likesId>@(review.Upvotes - review.Downvotes)</p>

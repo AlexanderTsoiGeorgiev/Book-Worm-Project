@@ -4,6 +4,7 @@
     public class ReviewDisplayViewModel
     {
         public Guid Id { get; set; }
+
         public Guid? PoemId { get; set; }
         public int? BookId { get; set; }
 
