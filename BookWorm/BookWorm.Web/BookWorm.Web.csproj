@@ -32,9 +32,8 @@
 
 	<ItemGroup>
 	  <Folder Include="Areas\Admin\ViewModels\" />
-	  <Folder Include="Areas\Admin\Views\" />
+	  <Folder Include="Areas\Admin\Views\Shared\" />
 	  <Folder Include="Areas\Forum\ViewModels\" />
-	  <Folder Include="Areas\Forum\Views\" />
 	</ItemGroup>
 
 </Project>

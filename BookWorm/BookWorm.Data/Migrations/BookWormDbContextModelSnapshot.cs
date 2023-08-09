@@ -42,6 +42,20 @@ namespace BookWorm.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasDefaultValue("Test");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasDefaultValue("Test");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -95,6 +109,8 @@ namespace BookWorm.Data.Migrations
                             ConcurrencyStamp = "a4276e99-7e24-486f-b71c-7ce187505e19",
                             Email = "edgar.allan.poe@bookworm.com",
                             EmailConfirmed = false,
+                            FirstName = "Edgar",
+                            LastName = "Poe",
                             LockoutEnabled = true,
                             NormalizedEmail = "EDGAR.ALLAN.POE@BOOKWORM.COM",
                             NormalizedUserName = "EDGAR.ALLAN.POE@BOOKWORM.COM",
@@ -111,6 +127,8 @@ namespace BookWorm.Data.Migrations
                             ConcurrencyStamp = "bdc117b5-2aa2-46a1-b7f0-3d577cf0d11c",
                             Email = "william.shakespeare@bookworm.com",
                             EmailConfirmed = false,
+                            FirstName = "William",
+                            LastName = "Shakespeare",
                             LockoutEnabled = true,
                             NormalizedEmail = "WILLIAM.SHAKESPEARE@BOOKWORM.COM",
                             NormalizedUserName = "WILLIAM.SHAKESPEARE@BOOKWORM.COM",
@@ -127,6 +145,8 @@ namespace BookWorm.Data.Migrations
                             ConcurrencyStamp = "e7bf6169-29b1-474f-9506-370fdd6a91fd",
                             Email = "emily.dickinson@bookworm.com",
                             EmailConfirmed = false,
+                            FirstName = "Emily",
+                            LastName = "Dickinson",
                             LockoutEnabled = true,
                             NormalizedEmail = "EMILY.DICKINSON@BOOKWORM.COM",
                             NormalizedUserName = "EMILY.DICKINSON@BOOKWORM.COM",
@@ -143,6 +163,8 @@ namespace BookWorm.Data.Migrations
                             ConcurrencyStamp = "f13caeaf-6cbe-4608-8b5b-4434d2d282fd",
                             Email = "admin@bookworm.com",
                             EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "User",
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@BOOKWORM.COM",
                             NormalizedUserName = "ADMIN@BOOKWORM.COM",
@@ -159,6 +181,8 @@ namespace BookWorm.Data.Migrations
                             ConcurrencyStamp = "cfb269b1-7833-439e-aa6e-f1f9a3fc484d",
                             Email = "moderator1@bookworm.com",
                             EmailConfirmed = false,
+                            FirstName = "Moderator",
+                            LastName = "User",
                             LockoutEnabled = true,
                             NormalizedEmail = "MODERATOR1@BOOKWORM.COM",
                             NormalizedUserName = "MODERATOR1@BOOKWORM.COM",
@@ -175,6 +199,8 @@ namespace BookWorm.Data.Migrations
                             ConcurrencyStamp = "99567f57-06ea-41bf-9e53-6c165534fe5c",
                             Email = "moderator2@bookworm.com",
                             EmailConfirmed = false,
+                            FirstName = "Moderator",
+                            LastName = "User",
                             LockoutEnabled = true,
                             NormalizedEmail = "MODERATOR2@BOOKWORM.COM",
                             NormalizedUserName = "MODERATOR2@BOOKWORM.COM",
@@ -424,7 +450,7 @@ namespace BookWorm.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8e41d45f-a630-4390-a458-12f905c35797"),
+                            Id = new Guid("2f169ebd-a1e4-463c-b97f-e003e938ee01"),
                             AuthorId = new Guid("d470da45-fd3c-4a54-accd-6088db795dfa"),
                             CategoryId = 5,
                             Content = "Shall I compare thee to a summer’s day?\r\nThou art more lovely and more temperate:\r\nRough winds do shake the darling buds of May,\r\nAnd summer’s lease hath all too short a date;\r\nSometime too hot the eye of heaven shines,\r\nAnd often is his gold complexion dimm'd;\r\nAnd every fair from fair sometime declines,\r\nBy chance or nature’s changing course untrimm'd;\r\nBut thy eternal summer shall not fade,\r\nNor lose possession of that fair thou ow’st;\r\nNor shall death brag thou wander’st in his shade,\r\nWhen in eternal lines to time thou grow’st:\r\n   So long as men can breathe or eyes can see,\r\n   So long lives this, and this gives life to thee.",
@@ -436,7 +462,7 @@ namespace BookWorm.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4653e0a6-579d-4d28-a762-197bcc80d917"),
+                            Id = new Guid("f3486e89-b36e-4457-a10d-bc83d212df4f"),
                             AuthorId = new Guid("dd34d4c5-95fb-4132-a14c-27fd7c53d919"),
                             CategoryId = 6,
                             Content = "“Hope” is the thing with feathers -\r\nThat perches in the soul -\r\nAnd sings the tune without the words -\r\nAnd never stops - at all -\r\n\r\nAnd sweetest - in the Gale - is heard -\r\nAnd sore must be the storm -\r\nThat could abash the little Bird\r\nThat kept so many warm -\r\n\r\nI’ve heard it in the chillest land -\r\nAnd on the strangest Sea -\r\nYet - never - in Extremity,\r\nIt asked a crumb - of me.\r\n",
@@ -448,7 +474,7 @@ namespace BookWorm.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fad5b312-1126-4281-a2bd-774157ce1f8a"),
+                            Id = new Guid("f9cef858-688f-4ca2-bf18-bd060ba08f4b"),
                             AuthorId = new Guid("a5ea65a0-7c43-4575-b825-24d2c12fe926"),
                             CategoryId = 1,
                             Content = "From childhood’s hour I have not been\r\nAs others were—I have not seen\r\nAs others saw—I could not bring\r\nMy passions from a common spring—\r\nFrom the same source I have not taken\r\nMy sorrow—I could not awaken\r\nMy heart to joy at the same tone—\r\nAnd all I lov’d—I lov’d alone—\r\nThen—in my childhood—in the dawn\r\nOf a most stormy life—was drawn\r\nFrom ev’ry depth of good and ill\r\nThe mystery which binds me still—\r\nFrom the torrent, or the fountain—\r\nFrom the red cliff of the mountain—\r\nFrom the sun that ’round me roll’d\r\nIn its autumn tint of gold—\r\nFrom the lightning in the sky\r\nAs it pass’d me flying by—\r\nFrom the thunder, and the storm—\r\nAnd the cloud that took the form\r\n(When the rest of Heaven was blue)\r\nOf a demon in my view—",

@@ -12,6 +12,14 @@
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+            builder
+                .Property(au => au.FirstName)
+                .HasDefaultValue("Test");
+
+            builder
+                .Property(au => au.LastName)
+                .HasDefaultValue("Test");
+
             builder.HasData(SeedUsers());
         }
 
@@ -36,7 +44,9 @@
                 TwoFactorEnabled = false,
                 LockoutEnd = null,
                 LockoutEnabled = true,
-                AccessFailedCount = 0
+                AccessFailedCount = 0,
+                FirstName = "Edgar",
+                LastName = "Poe"
             };
             users.Add(user);
 
@@ -56,7 +66,9 @@
                 TwoFactorEnabled = false,
                 LockoutEnd = null,
                 LockoutEnabled = true,
-                AccessFailedCount = 0
+                AccessFailedCount = 0,
+                FirstName = "William",
+                LastName = "Shakespeare"
             };
             users.Add(user);
 
@@ -76,7 +88,9 @@
                 TwoFactorEnabled = false,
                 LockoutEnd = null,
                 LockoutEnabled = true,
-                AccessFailedCount = 0
+                AccessFailedCount = 0,
+                FirstName = "Emily",
+                LastName = "Dickinson"
             };
             users.Add(user);
 
@@ -98,7 +112,9 @@
                 TwoFactorEnabled = false,
                 LockoutEnd = null,
                 LockoutEnabled = true,
-                AccessFailedCount = 0
+                AccessFailedCount = 0,
+                FirstName = "Admin",
+                LastName = "User"
             };
             users.Add(user);
 
@@ -120,7 +136,9 @@
                 TwoFactorEnabled = false,
                 LockoutEnd = null,
                 LockoutEnabled = true,
-                AccessFailedCount = 0
+                AccessFailedCount = 0,
+                FirstName = "Moderator",
+                LastName = "User"
             };
             users.Add(user);
 
@@ -142,7 +160,9 @@
                 TwoFactorEnabled = false,
                 LockoutEnd = null,
                 LockoutEnabled = true,
-                AccessFailedCount = 0
+                AccessFailedCount = 0,
+                FirstName = "Moderator",
+                LastName = "User"
             };
             users.Add(user);
 

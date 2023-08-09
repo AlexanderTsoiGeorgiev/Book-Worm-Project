@@ -28,6 +28,7 @@
         public bool IsPrivate { get; set; }
 
         [Required]
+        [Display(Name = "Poem type")]
         public int CategoryId { get; set; }
 
         public IEnumerable<CategoryDisplayViewModel> Categories { get; set; }

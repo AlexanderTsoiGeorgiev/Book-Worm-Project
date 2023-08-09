@@ -7,7 +7,7 @@
         <p>BookWorm is the best place to start your career as an author now!</p>
     </div>
 
-@if (User.Identity!.IsAuthenticated)
+@if (!(User.Identity?.IsAuthenticated) ?? false)
 {
     <h2 class="text-center">Get Started By Registering!</h2>
 }

@@ -82,5 +82,14 @@
             public const int ContentMinLength = 1;
             public const int ContentMaxLength = 500;
         }
+
+        public static class UserValidationConstant
+        {
+            public const int FirstNameMinLength = 2;
+            public const int FirstNameMaxLength = 150;
+
+            public const int LastNameMinLength = 2;
+            public const int LastNameMaxLength = 150;
+        }
     }
 }

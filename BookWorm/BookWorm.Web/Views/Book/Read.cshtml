@@ -53,6 +53,12 @@
         {
             <p>No review yet!</p>
         }
+
+         @{
+            int likeBtnIdCounter = 1;
+            int dislikeBtnIdCounter = 1;
+            int likesIdCounter = 1;
+        }
         <div class="accordion" id="reviewAccordion">
             @foreach (ReviewDisplayViewModel review in Model.Reviews!)
             {
@@ -65,6 +71,22 @@
                     <div id="id_@review.Id" class="accordion-collapse collapse" aria-labelledby="@review.Title" data-bs-parent="#reviewAccordion">
                         <div class="accordion-body">
                             @review.Content
+                        </div>
+
+                        @{
+                            string likeBtnId = $"likeBtn{likeBtnIdCounter++}";
+                            string dislikeBtnId = $"dislikeBtn{dislikeBtnIdCounter++}";
+                            string likesId = $"likes{likesIdCounter++}";
+                            string reviewId = review.Id.ToString();
+                        }
+                        <div>
+                            <button id="@likeBtnId" class="btn btn-success upvote" onclick="likeButton('@likeBtnId', '@dislikeBtnId', '@likesId', '@reviewId')">
+                                Like
+                            </button>
+                            <button id=@dislikeBtnId class="btn btn-danger downvote" onclick="dislikeButton('@likeBtnId', '@dislikeBtnId', '@likesId', '@reviewId')">
+                                Dislike
+                            </button>
+                            <p id=@likesId>@(review.Upvotes - review.Downvotes)</p>
                         </div>
                     </div>
                 </div>
