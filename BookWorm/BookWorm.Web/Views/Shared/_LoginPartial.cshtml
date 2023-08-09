@@ -1,5 +1,6 @@
 ﻿@using BookWorm.Data.Models;
-@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity;
+@using BookWorm.Web.Infrastructure.ExtensionMethods;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -7,7 +8,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Index">Hello @User.Identity?.Name!</a>
+            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Index">Hello, @User.GetUserFriendlyName()!</a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

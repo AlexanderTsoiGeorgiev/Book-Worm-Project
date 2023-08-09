@@ -14,6 +14,8 @@ namespace BookWorm.Web
     using BookWorm.Web.Infrastructure.ExtensionMethods;
 
     using static BookWorm.Common.GeneralApplicationConstants;
+    using static BookWorm.Data.Common.AuthorIds;
+    using static BookWorm.Data.Common.StaffIds;
 
     public class Program
     {
@@ -21,7 +23,7 @@ namespace BookWorm.Web
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<BookWormDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -95,6 +97,15 @@ namespace BookWorm.Web
 
             if (app.Environment.IsDevelopment())
             {
+                string[] ids = new string[] { 
+                    EdgarAllanPoeId, 
+                    WilliamShakespeareId, 
+                    EmilyDickinsonId, 
+                    AdminId, 
+                    Moderator1Id, 
+                    Moderator2Id 
+                };
+                app.AddFriendlyNameToSeededUsers(ids);
                 app.SeedAdministator(AdminUserEmail);
                 string[] emails = new string[] { Moderator1UserEmail, Moderator2UserEmail };
                 app.SeedModerators(emails);

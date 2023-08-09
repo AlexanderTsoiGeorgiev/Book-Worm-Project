@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.Text;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,7 +16,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 
 using BookWorm.Data.Models;
 using static BookWorm.Data.Common.DataModelsValidationConstants.UserValidationConstant;
-using System.Security.Claims;
+using static BookWorm.Common.ClaimNamesConstants;
 
 namespace BookWorm.Web.Areas.Identity.Pages.Account
 {
@@ -120,11 +121,12 @@ namespace BookWorm.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+
+
                 ApplicationUser user = CreateUser();
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
 
-                Claim friendlyName = new Claim("FriendlyName", user.FirstName);
 
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -147,7 +149,14 @@ namespace BookWorm.Web.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+
+
+
+                    Claim friendlyName = new Claim(FriendlyNameClaimName, user.FirstName);
                     await _userManager.AddClaimAsync(user, friendlyName);
+
+
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });

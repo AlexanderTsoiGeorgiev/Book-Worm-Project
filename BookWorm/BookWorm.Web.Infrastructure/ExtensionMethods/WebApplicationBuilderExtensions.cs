@@ -1,14 +1,54 @@
 ﻿namespace BookWorm.Web.Infrastructure.ExtensionMethods
 {
+    using System.Security.Claims;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
+    using BookWorm.Data;
     using BookWorm.Data.Models;
+
+    using static BookWorm.Common.ClaimNamesConstants;
     using static BookWorm.Common.GeneralApplicationConstants;
 
     public static class WebApplicationBuilderExtensions
     {
+        public static IApplicationBuilder AddFriendlyNameToSeededUsers(this IApplicationBuilder app, string[] ids)
+        {
+            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+
+            BookWormDbContext dbContext = serviceProvider.GetRequiredService<BookWormDbContext>();
+            UserManager<ApplicationUser> userManager =
+                serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            ApplicationUser user;
+            
+            Task.Run(async () =>
+            {
+                IEnumerable<Claim> claims;
+                foreach (string id in ids)
+                {
+                    user = await userManager.FindByIdAsync(id);
+                    Claim friendlyName = new Claim(FriendlyNameClaimName, user.FirstName);
+                    claims = await userManager.GetClaimsAsync(user);
+                    if (claims.Any(c => c.Type == FriendlyNameClaimName))
+                    {
+                        continue;
+                    }
+                    await userManager.AddClaimAsync(user, friendlyName);
+                    
+                }
+            })
+            .GetAwaiter()
+            .GetResult();
+
+
+            return app;
+        }
+
         public static IApplicationBuilder SeedAdministator(this IApplicationBuilder app, string email)
         {
             using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
@@ -79,5 +119,7 @@
 
             return app;
         }
+
+       
     }
 }

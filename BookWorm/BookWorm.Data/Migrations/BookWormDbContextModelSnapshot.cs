@@ -249,7 +249,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("PoemId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.Book", b =>
@@ -292,7 +292,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.BookPoem", b =>
@@ -307,7 +307,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookPoem");
+                    b.ToTable("BookPoem", (string)null);
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.Category", b =>
@@ -325,7 +325,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -397,7 +397,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("ForumPosts");
+                    b.ToTable("ForumPosts", (string)null);
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.Poem", b =>
@@ -445,7 +445,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Poems");
+                    b.ToTable("Poems", (string)null);
 
                     b.HasData(
                         new
@@ -509,7 +509,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("ForumPostId");
 
-                    b.ToTable("Replies");
+                    b.ToTable("Replies", (string)null);
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.Review", b =>
@@ -563,7 +563,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasIndex("PoemId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("BookWorm.Data.Models.Tag", b =>
@@ -581,7 +581,7 @@ namespace BookWorm.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
