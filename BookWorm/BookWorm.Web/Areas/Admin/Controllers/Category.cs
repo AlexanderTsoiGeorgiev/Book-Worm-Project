@@ -13,17 +13,29 @@
     public class Category : AdminBaseController
     {
         private readonly IAdminService adminService;
+        private readonly ICategoryService categoryService;
         private readonly IToastNotification toastNotification;
 
-        public Category(IAdminService adminService, IToastNotification toastNotification)
+        public Category(
+            IAdminService adminService, 
+            ICategoryService categoryService, 
+            IToastNotification toastNotification
+            )
         {
             this.adminService = adminService;
+            this.categoryService = categoryService;
             this.toastNotification = toastNotification;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            return Ok();
         }
 
         [HttpGet]
@@ -43,7 +55,11 @@
 
             try
             {
-                await adminService.AddCategoryAsync(model);
+                bool exists = await categoryService.CategoryExistsAsync(model);
+                toastNotification.AddWarningToastMessage("Category with such name already exists!");
+                if (exists) return View(model);
+
+                await categoryService.AddCategoryAsync(model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "category"));
                 return RedirectToAction(nameof(Add), "Category", new { Area = AdminAreaName });
             }

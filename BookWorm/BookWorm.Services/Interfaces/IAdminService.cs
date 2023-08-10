@@ -4,6 +4,5 @@
 
     public interface IAdminService
     {
-        public Task AddCategoryAsync(CategoryFormViewModel model);
     }
 }

@@ -44,7 +44,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-dark text-light">
+    <footer class="border-top footer text-muted bg-dark text-light fixed-bottom" @*style="position: absolute; bottom: 0; width: 100%; height: 80px;"*@>
         @if (DateTime.UtcNow.Year != ReleaseYear)
         {
             <div class="container">&copy; @ReleaseYear - @DateTime.UtcNow.Year copyright; Book Worm</div>
