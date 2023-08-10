@@ -17,8 +17,8 @@
         private readonly IToastNotification toastNotification;
 
         public Category(
-            IAdminService adminService, 
-            ICategoryService categoryService, 
+            IAdminService adminService,
+            ICategoryService categoryService,
             IToastNotification toastNotification
             )
         {
@@ -35,7 +35,19 @@
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            return Ok();
+            try
+            {
+                IEnumerable<CategoryDisplayViewModel> model =
+                    await categoryService.GetAllCategoriesAsDisplayModelAsync();
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
+
         }
 
         [HttpGet]
@@ -45,7 +57,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CategoryFormViewModel model) 
+        public async Task<IActionResult> Add(CategoryFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -55,18 +67,67 @@
 
             try
             {
-                bool exists = await categoryService.CategoryExistsAsync(model);
-                toastNotification.AddWarningToastMessage("Category with such name already exists!");
-                if (exists) return View(model);
+                bool exists = await categoryService.CategoryExistsByNameAsync(model);
+                if (exists)
+                {
+                    toastNotification.AddWarningToastMessage("Category with such name already exists!");
+                    return View(model);
+                }
 
                 await categoryService.AddCategoryAsync(model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "category"));
-                return RedirectToAction(nameof(Add), "Category", new { Area = AdminAreaName });
+                return RedirectToAction(nameof(All), "Category", new { Area = AdminAreaName });
             }
             catch (Exception)
             {
                 toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                bool existsById = await categoryService.CategoryExistsByIdAsync(id);
+                if (!existsById) 
+                {
+                    toastNotification.AddWarningToastMessage("Category with such id does not exist!");
+                    return RedirectToAction(nameof(All), "Category", new {Area = AdminAreaName});
+                }
+
+                await categoryService.SoftDeleteCategoryAsync(id);
+                toastNotification.AddSuccessToastMessage("Successfully deleted category!");
+                return RedirectToAction(nameof(All), "Category", new { Area = AdminAreaName });
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Restore(int id)
+        {
+            try
+            {
+                bool existsById = await categoryService.CategoryExistsByIdAsync(id);
+                if (!existsById)
+                {
+                    toastNotification.AddWarningToastMessage("Category with such id does not exist!");
+                    return RedirectToAction(nameof(All), "Category", new { Area = AdminAreaName });
+                }
+
+                await categoryService.RestoreCategoryAsync(id);
+                toastNotification.AddSuccessToastMessage("Successfully restored category!");
+                return RedirectToAction(nameof(All), "Category", new { Area = AdminAreaName });
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home", new { Area = AdminAreaName });
             }
         }
     }

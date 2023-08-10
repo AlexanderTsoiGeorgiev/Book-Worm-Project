@@ -7,12 +7,19 @@
     public interface ICategoryService
     {
         //All
-        public Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsDisplayModelAsyn();
+        public Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsDisplayModelAsync();
 
         //Add
         public Task AddCategoryAsync(CategoryFormViewModel model);
 
+        //Delete
+        public Task SoftDeleteCategoryAsync(int id);
+
+        //Restore
+        public Task RestoreCategoryAsync(int id);
+
         //Validation
-        public Task<bool> CategoryExistsAsync(CategoryFormViewModel model);
+        public Task<bool> CategoryExistsByIdAsync(int id);
+        public Task<bool> CategoryExistsByNameAsync(CategoryFormViewModel model);
     }
 }

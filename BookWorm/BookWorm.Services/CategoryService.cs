@@ -17,9 +17,16 @@
         }
 
         //All
-        public Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsDisplayModelAsyn()
+        public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsDisplayModelAsync()
         {
-            throw new NotImplementedException();
+            CategoryDisplayViewModel[] categories = await dbContext.Categories.AsNoTracking().Select(c => new CategoryDisplayViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                isDeleted = c.IsDeleted
+            }).ToArrayAsync();
+
+            return categories;
         }
 
         //Add
@@ -34,12 +41,35 @@
             await dbContext.SaveChangesAsync();
         }
 
+        //Delete
+        public async Task SoftDeleteCategoryAsync(int id)
+        {
+            Category? category = await dbContext.Categories.FindAsync(id);
+            category!.IsDeleted = true;
+            await dbContext.SaveChangesAsync();
+        }
+
+        //Restore
+        public async Task RestoreCategoryAsync(int id)
+        {
+            Category? category = await dbContext.Categories.FindAsync(id);
+            category!.IsDeleted = false;
+            await dbContext.SaveChangesAsync();
+        }
+
         //Validation
-        public async Task<bool> CategoryExistsAsync(CategoryFormViewModel model)
+        public async Task<bool> CategoryExistsByNameAsync(CategoryFormViewModel model)
         {
             string name = model.Name.ToLower();
 
-            return await dbContext.Categories.AnyAsync(c => c.Name.ToLower() == name);
+            bool result = await dbContext.Categories.AnyAsync(c => c.Name.ToLower() == name);
+            return result;
+        }
+
+        public async Task<bool> CategoryExistsByIdAsync(int id)
+        {
+            Category? category = await dbContext.Categories.FindAsync(id);
+            return category != null;
         }
     }
 }

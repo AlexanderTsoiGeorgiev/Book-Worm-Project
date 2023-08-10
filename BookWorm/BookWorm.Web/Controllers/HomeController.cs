@@ -9,6 +9,7 @@
     using NToastNotify;
 
     using static BookWorm.Common.ToastMessages;
+    using static BookWorm.Common.GeneralApplicationConstants;
 
     public class HomeController : BaseController
     {
@@ -22,6 +23,10 @@
         [AllowAnonymous]
         public IActionResult Index()
         {
+            if (User.IsInRole(AdminRoleName))
+            {
+                return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
             return View();
         }
 

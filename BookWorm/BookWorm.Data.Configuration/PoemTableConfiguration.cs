@@ -16,6 +16,10 @@
                 .WithMany(a => a.Poems)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .Property(p => p.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
+
             builder.HasData(SeedPoems());
         }
 

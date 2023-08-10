@@ -19,6 +19,9 @@
         [MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
 
+        [Required]
+        public bool IsDeleted { get; set; }
+
         public IEnumerable<Poem> Poems { get; set; }
     }
 }

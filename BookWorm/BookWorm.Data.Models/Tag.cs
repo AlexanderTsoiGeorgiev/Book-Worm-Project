@@ -18,6 +18,9 @@
         [MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
 
+        [Required]
+        public bool isDeleted { get; set; }
+
         public IEnumerable<ForumPost> ForumPosts { get; set; }
     }
 }
