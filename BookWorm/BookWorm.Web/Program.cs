@@ -65,6 +65,7 @@ namespace BookWorm.Web
             builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<IForumPostService, ForumPostService>();
             builder.Services.AddScoped<IReplyService, ReplyService>();
+            builder.Services.AddScoped<IAdminService, AdminService>();
 
             builder.Services.ConfigureApplicationCookie(configure => 
             {

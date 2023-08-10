@@ -5,9 +5,15 @@
     public class UserController : BaseController
     {
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string id)
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Search(string id)
+        {
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
