@@ -6,8 +6,15 @@
 
 
 <div class="row mt-5">
-    @foreach (var poem in Model)
+    @if (Model.Any())
     {
-        <partial name="_PoemCardPartial" model="@poem" />
+        foreach (var poem in Model)
+        {
+            <partial name="_PoemCardPartial" model="@poem" />
+        }
+    }
+    else
+    {
+        <p class="text-center fs-1">User does not have any poems yet!</p>
     }
 </div>

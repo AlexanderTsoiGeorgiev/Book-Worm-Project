@@ -226,9 +226,6 @@
                 bool isDeleted = await articleService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
 
-                bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
-                if (!(isUserOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
-
 
                 ArticleDetailsViewModel model = await articleService.FindArticleAsArticleDetailsViewModelByIdAsync(id);
                 return View(model);

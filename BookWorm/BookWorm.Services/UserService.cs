@@ -14,6 +14,8 @@
     using static BookWorm.Common.GeneralApplicationConstants;
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Web.ViewModels.Book;
+    using BookWorm.Web.ViewModels.Review;
+    using BookWorm.Web.ViewModels.Article;
     using BookWorm.Data.Common;
 
     public class UserService : IUserService
@@ -98,6 +100,49 @@
                 }).ToArrayAsync();
 
             return books;
+        }
+
+        //Load Reviews
+        public async Task<IEnumerable<ReviewDisplayViewModel>> GetUserReviewsAsDisplayModelAsync(string id)
+        {
+            var userReviews = await dbContext.Reviews
+               .Include(r => r.Poem)
+               .Include(r => r.Book)
+               .Where(r => r.AuthorId.ToString() == id &&
+                                     r.IsDeleted == false)
+               .Select(r => new ReviewDisplayViewModel
+               {
+                   Id = r.Id,
+                   PoemId = r.PoemId,
+                   BookId = r.BookId,
+                   Title = r.Title,
+                   Content = r.Content,
+                   Upvotes = r.Upvotes,
+                   Downvotes = r.Downvotes,
+                   AuthorId = r.AuthorId,
+                   AuthorName = r.Author.UserName,
+                   Rating = r.Rating,
+                   DatePosted = r.DatePosted,
+                   DateEdited = r.DateEdited
+               })
+               .ToArrayAsync();
+
+            return userReviews;
+        }
+        //Load Articles
+        public async Task<IEnumerable<ArticleDisplayViewModel>> GetUserArticlesAsDisplayModelAsync(string id)
+        {
+            ArticleDisplayViewModel[] articles = await dbContext.Articles
+                .Where(a => a.AuthorId.ToString() == id && a.IsDeleted == false)
+                .Select(a => new ArticleDisplayViewModel
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    DateCreated = a.DatePosted,
+                    PoemId = a.PoemId.ToString()
+                }).ToArrayAsync();
+
+            return articles;
         }
     }
 }

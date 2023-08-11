@@ -2,8 +2,10 @@
 {
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
+    using BookWorm.Web.ViewModels.Article;
     using BookWorm.Web.ViewModels.Book;
     using BookWorm.Web.ViewModels.Poem;
+    using BookWorm.Web.ViewModels.Review;
     using BookWorm.Web.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -103,15 +105,49 @@
         }
 
         [HttpGet]
-        public IActionResult Reviews(string id)
+        public async Task<IActionResult> Reviews(string id)
         {
-            return View();
+            try
+            {
+                ApplicationUser user = await userService.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    toastNotification.AddErrorToastMessage("User with the specified user name does not exist!");
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ViewData["Title"] = $"{user.FirstName} ({user.UserName}) {user.LastName}'s Reviews";
+                IEnumerable<ReviewDisplayViewModel> model = await userService.GetUserReviewsAsDisplayModelAsync(id);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet]
-        public IActionResult Articles(string id)
+        public async Task<IActionResult> Articles(string id)
         {
-            return View();
+            try
+            {
+                ApplicationUser user = await userService.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    toastNotification.AddErrorToastMessage("User with the specified user name does not exist!");
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ViewData["Title"] = $"{user.FirstName} ({user.UserName}) {user.LastName}'s Articles";
+                IEnumerable<ArticleDisplayViewModel> model = await userService.GetUserArticlesAsDisplayModelAsync(id);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

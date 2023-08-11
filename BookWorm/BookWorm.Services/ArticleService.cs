@@ -134,7 +134,8 @@
                 {
                     Id = a.Id,
                     Title = a.Title,
-                    DateCreated = a.DatePosted
+                    DateCreated = a.DatePosted,
+                    PoemId = a.PoemId.ToString()
                 }).ToArrayAsync();
 
             return articles;

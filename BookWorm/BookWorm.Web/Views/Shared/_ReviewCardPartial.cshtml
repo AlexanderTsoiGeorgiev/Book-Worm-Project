@@ -7,12 +7,21 @@
                 @Model.Title
             </h4>
             <h6>
-                @Model.DatePosted
+                Date Posted: @Model.DatePosted.ToString("dd-MM-yyyy")
             </h6>
             <p>
-                Rating: @(Model.Upvotes - Model.Downvotes)
+                Rating: @Model.Rating
+                Likes: @(Model.Upvotes - Model.Downvotes)
             </p>
             <a asp-area="" asp-controller="Review" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Details</a>
+            @if (Model.PoemId == null)
+            {
+                <a asp-area="" asp-controller="Book" asp-action="Read" asp-route-id="@Model.BookId" class="btn btn-primary">Read Book</a>
+            }
+            else
+            {
+                <a asp-area="" asp-controller="Poem" asp-action="Read" asp-route-id="@Model.PoemId" class="btn btn-primary">Read Poem</a>
+            }
         </div>
     </div>
 </div>

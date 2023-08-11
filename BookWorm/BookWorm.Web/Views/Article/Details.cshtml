@@ -28,14 +28,14 @@
             <div class="col-4">
                 <div class="mt-5">
                     <ul class="list-group">
-                        <li class="list-group-item">Date Crated: @Model.DateCreated</li>
+                        <li class="list-group-item">Date Crated: @Model.DateCreated.ToString("dd-MM-yyyy")</li>
                         @if (Model.DateEdited == null)
                         {
                             <li class="list-group-item">Date Edited: Not Edited Yet!</li>
                         }
                         else
                         {
-                            <li class="list-group-item">Date Edited: @Model.DateEdited</li>
+                            <li class="list-group-item">Date Edited: @Model.DateEdited.Value.ToString("dd-MM-yyyy")</li>
                         }
                     </ul>
                 </div>

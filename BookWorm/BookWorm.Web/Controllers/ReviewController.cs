@@ -375,9 +375,6 @@
                 bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
                 if (isDeleted) return NotFound();
 
-                bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
-                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
-
                 ReviewDetailsViewModel model = await reviewService.GetReviewAsDetailsViewModelAsync(id);
                 return View(model);
             }
