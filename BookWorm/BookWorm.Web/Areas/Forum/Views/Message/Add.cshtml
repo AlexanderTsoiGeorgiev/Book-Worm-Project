@@ -1,0 +1,15 @@
+﻿@model ForumFormViewModel
+
+@{
+    ViewData["Title"] = "Add Message";
+    ViewData["Action"] = "Add";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<partial name="_MessageFormPartial" model="@Model">
+
+    @section Scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }

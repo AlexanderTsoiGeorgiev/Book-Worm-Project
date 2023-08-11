@@ -29,7 +29,7 @@
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(Mine));
         }
 
         //TODO: Add Exceptions & Redirects

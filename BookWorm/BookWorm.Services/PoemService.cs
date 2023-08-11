@@ -8,13 +8,12 @@
 
     using BookWorm.Data;
     using BookWorm.Data.Models;
-    using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Interfaces;
-    using BookWorm.Web.ViewModels.Category;
+    using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Models.Poem;
+    using BookWorm.Web.ViewModels.Category;
 
 
-    //TODO: Add exceptions and add summaries
     public class PoemService : IPoemService
     {
         private readonly BookWormDbContext dbContext;
@@ -66,10 +65,10 @@
                     filteredPoems = filteredPoems.OrderBy(p => p.Title);
                     break;
                 case PoemSort.AlphabeticallyDescending:
-                    filteredPoems = filteredPoems.OrderByDescending(p => p.Title);
+                    filteredPoems = filteredPoems.OrderBy(p => p.Title);
                     break;
                 case PoemSort.Newest:
-                    filteredPoems = filteredPoems.OrderBy(p => p.DateCreated);
+                    filteredPoems = filteredPoems.OrderByDescending(p => p.DateCreated);
                     break;
                 case PoemSort.Oldest:
                     filteredPoems = filteredPoems.OrderByDescending(p => p.DateCreated);
@@ -103,7 +102,6 @@
         }
 
         //Read
-        //TODO: Check comment
         public async Task<PoemReadViewModel> FindPoemReadModelByIdAsync(string id)
         {
             PoemReadViewModel? entity = await dbContext.Poems
@@ -121,18 +119,10 @@
                     AuthorId = p.AuthorId,
                 }).FirstOrDefaultAsync();
 
-
-            //Instead of throwing exceptions return bad request in controller
-            if (entity == null)
-            {
-                throw new Exception();
-            }
-
-            return entity;
+            return entity!;
         }
 
         //Add
-        //Check TODOs
         public async Task CreatePoemAsync(string authorId, PoemFormViemModel model)
         {
             var entity = new Poem
@@ -154,16 +144,13 @@
         //Check TODOs
         public async Task EditPoemAsync(string id, PoemFormViemModel model)
         {
-            var entity = await dbContext.Poems.FindAsync(Guid.Parse(id));
-            if (entity == null)
-            {
-                return; //Add exception
-            }
-            entity.Title = model.Title;
-            entity.Content = model.Content;
-            entity.Description = model.Description;
-            entity.IsPrivate = model.IsPrivate;
-            entity.DateEdited = DateTime.Now;
+            Poem? entity = await dbContext.Poems.FindAsync(Guid.Parse(id));
+            
+            entity!.Title = model.Title;
+            entity!.Content = model.Content;
+            entity!.Description = model.Description;
+            entity!.IsPrivate = model.IsPrivate;
+            entity!.DateEdited = DateTime.Now;
 
             await dbContext.SaveChangesAsync();
         }
@@ -206,15 +193,10 @@
         }
 
         //Delete
-        //Check TODOs
         public async Task SoftDeletePoemAsync(string id)
         {
-            var entity = await dbContext.Poems.FindAsync(Guid.Parse(id));
-            if (entity == null)
-            {
-                return; //Add exception
-            }
-            entity.IsDeleted = true;
+            Poem? entity = await dbContext.Poems.FindAsync(Guid.Parse(id));
+            entity!.IsDeleted = true;
 
             await dbContext.SaveChangesAsync();
         }
@@ -231,11 +213,6 @@
                 })
                 .ToArrayAsync();
 
-            if (!categories.Any())
-            {
-                throw new Exception();
-            }
-
             return categories;
         }
         public async Task<IEnumerable<string>> GetAllCategoryNamesAsync()
@@ -244,11 +221,6 @@
                 .AsNoTracking()
                 .Select(c => c.Name)
                 .ToArrayAsync();
-
-            if (!categoryNames.Any())
-            {
-                throw new Exception();
-            }
 
             return categoryNames;
         }
@@ -308,7 +280,6 @@
 
             return poems;
         }
-
         public async Task<bool> UserHasPoemsAsync(string id)
         {
             bool hasPoems = await dbContext.Poems.AnyAsync(p => p.AuthorId.ToString() == id);

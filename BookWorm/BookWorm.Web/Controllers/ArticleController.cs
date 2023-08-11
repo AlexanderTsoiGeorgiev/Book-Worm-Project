@@ -10,7 +10,6 @@
 
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
-    using System.Globalization;
 
     public class ArticleController : BaseController
     {
@@ -30,7 +29,7 @@
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(Mine));
         }
 
         [HttpGet]

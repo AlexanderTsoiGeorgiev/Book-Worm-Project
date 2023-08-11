@@ -34,7 +34,7 @@
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(Mine));
         }
 
         //Works
