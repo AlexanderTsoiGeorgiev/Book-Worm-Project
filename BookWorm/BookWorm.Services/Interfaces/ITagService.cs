@@ -6,6 +6,7 @@
     {
         //Index
         public Task<IEnumerable<TagDisplayViewModel>> AllTagsAsDisplayModelAsync();
+        public Task<IEnumerable<TagDisplayViewModel>> NonDeletedTagsAsDisplayModelAsync();
 
         //Add
         public Task AddTagAsync(TagFormViewModel model);
@@ -19,5 +20,6 @@
         //Validation
         public Task<bool> TagExistsByNameAsync(string name);
         public Task<bool> TagExistsByIdAsync(int id);
+        public Task<bool> IsTagDeleted(int id);
     }
 }

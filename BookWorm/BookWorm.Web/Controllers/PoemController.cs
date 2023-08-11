@@ -105,7 +105,7 @@
                 return RedirectToAction("Index", "Home");
             }
         }
-        //TODO: fix not valid model state & add try catch when accessing the DB
+
         [HttpPost]
         public async Task<IActionResult> Add(PoemFormViemModel model)
         {

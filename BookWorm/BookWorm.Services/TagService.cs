@@ -9,6 +9,7 @@
     using BookWorm.Data.Models;
     using BookWorm.Web.ViewModels.Tag;
     using BookWorm.Services.Interfaces;
+    using BookWorm.Data.Migrations;
 
     public class TagService : ITagService
     {
@@ -36,6 +37,21 @@
         {
             TagDisplayViewModel[] tags = await dbContext.Tags
                 .AsNoTracking()
+                .Select(t => new TagDisplayViewModel
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    isDeleted = t.isDeleted
+                }).ToArrayAsync();
+
+            return tags;
+        }
+
+        public async Task<IEnumerable<TagDisplayViewModel>> NonDeletedTagsAsDisplayModelAsync()
+        {
+            TagDisplayViewModel[] tags = await dbContext.Tags
+                .AsNoTracking()
+                .Where(t => t.isDeleted == false)
                 .Select(t => new TagDisplayViewModel
                 {
                     Id = t.Id,
@@ -74,6 +90,12 @@
         {
             Tag? tag = await dbContext.Tags.FindAsync(id);
             return tag != null;
+        }
+
+        public async Task<bool> IsTagDeleted(int id)
+        {
+            Tag? tag = await dbContext.Tags.FindAsync(id);
+            return tag!.isDeleted;
         }
     }
 }
