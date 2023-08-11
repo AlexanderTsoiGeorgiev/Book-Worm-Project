@@ -15,11 +15,11 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Book Worm</a>
                 <a class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Add
-          </a>
-          <ul class="dropdown-menu dropdown-menu-dark">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a asp-area="" asp-controller="Poem" asp-action="Add" class="dropdown-item">Poem</a></li>
                     <li><a asp-area="" asp-controller="Book" asp-action="Add" class="dropdown-item">Book</a></li>
-          </ul>
+                </ul>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,6 +33,10 @@
                             <a class="nav-link text-light" asp-area="Forum" asp-controller="Home" asp-action="Index">Forum</a>
                         </li>
                     </ul>
+                    <form method="get" asp-area="" asp-controller="User" asp-action="Search" class="form-inline my-2 my-lg-0">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="UserName">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
                     <partial name="_LoginPartial" />
                 </div>
             </div>

@@ -4,34 +4,33 @@
     using System.Collections.Generic;
 
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
 
     using BookWorm.Data;
+    using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.User;
 
     using static BookWorm.Common.GeneralApplicationConstants;
-    using BookWorm.Data.Models;
-    using Microsoft.AspNetCore.Identity;
+    using BookWorm.Web.ViewModels.Poem;
+    using BookWorm.Web.ViewModels.Book;
+    using BookWorm.Data.Common;
 
     public class UserService : IUserService
     {
         private readonly BookWormDbContext dbContext;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole<Guid>> roleManager;
 
-        public UserService(BookWormDbContext dbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+        public UserService(BookWormDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             this.dbContext = dbContext;
-            this.roleManager = roleManager;
             this.userManager = userManager;
         }
 
         public async Task CreateModeratorAsync(string userName)
         {
             ApplicationUser user = await userManager.FindByEmailAsync(userName);
-
-            List<string> userRoles = await userManager.GetRolesAsync(user);
-            bool inRole = await userRoles.AnyAsync();
+            await userManager.AddToRoleAsync(user, ModeratorRoleName);
         }
 
         public async Task<IEnumerable<UserAdminDisplayViewModel>> GetAllUsersDisplayViewModelAsync()
@@ -50,6 +49,55 @@
                 }).ToArrayAsync();
 
             return users;
+        }
+
+
+        public async Task<ApplicationUser> GetUserByIdAsync(string id)
+        {
+            ApplicationUser user = await userManager.FindByIdAsync(id);
+            return user;
+        }
+
+        public async Task<ApplicationUser> GetUserByUserNameAsync(string userName)
+        {
+            ApplicationUser user = await userManager.FindByNameAsync(userName);
+            return user;
+        }
+
+        //Load Poems
+        public async Task<IEnumerable<PoemDisplayViewModel>> GetUserPoemsAsDisplayModelAsync(string id)
+        {
+            PoemDisplayViewModel[] poems = await dbContext.Poems
+                .AsNoTracking()
+                .Where(p => p.AuthorId.ToString() == id && p.IsDeleted == false && p.IsPrivate == false)
+                .Select(p => new PoemDisplayViewModel
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    DateCreated = p.DateCreated,
+                }).ToArrayAsync();
+
+            return poems;
+        }
+
+        //Load Books
+        public async Task<IEnumerable<BookDisplayViewModel>> GetUserBooksAsDisplayModelAsync(string id)
+        {
+            string userName = dbContext.Users.Find(Guid.Parse(id))!.UserName;
+            BookDisplayViewModel[] books = await dbContext.Books
+                .AsNoTracking()
+                .Where(b => b.AuthorId.ToString() == id && b.IsDeleted == false)
+                .Select(b => new BookDisplayViewModel
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Description = b.Description,
+                    ImageUrl = b.ImageUrl,
+                    AuthorName = userName
+                }).ToArrayAsync();
+
+            return books;
         }
     }
 }

@@ -47,9 +47,32 @@
         [HttpPost]
         public async Task<IActionResult> CreateModerator(UserAdminModeratorForm model)
         {
+            if (!ModelState.IsValid)
+            {
+                toastNotification.AddWarningToastMessage(WarningFulfillFormRequirementsMessage);
+                return View(model);
+            }
+
             try
             {
+                string username = model.UserName;
+                ApplicationUser user = await userManager.FindByNameAsync(username);
+                if (user == null)
+                {
+                    toastNotification.AddErrorToastMessage("User with the specified username does not exists!");
+                    return View(model);
+                }
+                IList<string> userRoles = await userManager.GetRolesAsync(user);
+                bool isInRole = userRoles.Any(r => r == ModeratorRoleName);
+                if (isInRole) 
+                {
+                    toastNotification.AddErrorToastMessage("User is already a moderator!");
+                    return View(model);
+                }
 
+                await userService.CreateModeratorAsync(username);
+
+                toastNotification.AddSuccessToastMessage("Succesffully added user to role!");
                 return RedirectToAction("Index", "Home", new {Area = AdminAreaName});
             }
             catch (Exception)

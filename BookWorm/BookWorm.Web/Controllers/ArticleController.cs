@@ -7,7 +7,10 @@
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Article;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
+
     using static BookWorm.Common.ToastMessages;
+    using static BookWorm.Common.GeneralApplicationConstants;
+    using System.Globalization;
 
     public class ArticleController : BaseController
     {
@@ -108,7 +111,7 @@
                 if (!articleExists) return NotFound();
 
                 bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
-                if (!isUserOwner) return BadRequest();
+                if (!(isUserOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 bool isDeleted = await articleService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
@@ -144,7 +147,7 @@
                 if (!articleExists) return NotFound();
 
                 bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
-                if (!isUserOwner) return NotFound();
+                if (!(isUserOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 bool isDeleted = await articleService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
@@ -224,7 +227,7 @@
                 if (isDeleted) return NotFound();
 
                 bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
-                if (!isUserOwner) return NotFound();
+                if (!(isUserOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
 
                 ArticleDetailsViewModel model = await articleService.FindArticleAsArticleDetailsViewModelByIdAsync(id);
@@ -253,7 +256,7 @@
                 if (isDeleted) return NotFound();
 
                 bool isUserOwner = await articleService.IsUserArticleOwner(userId, id);
-                if (!isUserOwner) return BadRequest();
+                if (!(isUserOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
 
                 await articleService.SoftDeleteAsync(id);

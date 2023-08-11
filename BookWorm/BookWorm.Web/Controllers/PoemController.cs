@@ -8,7 +8,9 @@
     using BookWorm.Web.ViewModels.Poem;
     using BookWorm.Services.Models.Poem;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
+
     using static BookWorm.Common.ToastMessages;
+    using static BookWorm.Common.GeneralApplicationConstants;
 
     public class PoemController : BaseController
     {
@@ -141,12 +143,11 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                if (!isOwner) return BadRequest();
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 PoemFormViemModel model = await poemService.FindPoemByIdAsync(id);
                 model.Categories = await poemService.GetAllCategoriesAsync();
 
-                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "poem"));
                 return View(model);
             }
             catch (Exception)
@@ -168,10 +169,12 @@
             {
                 bool exists = await poemService.ExistsByIdAsync(id);
                 if (!exists) return BadRequest();
+
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
+
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                if (!isOwner) return BadRequest();
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 await poemService.EditPoemAsync(id, model);
 
@@ -198,10 +201,6 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
 
-                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                if (!isOwner) return BadRequest();
-
-
                 model = await poemService.GetPoemAsDetailsViewModelByIdAsync(id);
                 return View(model);
             }
@@ -214,8 +213,6 @@
 
         }
 
-        //Figure out how to work with post method
-        //It is done by using onclick js function combined with fetch api
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
@@ -228,7 +225,7 @@
                 if (userId == null) return BadRequest();
 
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
-                if (!isOwner) return BadRequest();
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 await poemService.SoftDeletePoemAsync(id);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "poem"));

@@ -7,8 +7,11 @@
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Review;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
-    using static BookWorm.Common.ToastMessages;
     using BookWorm.Services.Models.Review;
+
+    using static BookWorm.Common.ToastMessages;
+    using static BookWorm.Common.GeneralApplicationConstants;
+    using BookWorm.Data.Models;
 
     public class ReviewController : BaseController
     {
@@ -181,11 +184,10 @@
 
                 bool isPoemDeleted = await poemService.IsPoemDeletedAsync(poemId);
                 if (isPoemDeleted) return BadRequest();
+                
+                bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
 
-                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, poemId);
-                bool isPrivete = await poemService.IsPoemPrivateAsync(poemId);
-
-                if (isPrivete && !isOwner) return NotFound();
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 bool isReviewDeleted = await reviewService.IsReviewDeletedAsync(id);
                 if (isReviewDeleted) return NotFound();
@@ -229,10 +231,8 @@
                 bool isPoemDeleted = await poemService.IsPoemDeletedAsync(poemId);
                 if (isPoemDeleted) return BadRequest();
 
-                bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, poemId);
-                bool isPrivete = await poemService.IsPoemPrivateAsync(poemId);
-
-                if (isPrivete && !isOwner) return NotFound();
+                bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 bool isReviewDeleted = await reviewService.IsReviewDeletedAsync(id);
                 if (isReviewDeleted) return NotFound();
@@ -248,14 +248,14 @@
             }
         }
 
-        //Semi-implemented
-        //Test it
-        //Add Exceptions
         [HttpGet]
         public async Task<IActionResult> EditBook(string id)
         {
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest();
+
                 bool exists = await reviewService.ExistsByIdAsync(id);
                 if (!exists) return NotFound();
 
@@ -270,6 +270,9 @@
 
                 bool isBookDeleted = await bookService.IsDeletedAsync((int)bookId);
                 if (isBookDeleted) return BadRequest();
+
+                bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 ReviewFormViewModel model = await reviewService.FindReviewByIdAsync(id);
 
@@ -294,6 +297,9 @@
 
             try
             {
+                string? userId = User.GetUserId();
+                if (userId == null) return BadRequest(); 
+
                 bool exists = await reviewService.ExistsByIdAsync(id);
                 if (!exists) return NotFound();
 
@@ -308,6 +314,9 @@
 
                 bool isBookDeleted = await bookService.IsDeletedAsync((int)bookId);
                 if (isBookDeleted) return BadRequest();
+
+                bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 await reviewService.EditReviewAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "review"));
@@ -336,8 +345,8 @@
                 bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
                 if (isDeleted) return NotFound();
 
-                bool isUserOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
-                if (isUserOwner) return BadRequest();
+                bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 await reviewService.SoftDeleteReviewAsync(id);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "review"));
@@ -366,8 +375,8 @@
                 bool isDeleted = await reviewService.IsReviewDeletedAsync(id);
                 if (isDeleted) return NotFound();
 
-                bool isUserOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
-                if (!isUserOwner) return BadRequest();
+                bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 ReviewDetailsViewModel model = await reviewService.GetReviewAsDetailsViewModelAsync(id);
                 return View(model);

@@ -7,7 +7,9 @@
     using BookWorm.Web.ViewModels.Book;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
+
     using static BookWorm.Common.ToastMessages;
+    using static BookWorm.Common.GeneralApplicationConstants;
 
     public class BookController : BaseController
     {
@@ -97,8 +99,12 @@
                 bool exists = await bookService.ExistsByIdAsync(id);
                 if (!exists) return NotFound();
 
+                bool isOwner = await bookService.IsUserOwnerAsync(userId, id);
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
+
                 bool isDeleted = await bookService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
+
 
                 model = await bookService.FindBookByIdFormModelAsync(id);
                 model.Poems = await poemService.GetUserPoemsAsPoemBookSelectViewModelAsync(userId);
@@ -128,8 +134,8 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
 
-                bool isUserOwner = await bookService.IsUserOwnerAsync(userId, id);
-                if (!isUserOwner) return BadRequest();
+                bool isOwner = await bookService.IsUserOwnerAsync(userId, id);
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 bool isDelete = await bookService.IsDeletedAsync(id);
                 if (isDelete) return NotFound();
@@ -204,7 +210,7 @@
                 if (!exists) return NotFound();
 
                 bool isOwner = await bookService.IsUserOwnerAsync(userId, id);
-                if (!isOwner) return BadRequest();
+                if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
                 await bookService.SoftDeleteBookAsync(id);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "book"));

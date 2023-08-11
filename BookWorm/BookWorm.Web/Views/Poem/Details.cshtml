@@ -1,7 +1,14 @@
-﻿@model PoemDetailsVisualizeViewModel
+﻿@using BookWorm.Services.Interfaces;
+@using BookWorm.Web.Infrastructure.ExtensionMethods;
+@model PoemDetailsVisualizeViewModel
+@inject IPoemService poemService
 
 @{
     ViewData["Title"] = $"Details {Model.Title}";
+    string? userId = User.GetUserId();
+    bool isUserOwner = await poemService.IsUserPoemOwnerAsync(userId!, Model.Id);
+    bool isUserAdmin = User.IsInRole(AdminRoleName);
+    bool isUserModerator = User.IsInRole(ModeratorRoleName);
 }
 
 <div class="row">
@@ -33,49 +40,52 @@
                         <li class="list-group-item">Private: @Model.IsPrivate</li>
                     </ul>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="text-center">
-                            <button type="button" class="btn mt-3 btn-dark text-center">
-                                <a class="text-decoration-none text-center text-light" asp-action="Edit" asp-controller="Poem" asp-area="" asp-route-id="@Model.Id">Edit</a>
-                            </button>
+                @if (isUserOwner || isUserAdmin || isUserModerator)
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="text-center">
+                                <button type="button" class="btn mt-3 btn-dark text-center">
+                                    <a class="text-decoration-none text-center text-light" asp-action="Edit" asp-controller="Poem" asp-area="" asp-route-id="@Model.Id">Edit</a>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="text-center">
-                            @*<button type="button" class="btn btn-danger mt-3 text-center" formmethod="post">
-                                <a class="text-decoration-none text-center text-light" asp-controller="Poem" asp-action="Delete" asp-route-id="@Model.Id">My Delete</a>
+                        <div class="col-6">
+                            <div class="text-center">
+                                @*<button type="button" class="btn btn-danger mt-3 text-center" formmethod="post">
+                            <a class="text-decoration-none text-center text-light" asp-controller="Poem" asp-action="Delete" asp-route-id="@Model.Id">My Delete</a>
                             </button>*@
 
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger mt-3 text-center" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
-                                Delete
-                            </button>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger mt-3 text-center" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
+                                    Delete
+                                </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete @Model.Title?</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure you want to delete this item?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">
-                                                <a class="text-decoration-none text-center text-light" asp-action="Delete" asp-controller="Poem" asp-area="" asp-route-id="@Model.Id.ToString()">Yes</a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete @Model.Title?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete this item?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">
+                                                    <a class="text-decoration-none text-center text-light" asp-action="Delete" asp-controller="Poem" asp-area="" asp-route-id="@Model.Id.ToString()">Yes</a>
                                                 </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>

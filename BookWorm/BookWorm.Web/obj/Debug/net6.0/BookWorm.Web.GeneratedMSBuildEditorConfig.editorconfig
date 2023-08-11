@@ -20,8 +20,8 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcnlcQWRkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Admin/Views/Category/All.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcnlcQWxsLmNzaHRtbA==
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Admin/Views/Category/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcnlcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Admin/Views/Home/Index.cshtml]
@@ -30,6 +30,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Admin/Views/Shared/_AdminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Admin/Views/Tag/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGFnXEFkZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Admin/Views/Tag/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVGFnXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Admin/Views/User/CreateModerator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxDcmVhdGVNb2RlcmF0b3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Admin/Views/User/Index.cshtml]
@@ -228,8 +240,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/User/Books.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxCb29rcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/User/Poems.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQb2Vtcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/User/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxTZWFyY2guY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Views/_ViewImports.cshtml]

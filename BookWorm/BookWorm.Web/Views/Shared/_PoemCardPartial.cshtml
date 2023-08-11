@@ -1,5 +1,9 @@
-﻿@model PoemDisplayViewModel
+﻿@using static BookWorm.Common.GeneralApplicationConstants;
+@using BookWorm.Web.Infrastructure.ExtensionMethods;
+@using BookWorm.Services.Interfaces;
+@model PoemDisplayViewModel
 
+@inject IPoemService poemService
 <div class="col-md-4">
     <div class="card mb-3">
         <div class="card-body text-center">
@@ -14,7 +18,10 @@
             <p>
                 @Model.Description
             </p>
-            <a asp-area="" asp-controller="Poem" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Details</a>
+            @if (await poemService.IsUserPoemOwnerAsync(User.GetUserId()!, Model.Id.ToString()) || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))
+            {
+                <a asp-area="" asp-controller="Poem" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Details</a>
+            }
         </div>
     </div>
 </div>

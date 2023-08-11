@@ -10,13 +10,13 @@
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
 
-    public class Category : AdminBaseController
+    public class CategoryController : AdminBaseController
     {
         private readonly IAdminService adminService;
         private readonly ICategoryService categoryService;
         private readonly IToastNotification toastNotification;
 
-        public Category(
+        public CategoryController(
             IAdminService adminService,
             ICategoryService categoryService,
             IToastNotification toastNotification
@@ -27,13 +27,8 @@
             this.toastNotification = toastNotification;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> Index()
         {
             try
             {
@@ -76,7 +71,7 @@
 
                 await categoryService.AddCategoryAsync(model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "category"));
-                return RedirectToAction(nameof(All), "Category", new { Area = AdminAreaName });
+                return RedirectToAction("Index", "Category", new { Area = AdminAreaName });
             }
             catch (Exception)
             {
@@ -94,12 +89,12 @@
                 if (!existsById) 
                 {
                     toastNotification.AddWarningToastMessage("Category with such id does not exist!");
-                    return RedirectToAction(nameof(All), "Category", new {Area = AdminAreaName});
+                    return RedirectToAction("Index", "Category", new {Area = AdminAreaName});
                 }
 
                 await categoryService.SoftDeleteCategoryAsync(id);
                 toastNotification.AddSuccessToastMessage("Successfully deleted category!");
-                return RedirectToAction(nameof(All), "Category", new { Area = AdminAreaName });
+                return RedirectToAction("Index", "Category", new { Area = AdminAreaName });
             }
             catch (Exception)
             {
@@ -117,12 +112,12 @@
                 if (!existsById)
                 {
                     toastNotification.AddWarningToastMessage("Category with such id does not exist!");
-                    return RedirectToAction(nameof(All), "Category", new { Area = AdminAreaName });
+                    return RedirectToAction("Index", "Category", new { Area = AdminAreaName });
                 }
 
                 await categoryService.RestoreCategoryAsync(id);
                 toastNotification.AddSuccessToastMessage("Successfully restored category!");
-                return RedirectToAction(nameof(All), "Category", new { Area = AdminAreaName });
+                return RedirectToAction("Index", "Category", new { Area = AdminAreaName });
             }
             catch (Exception)
             {

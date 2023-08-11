@@ -1,0 +1,23 @@
+﻿@model UserAdminModeratorForm
+
+@{
+    ViewData["Title"] = "Create Moderator";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<br/>
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.UserName" class="form-label">Username</label>
+                <input asp-for="@Model.UserName" class="form-control" />
+                <span asp-validation-for="@Model.UserName"></span>
+            </div>
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="@ViewData["Title"]" />
+            </div>
+        </form>
+    </div>
+</div>
