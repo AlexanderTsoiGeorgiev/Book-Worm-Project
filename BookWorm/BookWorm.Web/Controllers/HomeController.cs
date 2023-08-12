@@ -30,13 +30,6 @@
             return View();
         }
 
-        [AllowAnonymous]
-        public IActionResult Privacy()
-        {
-            toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
-            return RedirectToAction("All", "Poem");
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
         {

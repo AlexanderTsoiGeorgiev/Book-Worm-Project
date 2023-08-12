@@ -5,13 +5,13 @@
         <form method="post">
             <div class="mb-3">
                 <label asp-for="@Model.Title" class="form-label">Title</label>
-                <input asp-for="@Model.Title" class="form-control" />
+                <input asp-for="@Model.Title" class="form-control" placeholder="Title"/>
                 <span asp-validation-for="@Model.Title"></span>
             </div>
 
             <div class="mb-3">
                 <label asp-for="@Model.Content" class="form-label">Content</label>
-                <textarea asp-for="@Model.Content" class="form-control" rows="15"></textarea>
+                <textarea asp-for="@Model.Content" class="form-control" rows="15" placeholder="Content"></textarea>
                 <span asp-validation-for="@Model.Content"></span>
             </div>
 

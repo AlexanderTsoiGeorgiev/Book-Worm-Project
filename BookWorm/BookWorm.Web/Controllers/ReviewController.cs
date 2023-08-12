@@ -338,6 +338,9 @@
                 bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
                 if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
 
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
+
                 await reviewService.EditReviewAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "review"));
                 memoryCache.Remove(ReviewUserCache);
