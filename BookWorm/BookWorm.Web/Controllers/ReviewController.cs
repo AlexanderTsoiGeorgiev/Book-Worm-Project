@@ -12,6 +12,7 @@
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
     using BookWorm.Data.Models;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class ReviewController : BaseController
     {
@@ -19,17 +20,20 @@
         private readonly IPoemService poemService;
         private readonly IBookService bookService;
         private readonly IToastNotification toastNotification;
+        private readonly IMemoryCache memoryCache;
 
         public ReviewController(
             IReviewService reviewService,
             IPoemService poemService,
             IBookService bookService,
-            IToastNotification toastNotification)
+            IToastNotification toastNotification,
+            IMemoryCache memoryCache)
         {
             this.reviewService = reviewService;
             this.poemService = poemService;
             this.bookService = bookService;
             this.toastNotification = toastNotification;
+            this.memoryCache = memoryCache;
         }
 
         public IActionResult Index()
@@ -37,7 +41,6 @@
             return RedirectToAction(nameof(Mine));
         }
 
-        //Works
         [HttpGet]
         public async Task<IActionResult> AddPoem(string id)
         {
@@ -98,6 +101,8 @@
                 await reviewService.CreatePoemReviewAsync(userId!, model);
 
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "review"));
+                memoryCache.Remove(ReviewUserCache);
+                memoryCache.Remove(ReviewMineCache);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -108,7 +113,6 @@
         }
 
 
-        //Works, but add proper exceptions and error pages
         [HttpGet]
         public async Task<IActionResult> AddBook(int id)
         {
@@ -155,6 +159,8 @@
                 model.BookId = id;
                 await reviewService.CreateBookReviewAsync(userId!, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "review"));
+                memoryCache.Remove(ReviewUserCache);
+                memoryCache.Remove(ReviewMineCache);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -164,7 +170,6 @@
             }
         }
 
-        //Works
         [HttpGet]
         public async Task<IActionResult> EditPoem(string id)
         {
@@ -184,7 +189,7 @@
 
                 bool isPoemDeleted = await poemService.IsPoemDeletedAsync(poemId);
                 if (isPoemDeleted) return BadRequest();
-                
+
                 bool isOwner = await reviewService.IsUserReviewOwnerAsync(userId, id);
 
                 if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
@@ -239,6 +244,8 @@
 
                 await reviewService.EditReviewAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "review"));
+                memoryCache.Remove(ReviewUserCache);
+                memoryCache.Remove(ReviewMineCache);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -298,7 +305,7 @@
             try
             {
                 string? userId = User.GetUserId();
-                if (userId == null) return BadRequest(); 
+                if (userId == null) return BadRequest();
 
                 bool exists = await reviewService.ExistsByIdAsync(id);
                 if (!exists) return NotFound();
@@ -320,6 +327,8 @@
 
                 await reviewService.EditReviewAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "review"));
+                memoryCache.Remove(ReviewUserCache);
+                memoryCache.Remove(ReviewMineCache);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -329,8 +338,6 @@
             }
         }
 
-        //TODO: Add Get method and add exceptions
-        //TODO: Implement after finishing User Controller
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
@@ -350,6 +357,8 @@
 
                 await reviewService.SoftDeleteReviewAsync(id);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "review"));
+                memoryCache.Remove(ReviewUserCache);
+                memoryCache.Remove(ReviewMineCache);
                 return RedirectToAction("Mine", "Review");
             }
             catch (Exception)
@@ -360,7 +369,6 @@
         }
 
 
-        //Implement this now
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
@@ -385,7 +393,6 @@
             }
         }
 
-        //Implement this now
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
@@ -394,7 +401,17 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return NotFound();
 
-                IEnumerable<ReviewDisplayViewModel> model = await reviewService.GetAllUserReviewsAsync(userId);
+                IEnumerable<ReviewDisplayViewModel> model;
+
+                model = memoryCache.Get<IEnumerable<ReviewDisplayViewModel>>(ReviewMineCache);
+                if (model == null)
+                {
+                    model = await reviewService.GetAllUserReviewsAsync(userId);
+
+                    MemoryCacheEntryOptions cacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CacheExpirationMinutes));
+
+                    memoryCache.Set(ReviewMineCache, model, cacheOptions);
+                }
                 return View(model);
             }
             catch (Exception)

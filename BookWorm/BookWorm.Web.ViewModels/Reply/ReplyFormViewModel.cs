@@ -9,7 +9,6 @@
         [StringLength(ContentMaxLength, MinimumLength = ContentMinLength)]
         public string Content { get; set; } = null!;
 
-        [Required]
-        public string PostId { get; set; } = null!;
+        public string? PostId { get; set; } = null!;
     }
 }

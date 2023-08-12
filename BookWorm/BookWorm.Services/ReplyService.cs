@@ -25,7 +25,7 @@
             {
                 Content = model.Content,
                 AuthorId = Guid.Parse(authorId),
-                ForumPostId = Guid.Parse(model.PostId)
+                ForumPostId = Guid.Parse(model.PostId!)
             };
 
             await dbContext.AddAsync(reply);

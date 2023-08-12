@@ -29,7 +29,7 @@
             <h3 class="text-center">
                 Replies:
             </h3>
-            <a asp-area="@ForumAreaName" asp-controller="Reply" asp-action="Add" class="btn btn-primary text-center">Add Reply</a>
+            <a asp-area="@ForumAreaName" asp-controller="Reply" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary text-center">Add Reply</a>
         </div>
         <div class="accordion" id="reviewAccordion">
             @foreach (ReplyDisplayViewModel reply in Model.Replies!)

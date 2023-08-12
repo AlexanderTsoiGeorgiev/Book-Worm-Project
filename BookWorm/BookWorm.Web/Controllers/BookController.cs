@@ -10,21 +10,25 @@
 
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class BookController : BaseController
     {
         private readonly IBookService bookService;
         private readonly IPoemService poemService;
         private readonly IToastNotification toastNotification;
+        private readonly IMemoryCache memoryCache;
 
         public BookController(
             IBookService bookService,
             IPoemService poemService,
-            IToastNotification toastNotification)
+            IToastNotification toastNotification,
+            IMemoryCache memoryCache)
         {
             this.bookService = bookService;
             this.poemService = poemService;
             this.toastNotification = toastNotification;
+            this.memoryCache = memoryCache;
         }
 
         public IActionResult Index()
@@ -77,6 +81,8 @@
 
                 await bookService.CreateBookAsync(authorId, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "book"));
+                memoryCache.Remove(BookUserCache);
+                memoryCache.Remove(BookMineCache);
                 return View(model);
             }
             catch (Exception)
@@ -142,6 +148,8 @@
 
                 await bookService.EditBookAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "book"));
+                memoryCache.Remove(BookUserCache);
+                memoryCache.Remove(BookMineCache);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -160,7 +168,17 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
 
-                IEnumerable<BookDisplayViewModel>? model = await bookService.GetAllUserBooksAsync(userId);
+                IEnumerable<BookDisplayViewModel>? model;
+
+                model = memoryCache.Get<IEnumerable<BookDisplayViewModel>>(BookMineCache);
+                if (model == null)
+                {
+                    model = await bookService.GetAllUserBooksAsync(userId);
+                    MemoryCacheEntryOptions cacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CacheExpirationMinutes));
+
+                    memoryCache.Set(BookMineCache, model, cacheOptions);
+                }
+
 
                 return View(model);
             }
@@ -215,6 +233,8 @@
 
                 await bookService.SoftDeleteBookAsync(id);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "book"));
+                memoryCache.Remove(BookUserCache);
+                memoryCache.Remove(BookMineCache);
                 return RedirectToAction("Index");
             }
             catch (Exception)

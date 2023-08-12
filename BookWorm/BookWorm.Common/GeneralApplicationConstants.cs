@@ -17,5 +17,15 @@
 
         public const string AdminAreaName = "Admin";
         public const string ForumAreaName = "Forum";
+
+        public const string PoemUserCache = "PoemUserCache";
+        public const string PoemMineCache = "PoemMineCache";
+        public const string BookUserCache = "BookUserCache";
+        public const string BookMineCache = "BookMineCache";
+        public const string ReviewUserCache = "ReviewUserCache";
+        public const string ReviewMineCache = "ReviewMineCache";
+        public const string ArticleUserCache = "ArticleUserCache";
+        public const string ArticleMineCache = "ArticleMineCache";
+        public const int CacheExpirationMinutes = 5;
     }
 }

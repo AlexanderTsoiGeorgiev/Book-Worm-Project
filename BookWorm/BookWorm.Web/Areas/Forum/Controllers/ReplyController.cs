@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using NToastNotify;
     using static BookWorm.Common.ToastMessages;
+    using static BookWorm.Common.GeneralApplicationConstants;
 
     public class ReplyController : ForumBaseController
     {
@@ -41,6 +42,12 @@
         [HttpPost]
         public async Task<IActionResult> Add(ReplyFormViewModel model, string id)
         {
+            model.PostId = id;
+            if(model.PostId == null)
+            {
+                ModelState.AddModelError("Post Id is Null", "Post id can not be null");
+            }
+
             if (!ModelState.IsValid)
             {
                 toastNotification.AddWarningToastMessage(WarningFulfillFormRequirementsMessage);
@@ -57,9 +64,8 @@
 
 
                 await replyService.AddReplyAsync(model, userId!);
-
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "reply"));
-                return View();
+                return RedirectToAction("Index", "Home", new { Area = ForumAreaName});
             }
             catch (Exception)
             {

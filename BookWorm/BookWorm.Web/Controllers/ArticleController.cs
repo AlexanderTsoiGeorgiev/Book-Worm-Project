@@ -10,21 +10,26 @@
 
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
+    using Microsoft.Extensions.Caching.Memory;
+    using System.Reflection.Metadata;
 
     public class ArticleController : BaseController
     {
         private readonly IArticleService articleService;
         private readonly IPoemService poemService;
         private readonly IToastNotification toastNotification;
+        private readonly IMemoryCache memoryCache;
 
         public ArticleController(
             IArticleService articleService,
             IPoemService poemService,
-            IToastNotification toastNotification)
+            IToastNotification toastNotification,
+            IMemoryCache memoryCache)
         {
             this.articleService = articleService;
             this.poemService = poemService;
             this.toastNotification = toastNotification;
+            this.memoryCache = memoryCache;
         }
 
         public IActionResult Index()
@@ -89,6 +94,8 @@
                 model.PoemId = Guid.Parse(id);
                 await articleService.CreateArticleAsync(userId!, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "article"));
+                memoryCache.Remove(ArticleUserCache);
+                memoryCache.Remove(ArticleMineCache);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -155,6 +162,8 @@
 
                 await articleService.EditArticleAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "article"));
+                memoryCache.Remove(ArticleUserCache);
+                memoryCache.Remove(ArticleMineCache);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
@@ -199,7 +208,18 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
 
-                IEnumerable<ArticleDisplayViewModel> model = await articleService.GetAllUserArticlesAsync(userId);
+                IEnumerable<ArticleDisplayViewModel> model;
+
+                model = memoryCache.Get<IEnumerable<ArticleDisplayViewModel>>(ArticleMineCache);
+
+                if (model == null)
+                {
+                    model = await articleService.GetAllUserArticlesAsync(userId);
+
+                    MemoryCacheEntryOptions cacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(CacheExpirationMinutes));
+
+                    memoryCache.Set(ArticleMineCache, model, cacheOptions);
+                }
 
 
                 return View(model);
@@ -256,6 +276,8 @@
 
 
                 await articleService.SoftDeleteAsync(id);
+                memoryCache.Remove(ArticleUserCache);
+                memoryCache.Remove(ArticleMineCache);
                 return RedirectToAction(nameof(Index));
 
             }

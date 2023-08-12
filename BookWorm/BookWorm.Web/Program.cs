@@ -75,6 +75,8 @@ namespace BookWorm.Web
                 configure.AccessDeniedPath = "/Home/Error/401"; 
             });
 
+            builder.Services.AddMemoryCache();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

@@ -11,33 +11,35 @@
 
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class PoemController : BaseController
     {
         private readonly IPoemService poemService;
         private readonly IReviewService reviewService;
         private readonly IToastNotification toastNotification;
+        private readonly IMemoryCache memoryCache;
 
         public PoemController(
             IPoemService poemService,
             IReviewService reviewService,
-            IToastNotification toastNotification
+            IToastNotification toastNotification,
+            IMemoryCache memoryCache
             )
         {
             this.poemService = poemService;
             this.reviewService = reviewService;
             this.toastNotification = toastNotification;
+            this.memoryCache = memoryCache;
         }
 
 
-        //Add generic view
         [HttpGet]
         public IActionResult Index()
         {
             return RedirectToAction(nameof(Mine));
         }
 
-        //Works
         [HttpGet]
         public async Task<IActionResult> All([FromQuery] PoemQueryViewModel model)
         {
@@ -58,7 +60,6 @@
             }
         }
 
-        //Works
         [HttpGet]
         public async Task<IActionResult> Read(string id)
         {
@@ -87,7 +88,6 @@
             }
         }
 
-        //Works
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -123,6 +123,8 @@
                 await poemService.CreatePoemAsync(authorId, model);
 
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "poem"));
+                memoryCache.Remove(PoemUserCache);
+                memoryCache.Remove(PoemMineCache);
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
@@ -132,7 +134,6 @@
             }
         }
 
-        //Works
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
@@ -179,6 +180,8 @@
                 await poemService.EditPoemAsync(id, model);
 
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "poem"));
+                memoryCache.Remove(PoemUserCache);
+                memoryCache.Remove(PoemMineCache);
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
@@ -229,6 +232,8 @@
 
                 await poemService.SoftDeletePoemAsync(id);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "poem"));
+                memoryCache.Remove(PoemUserCache);
+                memoryCache.Remove(PoemMineCache);
                 return RedirectToAction(nameof(All));
             }
             catch (Exception)
@@ -238,7 +243,6 @@
             }
         }
 
-        //Not implemented
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
@@ -248,7 +252,17 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
 
-                poems = await poemService.GetAllUserPoemsAsync(userId);
+                poems = memoryCache.Get<IEnumerable<PoemDisplayViewModel>>(PoemMineCache);
+                if (poems == null)
+                {
+                    poems = await poemService.GetAllUserPoemsAsync(userId);
+
+                    MemoryCacheEntryOptions memoryCacheEntryOptions = new MemoryCacheEntryOptions()
+                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(CacheExpirationMinutes));
+
+                    memoryCache.Set(PoemMineCache, poems, memoryCacheEntryOptions);
+                }
+
                 return View(poems);
             }
             catch (Exception)
