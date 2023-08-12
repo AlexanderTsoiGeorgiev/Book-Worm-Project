@@ -175,11 +175,15 @@
         }
         public async Task<bool> DoesUserOwnAllPoemsAsync(string userId, string[] poemIds)
         {
-            ApplicationUser? user = await dbContext.Users.FindAsync(userId);
+            ApplicationUser? user = await dbContext.Users
+                .Include(u => u.Poems)
+                .FirstAsync(u => u.Id == Guid.Parse(userId));
+
             ICollection<bool> allOwned = new List<bool>();
             foreach (string poemId in poemIds)
             {
-                allOwned.Add(user!.Poems.Any(p => p.Id == Guid.Parse(poemId)));
+                bool result = user!.Poems.Any(p => p.Id.ToString().ToLower() == poemId.ToLower());
+                allOwned.Add(result);
             }
 
             return allOwned.All(b => b == true);

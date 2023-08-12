@@ -90,7 +90,7 @@
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "book"));
                 memoryCache.Remove(BookUserCache);
                 memoryCache.Remove(BookMineCache);
-                return View(model);
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {

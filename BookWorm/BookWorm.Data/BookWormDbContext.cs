@@ -34,7 +34,8 @@
                 .ApplyConfiguration<Category>(new CategoryTableConfiguration())
                 .ApplyConfiguration<BookPoem>(new BookPoemTableConfiguration())
                 .ApplyConfiguration<Poem>(new PoemTableConfiguration())
-                .ApplyConfiguration<Reply>(new ReplyTableConfiguration());
+                .ApplyConfiguration<Reply>(new ReplyTableConfiguration())
+                .ApplyConfiguration<Tag>(new TagTableConfiguration());
 
             //base.OnModelCreating(builder);
 
