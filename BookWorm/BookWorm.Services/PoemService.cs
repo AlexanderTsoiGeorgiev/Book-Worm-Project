@@ -142,7 +142,6 @@
         }
 
         //Edit
-        //Check TODOs
         public async Task EditPoemAsync(string id, PoemFormViemModel model)
         {
             Poem? entity = await dbContext.Poems.FindAsync(Guid.Parse(id));
@@ -176,7 +175,6 @@
         
 
         //Mine
-        //Check TODOs
         public async Task<IEnumerable<PoemDisplayViewModel>?> GetAllUserPoemsAsync(string id)
         {
             PoemDisplayViewModel[]? allPoems = await dbContext.Poems
@@ -269,7 +267,7 @@
             return entity!.AuthorId == Guid.Parse(userId);
         }
 
-
+        
         //Used by BookController
         public async Task<IEnumerable<PoemBookSelectViewModel>> GetUserPoemsAsPoemBookSelectViewModelAsync(string userId)
         {
