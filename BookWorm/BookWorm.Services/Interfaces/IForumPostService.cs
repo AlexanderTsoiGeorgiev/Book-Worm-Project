@@ -14,6 +14,15 @@
         //Delete
         public Task SoftDeletePostAsync(string id);
 
+        //Sort
+        public Task<IEnumerable<ForumDisplayViewModel>> SortedForumPostsAsync(ForumAllViewModel model);
+
+        //Read
+        public Task<ForumReadViewModel> GetForumAsReadViewModelAsync(string id);
+
+        //Details
+        public Task<ForumDetailsViewModel> GetForumAsDetailsModelAsync(string id);
+
 
         //Validation
         public Task<bool> ForumPostExistsAsync(string id);

@@ -40,6 +40,15 @@
                             <a class="nav-link text-light" asp-area="Admin" asp-controller="Tag" asp-action="Index">Tags</a>
                         </li>
                     </ul>
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <form method="get" asp-area="" asp-controller="User" asp-action="Search" class="form-inline my-2 my-lg-0">
+                            <div class="d-flex justify-content-center">
+                                <input class="form-control" type="search" placeholder="Username" aria-label="Search" name="UserName">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </div>
+                        </form>
+                    }
                     <partial name="_LoginPartial" />
                 </div>
             </div>

@@ -48,13 +48,14 @@
                 Reviews:
             </h3>
         </div>
+        <a asp-area="" asp-controller="Review" asp-action="AddBook" asp-route-id="@Model.Id" class="btn btn-primary text-center">Add Review</a>
 
         @if (Model.Reviews == null)
         {
             <p>No review yet!</p>
         }
 
-         @{
+        @{
             int likeBtnIdCounter = 1;
             int dislikeBtnIdCounter = 1;
             int likesIdCounter = 1;

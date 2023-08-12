@@ -2,11 +2,12 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using BookWorm.Data;
     using BookWorm.Data.Models;
     using BookWorm.Services.Interfaces;
     using BookWorm.Web.ViewModels.Forum;
-    using Microsoft.EntityFrameworkCore;
 
     public class ForumPostService : IForumPostService
     {
@@ -87,7 +88,78 @@
             };
 
             return model;
-            
+
+        }
+
+        public async Task<IEnumerable<ForumDisplayViewModel>> SortedForumPostsAsync(ForumAllViewModel model)
+        {
+            string? tag = model?.TagName;
+            string? query = model!.QueryString;
+
+            IQueryable<ForumPost> filteredForums = dbContext.ForumPosts
+                .Include(fp => fp.Tag)
+                .Where(fp => fp.IsDeleted == false).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                filteredForums = filteredForums.Where(fp => fp.Tag.Name.ToLower() == tag.ToLower());
+            }
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                string wildCard = $"%{query.ToLower()}%";
+                filteredForums = filteredForums.Where(fp => EF.Functions.Like(fp.Title, wildCard));
+            }
+
+
+            IEnumerable<ForumDisplayViewModel> forums = await filteredForums.Select(fp => new ForumDisplayViewModel
+            {
+                Id = fp.Id.ToString(),
+                Title = fp.Title,
+                Tag = fp.Tag.Name,
+                DatePosted = fp.DatePosted,
+            }).ToArrayAsync();
+
+            return forums;
+        }
+
+        public async Task<ForumReadViewModel> GetForumAsReadViewModelAsync(string id)
+        {
+            ForumReadViewModel model = await dbContext.ForumPosts
+                .Include(fp => fp.Author)
+                .Include(fp => fp.Tag)
+                .AsNoTracking()
+                .Where(fp => fp.Id.ToString().ToLower() == id)
+                .Select(fp => new ForumReadViewModel
+                {
+                    Id = fp.Id.ToString(),
+                    AuthorId = fp.AuthorId.ToString(),
+                    AuthorName = fp.Author.UserName,
+                    Content = fp.Content,
+                    DateCreated = fp.DatePosted,
+                    DateEdited = fp.DateEdited,
+                    TagName = fp.Tag.Name,
+                    Title = fp.Title
+                }).FirstAsync();
+            return model;
+        }
+
+        public async Task<ForumDetailsViewModel> GetForumAsDetailsModelAsync(string id)
+        {
+            ForumDetailsViewModel model = await dbContext.ForumPosts
+                .Include(fp => fp.Author)
+                .Include(fp => fp.Tag)
+                .AsNoTracking()
+                .Where(fp => fp.Id.ToString().ToLower() == id)
+                .Select(fp => new ForumDetailsViewModel
+                {
+                    Id = fp.Id.ToString(),
+                    Content = fp.Content,
+                    Title = fp.Title,
+                    DateCreated = fp.DatePosted,
+                    DateEdited = fp.DateEdited,
+                    TagName = fp.Tag.Name,
+                }).FirstAsync();
+            return model;
         }
     }
 }

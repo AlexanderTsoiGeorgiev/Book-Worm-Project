@@ -1,0 +1,38 @@
+﻿@model ForumAllViewModel
+
+@{
+    ViewData["Title"] = "All Posts";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="@Model.TagName"></label>
+                <select asp-for="@Model.TagName" class="form-control">
+                    <option value="">All</option>
+                    @foreach (string tag in Model.Tags)
+                    {
+                        <option value="@tag">@tag</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label asp-for="@Model.QueryString"></label>
+            <input asp-for="@Model.QueryString" class="form-control" placeholder="Search">
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@await Component.InvokeAsync("SearchBar", Model)

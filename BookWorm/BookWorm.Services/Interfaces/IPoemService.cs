@@ -9,7 +9,7 @@
     public interface IPoemService
     {
         //All action
-        public Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync();
+       // public Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync();
         public Task<PoemAllFilteredServiceModel> GetAllPoemsFilteredAsync(PoemQueryViewModel query);
 
         //Read action

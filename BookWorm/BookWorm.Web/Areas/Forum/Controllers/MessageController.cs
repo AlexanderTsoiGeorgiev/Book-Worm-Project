@@ -18,16 +18,19 @@
         private readonly ITagService tagService;
         private readonly IToastNotification toastNotification;
         private readonly IForumPostService forumPostService;
+        private readonly IReplyService replyService;
 
 
         public MessageController(
             IForumPostService forumPostService,
             ITagService tagService,
-            IToastNotification toastNotification)
+            IToastNotification toastNotification,
+            IReplyService replyService)
         {
             this.forumPostService = forumPostService;
             this.tagService = tagService;
             this.toastNotification = toastNotification;
+            this.replyService= replyService;
         }
 
         public IActionResult Index()
@@ -141,6 +144,83 @@
 
                 await forumPostService.EditForumPostAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "forum post"));
+                return RedirectToAction("Index", "Home", new { area = ForumAreaName });
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home", new { Area = ForumAreaName });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Read(string id)
+        {
+            try
+            {
+                bool exists = await forumPostService.ForumPostExistsAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await forumPostService.IsPostDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                ForumReadViewModel model = await forumPostService.GetForumAsReadViewModelAsync(id);
+                model.Replies = await replyService.GetAllPostReplyAsync(id);
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home", new { Area = ForumAreaName });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            try
+            {
+                string? userId = User.GetUserId();
+
+                bool exists = await forumPostService.ForumPostExistsAsync(id);
+                if (!exists) return NotFound();
+
+                bool isDeleted = await forumPostService.IsPostDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                bool isUserOwner = await forumPostService.IsUserOwnerAsync(userId!, id);
+
+                if (!(isUserOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return NotFound();
+
+                ForumDetailsViewModel model = await forumPostService.GetForumAsDetailsModelAsync(id);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                toastNotification.AddErrorToastMessage(DatabaseErrorMessage);
+                return RedirectToAction("Index", "Home", new { Area = ForumAreaName });
+            }
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            try
+            {
+
+                string? userId = User.GetUserId();
+
+                bool postExists = await forumPostService.ForumPostExistsAsync(id);
+                if (!postExists) return NotFound();
+
+                bool isDeleted = await forumPostService.IsPostDeletedAsync(id);
+                if (isDeleted) return NotFound();
+
+                bool isUserOwner = await forumPostService.IsUserOwnerAsync(userId!, id);
+                if (!(isUserOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
+
+                await forumPostService.SoftDeletePostAsync(id);
+                toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyDeletedItemMessage, "forum post"));
                 return RedirectToAction("Index", "Home", new { area = ForumAreaName });
             }
             catch (Exception)

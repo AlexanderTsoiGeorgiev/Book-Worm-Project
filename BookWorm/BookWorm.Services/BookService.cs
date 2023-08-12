@@ -107,6 +107,7 @@
                 .Where(b => b.Id == id)
                 .Select(b => new BookReadViewModel
                 {
+                    Id = b.Id,
                     Title = b.Title,
                     AuthorUserName = b.Author.UserName,
                 }).FirstAsync();

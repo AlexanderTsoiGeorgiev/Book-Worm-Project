@@ -21,5 +21,8 @@
         public Task<bool> TagExistsByNameAsync(string name);
         public Task<bool> TagExistsByIdAsync(int id);
         public Task<bool> IsTagDeleted(int id);
+
+        //Utility
+        public Task<IEnumerable<string>> AllTagNamesAsync();
     }
 }

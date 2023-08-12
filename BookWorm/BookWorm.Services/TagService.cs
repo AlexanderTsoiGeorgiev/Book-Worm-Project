@@ -77,7 +77,7 @@
             Tag? tag = await dbContext.Tags.FindAsync(id);
             tag!.isDeleted = false;
             await dbContext.SaveChangesAsync();
-        } 
+        }
 
         //Validation
         public async Task<bool> TagExistsByNameAsync(string name)
@@ -96,6 +96,18 @@
         {
             Tag? tag = await dbContext.Tags.FindAsync(id);
             return tag!.isDeleted;
+        }
+
+        //Utility
+        public async Task<IEnumerable<string>> AllTagNamesAsync()
+        {
+            IEnumerable<string> tags = await dbContext.Tags
+                .AsNoTracking()
+                .Where(t => !t.isDeleted)
+                .Select(t => t.Name)
+                .ToArrayAsync();
+
+            return tags;
         }
     }
 }

@@ -111,6 +111,7 @@
                 .Where(p => p.Id.ToString() == id)
                 .Select(p => new PoemReadViewModel
                 {
+                    Id = p.Id,
                     Title = p.Title,
                     ReadableContent = SplitContentToReadableFormat(p.Content),
                     DateCreated = p.DateCreated,

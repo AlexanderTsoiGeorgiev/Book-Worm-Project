@@ -33,10 +33,15 @@
                             <a class="nav-link text-light" asp-area="Forum" asp-controller="Home" asp-action="Index">Forum</a>
                         </li>
                     </ul>
-                    <form method="get" asp-area="" asp-controller="User" asp-action="Search" class="form-inline my-2 my-lg-0">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="UserName">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <form method="get" asp-area="" asp-controller="User" asp-action="Search" class="form-inline my-2 my-lg-0">
+                            <div class="d-flex justify-content-center">
+                                <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="UserName">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </div>
+                        </form>
+                    }
                     <partial name="_LoginPartial" />
                 </div>
             </div>

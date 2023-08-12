@@ -1,0 +1,15 @@
+﻿@model ReplyFormViewModel
+
+@{
+    ViewData["Title"] = "Add a reply";
+    ViewData["Action"] = "Add";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<partial name="_ReplyFormPartial" model="@Model">
+
+    @section Scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }

@@ -183,6 +183,7 @@
                 if (isDeleted) return NotFound();
 
                 BookReadViewModel placeholder = await bookService.GetBookAsBookReadModelAsync(id);
+                model.Id = placeholder.Id;
                 model.Title = placeholder.Title;
                 model.AuthorUserName = placeholder.AuthorUserName;
                 model.Poems = await bookService.GetBookPoemsAsPoemBookReadModelAsync(id);

@@ -1,0 +1,57 @@
+﻿@model ForumReadViewModel
+
+@{
+    ViewData["Title"] = $"Read {Model.Title}";
+}
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <h2 class="text-center fw-bold">@Model.Title</h2>
+        <hr />
+        <div class="text-end">
+            <blockquote class="blockquote">
+                <p>
+                    By - <a class="link-primary" asp-action="Index" asp-controller="User" asp-area="" asp-route-id="@Model.AuthorId">@Model.AuthorName</a>
+                </p>
+            </blockquote>
+        </div>
+
+        <div class="mt-5">
+                @Model.Content
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <hr />
+        <div>
+            <h3 class="text-center">
+                Replies:
+            </h3>
+            <a asp-area="@ForumAreaName" asp-controller="Reply" asp-action="Add" class="btn btn-primary text-center">Add Reply</a>
+        </div>
+        <div class="accordion" id="reviewAccordion">
+            @foreach (ReplyDisplayViewModel reply in Model.Replies!)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="@reply.AuthorId">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#id_@reply.ReplyId" aria-expanded="true" aria-controls="id_@reply.ReplyId">
+                            @reply.AuthorName's reply
+                        </button>
+                    </h2>
+                    <div id="id_@reply.ReplyId" class="accordion-collapse collapse" aria-labelledby="@reply.AuthorId" data-bs-parent="#reviewAccordion">
+                        <div class="accordion-body">
+                            @reply.Content
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.Replies == null)
+        {
+            <p>No replies yet!</p>
+        }
+    </div>
+</div>

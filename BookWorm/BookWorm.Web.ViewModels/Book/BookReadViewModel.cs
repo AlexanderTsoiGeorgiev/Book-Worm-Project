@@ -12,8 +12,9 @@
             CurrentPage = CurrentPageDefault;
         }
 
-        public string Title { get; set; } = null!; 
-        public string AuthorUserName { get; set; } = null!; 
+        public int Id { get; set; }
+        public string Title { get; set; } = null!;
+        public string AuthorUserName { get; set; } = null!;
         public int CurrentPage { get; set; }
         public int PreviousPage { get; set; }
         public int TotalPages { get; set; }

@@ -1,0 +1,8 @@
+﻿@model ForumAllViewModel
+
+<div class="row">
+    @foreach (ForumDisplayViewModel forum in Model.Forums)
+    {
+        <partial name="_ForumCardPartial" model="@forum" />
+    }
+</div>

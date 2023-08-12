@@ -32,6 +32,8 @@
             <h3 class="text-center">
                 Reviews:
             </h3>
+            <a  asp-area="" asp-controller="Review" asp-action="AddPoem" asp-route-id="@Model.Id.ToString()" class="btn btn-primary text-center">Add Review</a>
+            <a asp-area="" asp-controller="Article" asp-action="Add" asp-route-id="@Model.Id.ToString()" class="btn btn-primary text-center">Add Article</a>
         </div>
 
         @if (Model.Reviews == null)
@@ -80,13 +82,3 @@
         </div>
     </div>
 </div>
-
-@*@section Scripts{
-    <script>
-        function likeButton(testPara) {
-            var selector = "paragraph";
-            var asd1 = "#".concat(testPara);
-            $(`#${testPara}`).text("Works");
-        }
-    </script>
-}*@
