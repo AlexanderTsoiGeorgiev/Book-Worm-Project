@@ -13,9 +13,10 @@ namespace BookWorm.Web
     using BookWorm.Web.Infrastructure.ModelBinders;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
 
-    using static BookWorm.Common.GeneralApplicationConstants;
-    using static BookWorm.Data.Common.AuthorIds;
     using static BookWorm.Data.Common.StaffIds;
+    using static BookWorm.Data.Common.AuthorIds;
+    using static BookWorm.Common.GeneralApplicationConstants;
+    using Ganss.Xss;
 
     public class Program
     {
@@ -69,6 +70,9 @@ namespace BookWorm.Web
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<ITagService, TagService>();
+
+            IHtmlSanitizer sanitizer = new HtmlSanitizer();
+            builder.Services.AddSingleton<IHtmlSanitizer>(sanitizer);
 
             builder.Services.ConfigureApplicationCookie(configure => 
             {

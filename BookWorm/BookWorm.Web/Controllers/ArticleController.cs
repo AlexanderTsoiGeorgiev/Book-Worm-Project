@@ -1,6 +1,7 @@
 ﻿namespace BookWorm.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
 
     using NToastNotify;
 
@@ -10,8 +11,7 @@
 
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
-    using Microsoft.Extensions.Caching.Memory;
-    using System.Reflection.Metadata;
+    using Ganss.Xss;
 
     public class ArticleController : BaseController
     {
@@ -19,17 +19,20 @@
         private readonly IPoemService poemService;
         private readonly IToastNotification toastNotification;
         private readonly IMemoryCache memoryCache;
+        private readonly IHtmlSanitizer sanitizer;
 
         public ArticleController(
             IArticleService articleService,
             IPoemService poemService,
             IToastNotification toastNotification,
-            IMemoryCache memoryCache)
+            IMemoryCache memoryCache,
+            IHtmlSanitizer sanitizer)
         {
             this.articleService = articleService;
             this.poemService = poemService;
             this.toastNotification = toastNotification;
             this.memoryCache = memoryCache;
+            this.sanitizer = sanitizer;
         }
 
         public IActionResult Index()
@@ -90,6 +93,9 @@
 
                 bool isDeleted = await poemService.IsPoemDeletedAsync(id);
                 if (isDeleted) return NotFound();
+                
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
 
                 model.PoemId = Guid.Parse(id);
                 await articleService.CreateArticleAsync(userId!, model);
@@ -157,6 +163,9 @@
 
                 bool isDeleted = await articleService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
+
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
 
                 model.PoemId = await articleService.GetArticlePoemIdAsync(id);
 

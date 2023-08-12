@@ -1,7 +1,9 @@
 ﻿namespace BookWorm.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
 
+    using Ganss.Xss;
     using NToastNotify;
 
     using BookWorm.Web.ViewModels.Book;
@@ -10,7 +12,6 @@
 
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class BookController : BaseController
     {
@@ -18,17 +19,20 @@
         private readonly IPoemService poemService;
         private readonly IToastNotification toastNotification;
         private readonly IMemoryCache memoryCache;
+        private readonly IHtmlSanitizer sanitizer;
 
         public BookController(
             IBookService bookService,
             IPoemService poemService,
             IToastNotification toastNotification,
-            IMemoryCache memoryCache)
+            IMemoryCache memoryCache,
+            IHtmlSanitizer sanitizer)
         {
             this.bookService = bookService;
             this.poemService = poemService;
             this.toastNotification = toastNotification;
             this.memoryCache = memoryCache;
+            this.sanitizer = sanitizer;
         }
 
         public IActionResult Index()
@@ -36,7 +40,6 @@
             return RedirectToAction(nameof(Mine));
         }
 
-        //TODO: Add Exceptions & Redirects
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -78,6 +81,10 @@
 
                 bool userOwnsAllPoems = await bookService.DoesUserOwnAllPoemsAsync(authorId, model.PoemIds.ToArray());
                 if (!userOwnsAllPoems) return BadRequest();
+
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Description = sanitizer.Sanitize(model.Description);
+                model.ImageUrl = sanitizer.Sanitize(model.ImageUrl);
 
                 await bookService.CreateBookAsync(authorId, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "book"));
@@ -145,6 +152,10 @@
 
                 bool isDelete = await bookService.IsDeletedAsync(id);
                 if (isDelete) return NotFound();
+
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Description = sanitizer.Sanitize(model.Description);
+                model.ImageUrl = sanitizer.Sanitize(model.ImageUrl);
 
                 await bookService.EditBookAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "book"));
@@ -216,7 +227,6 @@
             }
         }
 
-        //TODO: Add exceptions and Get action
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

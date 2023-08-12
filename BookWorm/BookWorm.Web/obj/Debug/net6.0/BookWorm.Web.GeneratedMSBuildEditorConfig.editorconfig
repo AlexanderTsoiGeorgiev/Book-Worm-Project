@@ -88,6 +88,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcU2hhcmVkXF9Gb3J1bUNhcmRQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Forum/Views/Shared/_ForumLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcU2hhcmVkXF9Gb3J1bUxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Alexander/Desktop/SU/SU Web/ASP.NET Advanced/Book-Worm-Project/BookWorm/BookWorm.Web/Areas/Forum/Views/Shared/_MessageFormPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRm9ydW1cVmlld3NcU2hhcmVkXF9NZXNzYWdlRm9ybVBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

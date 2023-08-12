@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "kXJrKBSNcxOyNSe6y61QJeWWNA05BdXd0jcjjVL8ZsVKGFAgDv1LQn3YdjzewdHk9Lk+C/TFbBnBwkWTUx/Mdg==",
+  "dgSpecHash": "qJal+qIpsOMMoWoLeaSl7DO+Iuc8HqLZTqlEK2wDY8Svxt3cMwYeAeOtmzB4aPsGXHG/q3GUjAXc9xETqtDkmg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Alexander\\Desktop\\SU\\SU Web\\ASP.NET Advanced\\Book-Worm-Project\\BookWorm\\BookWorm.Web\\BookWorm.Web.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Alexander\\.nuget\\packages\\anglesharp\\0.17.1\\anglesharp.0.17.1.nupkg.sha512",
+    "C:\\Users\\Alexander\\.nuget\\packages\\anglesharp.css\\0.17.0\\anglesharp.css.0.17.0.nupkg.sha512",
+    "C:\\Users\\Alexander\\.nuget\\packages\\htmlsanitizer\\8.0.692\\htmlsanitizer.8.0.692.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",
@@ -189,7 +192,7 @@
     "C:\\Users\\Alexander\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
-    "C:\\Users\\Alexander\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
+    "C:\\Users\\Alexander\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\system.componentmodel.annotations\\4.5.0\\system.componentmodel.annotations.4.5.0.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\system.composition\\1.0.31\\system.composition.1.0.31.nupkg.sha512",
     "C:\\Users\\Alexander\\.nuget\\packages\\system.composition.attributedmodel\\1.0.31\\system.composition.attributedmodel.1.0.31.nupkg.sha512",

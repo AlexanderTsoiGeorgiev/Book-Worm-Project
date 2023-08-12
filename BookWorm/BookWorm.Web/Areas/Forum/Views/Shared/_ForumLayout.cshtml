@@ -12,46 +12,35 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3" id="sidebar-wrapper">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">Book Worm</a>
-
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Book Worm</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item dropdown">
-                            <div>
-                                <a class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Add
-                                    <ul class="dropdown-menu dropdown-menu-dark">
-                                        <a asp-area="Admin" asp-controller="User" asp-action="CreateModerator" class="dropdown-item">Create Moderator</a>
-                                        <a asp-area="Admin" asp-controller="Category" asp-action="Add" class="dropdown-item">Add Category</a>
-                                        <a asp-area="Admin" asp-controller="Tag" asp-action="Add" class="dropdown-item">Add Tag</a>
-                                        <a asp-area="" asp-controller="Poem" asp-action="Add" class="dropdown-item">Poem</a>
-                                        <a asp-area="" asp-controller="Book" asp-action="Add" class="dropdown-item">Book</a>
-                                    </ul>
-                                </a>
-                            </div>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Forum" asp-controller="Home" asp-action="Index">Forum</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Admin" asp-controller="User" asp-action="Index">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Tag" asp-action="Index">Tags</a>
-                        </li>
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item dropdown">
+                                <div>
+                                    <a class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Add
+                                        <ul class="dropdown-menu dropdown-menu-dark">
+                                            <a asp-area="Forum" asp-controller="Message" asp-action="Add" class="dropdown-item">Post</a>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </li>
+                        }
                     </ul>
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
                         <form method="get" asp-area="" asp-controller="User" asp-action="Search" class="form-inline my-2 my-lg-0">
                             <div class="d-flex justify-content-center">
-                                <input class="form-control" type="search" placeholder="Username" aria-label="Search" name="UserName">
+                                <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="UserName">
                                 <button class="btn btn-outline-success" type="submit">Search</button>
                             </div>
                         </form>
@@ -67,7 +56,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-dark text-light fixed-bottom" @*style="position: absolute; bottom: 0; width: 100%; height: 80px;"*@>
+    <footer class="border-top footer text-muted bg-dark text-light fixed-bottom">
         @if (DateTime.UtcNow.Year != ReleaseYear)
         {
             <div class="container">&copy; @ReleaseYear - @DateTime.UtcNow.Year copyright; Book Worm</div>

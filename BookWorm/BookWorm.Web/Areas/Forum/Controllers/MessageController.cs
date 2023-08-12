@@ -2,16 +2,16 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    using Ganss.Xss;
     using NToastNotify;
 
     using BookWorm.Web.ViewModels.Tag;
     using BookWorm.Services.Interfaces;
-
-    using static BookWorm.Common.GeneralApplicationConstants;
-    using static BookWorm.Common.ToastMessages;
     using BookWorm.Web.ViewModels.Forum;
     using BookWorm.Web.Infrastructure.ExtensionMethods;
-    using BookWorm.Data.Models;
+
+    using static BookWorm.Common.ToastMessages;
+    using static BookWorm.Common.GeneralApplicationConstants;
 
     public class MessageController : ForumBaseController
     {
@@ -19,18 +19,21 @@
         private readonly IToastNotification toastNotification;
         private readonly IForumPostService forumPostService;
         private readonly IReplyService replyService;
+        private readonly IHtmlSanitizer sanitizer;
 
 
         public MessageController(
             IForumPostService forumPostService,
             ITagService tagService,
             IToastNotification toastNotification,
-            IReplyService replyService)
+            IReplyService replyService,
+            IHtmlSanitizer sanitizer)
         {
             this.forumPostService = forumPostService;
             this.tagService = tagService;
             this.toastNotification = toastNotification;
             this.replyService= replyService;
+            this.sanitizer = sanitizer;
         }
 
         public IActionResult Index()
@@ -72,6 +75,8 @@
                 string? userId = User.GetUserId();
                 if (userId == null) return BadRequest();
 
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
 
                 await forumPostService.AddForumPostAsync(userId, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "forum post"));
@@ -141,6 +146,9 @@
 
                 bool isUserOwner = await forumPostService.IsUserOwnerAsync(userId!, id);
                 if (!(isUserOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
+
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
 
                 await forumPostService.EditForumPostAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "forum post"));

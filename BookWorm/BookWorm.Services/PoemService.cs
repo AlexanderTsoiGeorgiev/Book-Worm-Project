@@ -25,17 +25,6 @@
 
 
         //All
-        public async Task<IEnumerable<PoemDisplayViewModel>> GetAllPoemsAsync()
-        {
-            PoemDisplayViewModel[] allPoems = await dbContext.Poems.AsNoTracking().Select(p => new PoemDisplayViewModel
-            {
-                Title = p.Title,
-                Description = p.Description,
-                DateCreated = p.DateCreated
-            }).ToArrayAsync();
-
-            return allPoems;
-        }
         public async Task<PoemAllFilteredServiceModel> GetAllPoemsFilteredAsync(PoemQueryViewModel query)
         {
             IQueryable<Poem> filteredPoems = dbContext.Poems

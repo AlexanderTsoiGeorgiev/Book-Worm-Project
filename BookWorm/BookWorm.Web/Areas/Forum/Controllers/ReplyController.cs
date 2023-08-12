@@ -1,10 +1,14 @@
 ﻿namespace BookWorm.Web.Areas.Forum.Controllers
 {
-    using BookWorm.Services.Interfaces;
-    using BookWorm.Web.Infrastructure.ExtensionMethods;
-    using BookWorm.Web.ViewModels.Reply;
     using Microsoft.AspNetCore.Mvc;
+
     using NToastNotify;
+    using Ganss.Xss;
+
+    using BookWorm.Services.Interfaces;
+    using BookWorm.Web.ViewModels.Reply;
+    using BookWorm.Web.Infrastructure.ExtensionMethods;
+
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
 
@@ -13,20 +17,23 @@
         private readonly IReplyService replyService;
         private readonly IForumPostService forumPostService;
         private readonly IToastNotification toastNotification;
+        private readonly IHtmlSanitizer sanitizer;
 
         public ReplyController(
             IReplyService replyService,
             IForumPostService forumPostService,
-            IToastNotification toastNotification)
+            IToastNotification toastNotification,
+            IHtmlSanitizer sanitizer)
         {
             this.replyService = replyService;
             this.forumPostService = forumPostService;
             this.toastNotification = toastNotification;
+            this.sanitizer = sanitizer;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Home", new {Area = ForumAreaName});
         }
 
         [HttpGet]
@@ -62,6 +69,7 @@
                 bool postExists = await forumPostService.ForumPostExistsAsync(id);
                 if (!postExists) return NotFound();
 
+                model.Content = sanitizer.Sanitize(model.Content);
 
                 await replyService.AddReplyAsync(model, userId!);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "reply"));

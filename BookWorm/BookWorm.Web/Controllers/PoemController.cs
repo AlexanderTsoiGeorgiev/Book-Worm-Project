@@ -1,6 +1,7 @@
 ﻿namespace BookWorm.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
 
     using NToastNotify;
 
@@ -11,7 +12,7 @@
 
     using static BookWorm.Common.ToastMessages;
     using static BookWorm.Common.GeneralApplicationConstants;
-    using Microsoft.Extensions.Caching.Memory;
+    using Ganss.Xss;
 
     public class PoemController : BaseController
     {
@@ -19,18 +20,21 @@
         private readonly IReviewService reviewService;
         private readonly IToastNotification toastNotification;
         private readonly IMemoryCache memoryCache;
+        private readonly IHtmlSanitizer sanitizer;
 
         public PoemController(
             IPoemService poemService,
             IReviewService reviewService,
             IToastNotification toastNotification,
-            IMemoryCache memoryCache
+            IMemoryCache memoryCache,
+            IHtmlSanitizer sanitizer
             )
         {
             this.poemService = poemService;
             this.reviewService = reviewService;
             this.toastNotification = toastNotification;
             this.memoryCache = memoryCache;
+            this.sanitizer = sanitizer;
         }
 
 
@@ -120,6 +124,10 @@
                 string? authorId = User.GetUserId();
                 if (authorId == null) return BadRequest();
 
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
+                model.Description = sanitizer.Sanitize(model.Description);
+
                 await poemService.CreatePoemAsync(authorId, model);
 
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyAddedItemMessage, "poem"));
@@ -176,6 +184,10 @@
 
                 bool isOwner = await poemService.IsUserPoemOwnerAsync(userId, id);
                 if (!(isOwner || User.IsInRole(AdminRoleName) || User.IsInRole(ModeratorRoleName))) return BadRequest();
+
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
+                model.Description = sanitizer.Sanitize(model.Description);
 
                 await poemService.EditPoemAsync(id, model);
 

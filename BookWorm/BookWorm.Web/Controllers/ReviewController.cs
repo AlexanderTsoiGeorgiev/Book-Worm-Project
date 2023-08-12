@@ -13,6 +13,7 @@
     using static BookWorm.Common.GeneralApplicationConstants;
     using BookWorm.Data.Models;
     using Microsoft.Extensions.Caching.Memory;
+    using Ganss.Xss;
 
     public class ReviewController : BaseController
     {
@@ -21,19 +22,22 @@
         private readonly IBookService bookService;
         private readonly IToastNotification toastNotification;
         private readonly IMemoryCache memoryCache;
+        private readonly IHtmlSanitizer sanitizer;
 
         public ReviewController(
             IReviewService reviewService,
             IPoemService poemService,
             IBookService bookService,
             IToastNotification toastNotification,
-            IMemoryCache memoryCache)
+            IMemoryCache memoryCache,
+            IHtmlSanitizer sanitizer)
         {
             this.reviewService = reviewService;
             this.poemService = poemService;
             this.bookService = bookService;
             this.toastNotification = toastNotification;
             this.memoryCache = memoryCache;
+            this.sanitizer = sanitizer; 
         }
 
         public IActionResult Index()
@@ -97,6 +101,9 @@
                 bool isDeleted = await poemService.IsPoemDeletedAsync(id);
                 if (isDeleted) return NotFound();
 
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
+
                 model.PoemId = Guid.Parse(id);
                 await reviewService.CreatePoemReviewAsync(userId!, model);
 
@@ -155,6 +162,9 @@
 
                 bool isDeleted = await bookService.IsDeletedAsync(id);
                 if (isDeleted) return NotFound();
+
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
 
                 model.BookId = id;
                 await reviewService.CreateBookReviewAsync(userId!, model);
@@ -241,6 +251,9 @@
 
                 bool isReviewDeleted = await reviewService.IsReviewDeletedAsync(id);
                 if (isReviewDeleted) return NotFound();
+
+                model.Title = sanitizer.Sanitize(model.Title);
+                model.Content = sanitizer.Sanitize(model.Content);
 
                 await reviewService.EditReviewAsync(id, model);
                 toastNotification.AddSuccessToastMessage(String.Format(SuccesfullyEditedItemMessage, "review"));

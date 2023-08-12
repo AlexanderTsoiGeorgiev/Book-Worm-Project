@@ -8,6 +8,7 @@ namespace BookWorm.Tests
 
     using static BookWorm.Data.Common.AuthorIds;
     using BookWorm.Services;
+    using BookWorm.Web.ViewModels.Poem;
 
     public class PoemServiceTests
     {
@@ -110,6 +111,99 @@ namespace BookWorm.Tests
             Assert.IsFalse(result);
         }
 
+        [Test]
+        public async Task TestFindPoemReadModel()
+        {
+            string poemId = dbContext.Poems.First().Id.ToString().ToLower();
+
+            PoemReadViewModel model = await poemService.FindPoemReadModelByIdAsync(poemId);
+            Assert.IsNotNull(model);
+            Assert.IsAssignableFrom<PoemReadViewModel>(model);
+            Assert.IsTrue(model.Id.ToString().ToLower() == poemId);
+        }
+
+        [Test]
+        public async Task TestCreatePoem()
+        {
+            string authorId = EdgarAllanPoeId.ToString();
+            PoemFormViemModel model = new PoemFormViemModel()
+            {
+                Title = "Test",
+                Content = "Test",
+                CategoryId = 1,
+                IsPrivate = false,
+                Description = "Test",
+            };
+
+            int futureCount = dbContext.Poems.Count();
+            futureCount++;
+            await poemService.CreatePoemAsync(authorId, model);
+            Poem remove = dbContext.Poems.Where(p => p.Title == "Alone").First();
+            dbContext.Poems.Remove(remove);
+            dbContext.SaveChanges();
+
+
+            Assert.IsNotNull(model);
+            Assert.That(futureCount == dbContext.Poems.Count());
+        }
+
+
+        [Test]
+        public async Task TestEditPoem()
+        {
+            Poem entity = dbContext.Poems.Where(p => p.Title == "Alone").First();
+            string poemId = entity.Id.ToString();
+            string title = entity.Title;
+            string description = entity.Description;
+            string content = entity.Content;
+            Poem beforeChange = new Poem
+            {
+                Title = title,
+                Content = content,
+                Description = description
+            };
+
+            PoemFormViemModel model = new PoemFormViemModel
+            { 
+                Title = "Test",
+                Content = "Test",
+                CategoryId = 1,
+                IsPrivate = false,
+                Description = "Test",
+            };
+
+            await poemService.EditPoemAsync(poemId, model);
+            Poem? poemAfterChange = dbContext.Poems.Find(Guid.Parse(poemId));
+
+
+            Assert.That(beforeChange.Title != poemAfterChange!.Title);
+            Assert.That(beforeChange.Content != poemAfterChange!.Content);
+            Assert.That(beforeChange.Description != poemAfterChange!.Description);
+        }
+
+        [Test]
+        public async Task TestFindPoem()
+        {
+            Poem poem = dbContext.Poems.First();
+            string id = poem.Id.ToString();
+
+            PoemFormViemModel viemModel = await poemService.FindPoemByIdAsync(id);
+
+            Assert.IsAssignableFrom<PoemFormViemModel>(viemModel);
+            Assert.True(viemModel.Title == poem.Title);
+        }
+
+        [Test]
+        public async Task TestGetPoemDetailsById()
+        {
+            Poem poem = dbContext.Poems.First();
+            string id = poem.Id.ToString();
+
+            PoemDetailsVisualizeViewModel? viemModel = await poemService.GetPoemAsDetailsViewModelByIdAsync(id);
+
+            Assert.IsAssignableFrom<PoemDetailsVisualizeViewModel>(viemModel);
+            Assert.True(viemModel!.Title == poem.Title);
+        }
 
 
         private void SeedPoems()
@@ -200,7 +294,7 @@ Of a demon in my view—",
             poems.Add(poem);
 
             dbContext.AddRange(poem);
-            dbContext.SaveChanges();
+            //dbContext.SaveChanges();
         }
     }
 }
