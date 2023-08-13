@@ -86,8 +86,8 @@ namespace BookWorm.Web
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
-                //app.UseExceptionHandler("/Home/Error/500");
-                //app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+                app.UseExceptionHandler("/Home/Error/500");
+                app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
                 app.UseDeveloperExceptionPage();
             }
             else

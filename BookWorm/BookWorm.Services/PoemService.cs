@@ -54,13 +54,13 @@
                     filteredPoems = filteredPoems.OrderBy(p => p.Title);
                     break;
                 case PoemSort.AlphabeticallyDescending:
-                    filteredPoems = filteredPoems.OrderBy(p => p.Title);
+                    filteredPoems = filteredPoems.OrderByDescending(p => p.Title);
                     break;
                 case PoemSort.Newest:
                     filteredPoems = filteredPoems.OrderByDescending(p => p.DateCreated);
                     break;
                 case PoemSort.Oldest:
-                    filteredPoems = filteredPoems.OrderByDescending(p => p.DateCreated);
+                    filteredPoems = filteredPoems.OrderBy(p => p.DateCreated);
                     break;
                 default:
                     filteredPoems = filteredPoems.OrderBy(p => p.DateCreated);
@@ -194,6 +194,7 @@
         public async Task<IEnumerable<CategoryDisplayViewModel>> GetAllCategoriesAsync()
         {
             CategoryDisplayViewModel[]? categories = await dbContext.Categories
+                .Where(c => c.IsDeleted == false)
                 .Select(c => new CategoryDisplayViewModel
                 {
                     Id = c.Id,

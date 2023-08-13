@@ -81,7 +81,7 @@
             {
                 mappingEntites.Add(new BookPoem { BookId = entity.Id, PoemId = Guid.Parse(poemId) });
             }
-            //error occurs here probablly
+
             entity.BooksPoems = mappingEntites.ToList();
 
             await dbContext.SaveChangesAsync();
@@ -166,7 +166,7 @@
         public async Task<bool> IsUserOwnerAsync(string userId, int bookId)
         {
             Book? book = await dbContext.Books.FindAsync(bookId);
-            return book!.AuthorId.ToString() == userId;
+            return book!.AuthorId == Guid.Parse(userId);
         }
         public async Task<bool> ExistsByIdAsync(int id)
         {
